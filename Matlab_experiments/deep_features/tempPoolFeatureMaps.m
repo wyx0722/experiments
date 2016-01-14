@@ -1,0 +1,59 @@
+function [ featuresVideo ] = tempPoolFeatureMaps( pathVideo, layer, nPool )
+
+
+
+switch layer
+    
+     case 'conv5_3' 
+         
+        dimConvMap=14*14;
+        channels=512;
+        dimFeatures=dimConvMap * channels;
+        fileID=fopen(pathVideo); %open the file
+        [featMaps, count]=fscanf(fileID, '%f', [dimFeatures inf]); %read the opened file with the format coresponding to the layer
+        featMaps=featMaps';
+        nFeatursMaps=size(featMaps,1);
+        if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
+            fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
+        end      
+        fclose(fileID);
+        
+        
+        
+        if nPool>1
+            modPool=mod(size(featMaps, 1),nPool);
+            
+            if modPool>(nPool/2 -1)
+                poolFeatMaps=zeros(floor(nFeatursMaps/nPool)+1, dimFeatures);
+                poolFeatMaps(end, :)=sum(featMaps(end-nPool+1:end, :), 1);
+            else
+                poolFeatMaps=zeros(floor(nFeatursMaps/nPool), dimFeatures);
+            end
+            
+            k=1;
+            for i=nPool:nPool:size(featMaps, 1)
+                poolFeatMaps(k, :)=sum(featMaps(i-nPool+1:i, :), 1);
+                k=k+1;
+            end
+            
+        else
+            poolFeatMaps=featMaps;
+        end
+        
+        
+        
+        nPoolFeatMaps=size(poolFeatMaps, 1);
+        featuresVideo=zeros(dimConvMap * nPoolFeatMaps, channels);
+        
+        for i=1:dimConvMap
+           % featuresVideo=cat(1,featuresVideo,featMaps(:, i:dimConvMap:end));
+            step=nPoolFeatMaps;
+            featuresVideo(i*step-step+1:i*step,:)=poolFeatMaps(:, i:dimConvMap:end);
+        end
+        
+        
+    otherwise
+       fprintf('Unkonwn parameter!!!! the layer should be fc8, fc7, fc6 conv5_3 ...'); 
+
+end
+
