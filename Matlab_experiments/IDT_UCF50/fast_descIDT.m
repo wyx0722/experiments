@@ -108,5 +108,5 @@ command2=['rm ' filePath];
 
 if status2~=0
     warning('The System command did not proccess right: %s', command2);
-    keyboard;
+    %keyboard;
 end
