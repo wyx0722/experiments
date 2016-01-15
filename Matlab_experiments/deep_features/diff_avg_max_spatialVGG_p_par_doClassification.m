@@ -35,7 +35,7 @@ parfor i=1:length(vids)
     % Extract descriptors   
    [avg_fc8(i, :), max_fc8(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc8.txt'], 'fc8_sVGG');
    [avg_fc7(i, :),max_fc7(i, :) ]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc7.txt'], 'fc7');
-   [avg_fc6(i, :), max_fc6(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc6.txt'], 'fc6', i);
+   [avg_fc6(i, :), max_fc6(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc6.txt'], 'fc6');
    [avg_conv5_3(i, :),max_conv5_3(i, :) ]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/conv5_3.txt'], 'conv5_3');
    [avg_conv5_1(i, :), max_conv5_1(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/conv5_1.txt'], 'conv5_1');
 
