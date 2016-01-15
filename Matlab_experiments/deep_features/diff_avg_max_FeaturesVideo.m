@@ -1,9 +1,4 @@
-function  [avg_feat_vid, max_feat_vid]  = avg_max_FeaturesVideo( pathVideo, layer, i )
-
-
-if nargin>2
-    fprintf('%d ', i);
-end
+function  [avg_feat_vid, max_feat_vid]  = diff_avg_max_FeaturesVideo( pathVideo, layer )
 
 
 switch layer
@@ -16,8 +11,10 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        
+        
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -33,8 +30,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -50,8 +47,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -66,8 +63,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -82,8 +79,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -98,8 +95,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -114,8 +111,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
@@ -130,8 +127,8 @@ switch layer
         %now each column represents the features for a frame within the
         %video, the next step is to compute the average pooling for each
         %line and then transpose the result to get a row vector for a video
-        avg_feat_vid=mean(feat, 2)';
-        max_feat_vid=max(feat,[], 2)';
+        avg_feat_vid=mean(feat(:, 1:end-1)-feat(:, 2:end), 2)';
+        max_feat_vid=max(feat(:, 1:end-1)-feat(:, 2:end),[], 2)';
         
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
             fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));

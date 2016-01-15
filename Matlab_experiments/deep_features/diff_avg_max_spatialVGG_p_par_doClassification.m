@@ -12,17 +12,17 @@ avg_fc8=zeros(length(vids), 1000);
 avg_fc7=zeros(length(vids), 4096);
 avg_fc6=zeros(length(vids), 4096);
 avg_conv5_3=zeros(length(vids), 14*14*512);
-avg_pool5=zeros(length(vids), 7*7*512);
+avg_conv5_1=zeros(length(vids), 14*14*512);
 
 max_fc8=zeros(length(vids), 1000);
 max_fc7=zeros(length(vids), 4096);
 max_fc6=zeros(length(vids), 4096);
 max_conv5_3=zeros(length(vids), 14*14*512);
-max_pool5=zeros(length(vids), 7*7*512);
+max_conv5_1=zeros(length(vids), 14*14*512);
 
-rootPathFeatures='/home/ionut/Data/action_temporal_vgg_16_split1_features_opticalFlow_tvL1_UCF50/Videos/';
+rootPathFeatures='/home/ionut/Data/VGG_16_v-features_rawFrames_UCF50/Videos/';
 
-parpool(5);
+parpool(13);
 
 fprintf('Load VGG features for %d vids: ', length(vids));
 parfor i=1:length(vids)
@@ -30,13 +30,14 @@ parfor i=1:length(vids)
     %    fprintf('%d ', i);
     %end
     
+    fprintf('\b%d\n', i)
 
     % Extract descriptors   
-   [avg_fc8(i, :), max_fc8(i, :)]=avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc8.txt'], 'fc8', i);
-   [avg_fc7(i, :),max_fc7(i, :) ]=avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc7.txt'], 'fc7', i);
-   [avg_fc6(i, :), max_fc6(i, :)]=avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc6.txt'], 'fc6', i);
-   [avg_conv5_3(i, :),max_conv5_3(i, :) ]=avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/conv5_3.txt'], 'conv5_3', i);
-   [avg_pool5(i, :), max_pool5(i, :)]=avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/pool5.txt'], 'pool5', i);
+   [avg_fc8(i, :), max_fc8(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc8.txt'], 'fc8_sVGG');
+   [avg_fc7(i, :),max_fc7(i, :) ]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc7.txt'], 'fc7');
+   [avg_fc6(i, :), max_fc6(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/fc6.txt'], 'fc6', i);
+   [avg_conv5_3(i, :),max_conv5_3(i, :) ]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/conv5_3.txt'], 'conv5_3');
+   [avg_conv5_1(i, :), max_conv5_1(i, :)]=diff_avg_max_FeaturesVideo([rootPathFeatures, vids{i}, '/conv5_1.txt'], 'conv5_1');
 
 
 
@@ -69,9 +70,9 @@ n_avg_conv5_3=NormalizeRowsUnit(SquareRootAbs(avg_conv5_3));
 allDist{4}=n_avg_conv5_3 * n_avg_conv5_3';
 clear n_avg_conv5_3
 
-n_avg_pool5=NormalizeRowsUnit(SquareRootAbs(avg_pool5));
-allDist{5}=n_avg_pool5 * n_avg_pool5';
-clear n_avg_pool5
+n_avg_conv5_1=NormalizeRowsUnit(SquareRootAbs(avg_conv5_1));
+allDist{5}=n_avg_conv5_1 * n_avg_conv5_1';
+clear n_avg_conv5_1
 
 
 
@@ -91,9 +92,9 @@ n_max_conv5_3=NormalizeRowsUnit(SquareRootAbs(max_conv5_3));
 allDist{9}=n_max_conv5_3 * n_max_conv5_3';
 clear n_max_conv5_3
 
-n_max_pool5=NormalizeRowsUnit(SquareRootAbs(max_pool5));
-allDist{10}=n_max_pool5 * n_max_pool5';
-clear n_max_pool5
+n_max_conv5_1=NormalizeRowsUnit(SquareRootAbs(max_conv5_1));
+allDist{10}=n_max_conv5_1 * n_max_conv5_1';
+clear n_max_conv5_1
 
 
 
