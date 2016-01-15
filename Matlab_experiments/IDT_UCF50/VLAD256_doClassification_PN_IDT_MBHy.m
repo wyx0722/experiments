@@ -73,7 +73,7 @@ parpool(5);
 % Now object visual word frequency histograms
 fprintf('IDT VLAD extraction  for %d vids: ', length(pathFeatures));
 parfor i=1:length(pathFeatures)
-
+fprintf('\b%d\n', i)
     % Extract descriptors
     [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
     
