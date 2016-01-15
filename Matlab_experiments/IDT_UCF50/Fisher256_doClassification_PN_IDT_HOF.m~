@@ -55,10 +55,10 @@ if (useSP==1)
         nDivImg=nDivImg+1;
     end
 
-    dimVlad = numClusters * pcaDim * nDivImg;
+    dimVlad = size(gmmModelName, 1) * size(gmmModelName, 2) * nDivImg;
 
 else
-    dimVlad=numClusters * pcaDim;
+    dimVlad=size(gmmModelName, 1) * size(gmmModelName, 2);
 end
 
 nEncoding=1;
