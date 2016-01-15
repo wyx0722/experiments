@@ -24,9 +24,6 @@ switch layer
             
             poolFeatMaps=zeros(ceil((nFeatursMaps-nPool+1)/overlap), dimFeatures); 
             
-            size(poolFeatMaps)
-            nFeatursMaps
-            
             k=1;
             for i=1:overlap:nFeatursMaps-nPool+1
                 poolFeatMaps(k, :)=sum(featMaps(i:i+nPool-1, :), 1);
