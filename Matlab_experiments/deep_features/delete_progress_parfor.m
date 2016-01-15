@@ -1,7 +1,6 @@
 
 m=6;
-fprintf('Progress:\n');
-fprintf(['\n' repmat('.',1,m) '\n\n']);
+
 
 
 parpool(2);
