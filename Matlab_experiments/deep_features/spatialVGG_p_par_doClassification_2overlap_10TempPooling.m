@@ -80,7 +80,7 @@ fprintf('Feature extraction for %d vids: ', length(pathFeatures));
 
 
 parpool(13);
-for i=1:length(pathFeatures)
+parfor i=1:length(pathFeatures)
 %     if mod(i,100) == 0
 %         fprintf('%d ', i);
 %     end
