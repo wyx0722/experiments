@@ -5,14 +5,14 @@ DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = @FEVidHOG_IDT;
+descParam.Func = @FEVidHOF_IDT;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'IDT';
 descParam.NumOr = 8;
 %descParam.FrameSampleRate = 1;
 %descParam.ColourSpace = colourSpace
-descParam.IDTfeature='HOG';
+descParam.IDTfeature='HOF';
 
 %sRow = [1 3];
 %sCol = [1 1];
@@ -31,10 +31,9 @@ for i=1:length(vocabularyImsPaths)
     vocabularyImsPaths{i}=[bazePathFeatures char(vocabularyIms(i)) '.gz'];
 end
     
-%[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
-%                                                numClusters, pcaDim);
-[vocabulary, pcaMap, st_d, skew, nElem] = CreateVocabularyKmeansPca_m(vocabularyImsPaths, descParam, ...
+[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
                                                 numClusters, pcaDim);
+
                                      
 
 
@@ -62,25 +61,22 @@ else
     dimVlad=size(vocabulary, 1) * size(vocabulary, 2);
 end
 
-nEncoding=3;
+nEncoding=1;
 
-vladVectors1= zeros(length(vids), dimVlad);  
-vladVectors2= zeros(length(vids), 2*dimVlad);
-vladVectors3= zeros(length(vids), 3*dimVlad);
+fisherVectors1= zeros(length(vids), 2*dimVlad);  
 
 
 parpool(5);
 % Now object visual word frequency histograms
-fprintf('IDT VLAD extraction  for %d vids: ', length(pathFeatures));
+fprintf('IDT FisherVector extraction  for %d vids: ', length(pathFeatures));
 parfor i=1:length(pathFeatures)
 
     % Extract descriptors
     [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
+    desc = desc';
     
-        vladVectors1(i,:)=VLAD_1_mean_L2(desc, vocabulary);
-        vladVectors2(i,:)=improvedVLAD_intraL2(desc, vocabulary, st_d, skew, nElem);
-        vladVectors3(i,:)=BoostingVLAD_paper_intraL2(desc, vocabulary, st_d, skew, nElem);
-   
+    fisherVectors1(i,:)=mexFisherAssign(desc, gmmModelName)';
+
   
        
         
@@ -95,17 +91,10 @@ fprintf('\nDone!\n');
 
 allDist=cell(1, nEncoding);
 
-n_vladVectors1=NormalizeRowsUnit(PowerNormalization(vladVectors1, 0.14));
-allDist{1}=n_vladVectors1 * n_vladVectors1';
-clear n_vladVectors1
+n_fisherVectors1=NormalizeRowsUnit(PowerNormalization(fisherVectors1, 0.14));
+allDist{1}=n_fisherVectors1 * n_fisherVectors1';
+clear n_fisherVectors1
 
-n_vladVectors2=NormalizeRowsUnit(PowerNormalization(vladVectors2, 0.14));
-allDist{2}=n_vladVectors2 * n_vladVectors2';
-clear n_vladVectors2
-
-n_vladVectors3=NormalizeRowsUnit(PowerNormalization(vladVectors3, 0.14));
-allDist{3}=n_vladVectors3 * n_vladVectors3';
-clear n_vladVectors3
 
 
 
@@ -145,6 +134,6 @@ end
 
 delete(gcp('nocreate'))
 
-saveName = [DATAopts.resultsPath DescParam2Name(descParam) 'VLAD256.mat'];
+saveName = [DATAopts.resultsPath DescParam2Name(descParam) 'fisher256.mat'];
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 

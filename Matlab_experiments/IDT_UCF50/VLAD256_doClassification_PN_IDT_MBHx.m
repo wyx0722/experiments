@@ -5,14 +5,14 @@ DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = @FEVidMBHy_IDT;
+descParam.Func = @FEVidMBHx_IDT;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'IDT';
 descParam.NumOr = 8;
 %descParam.FrameSampleRate = 1;
 %descParam.ColourSpace = colourSpace
-descParam.IDTfeature='MBHy';
+descParam.IDTfeature='MBHx';
 
 %sRow = [1 3];
 %sCol = [1 1];
@@ -22,7 +22,7 @@ pcaDim = 72;
 numClusters = 256;
 
 %%%%%%%%%%
-bazePathFeatures='/data/MM31/iduta/Features/UCF50/IDT/Videos/'; %change
+bazePathFeatures='/home/ionut/Features/Features/UCF50/IDT/Videos/'; %change
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
 vocabularyImsPaths=cell(size(vocabularyIms));
@@ -93,25 +93,58 @@ fprintf('\nDone!\n');
 
 %% Do classification
 
-% Histogram Intersection kernel
-allDist = fisherVectors * fisherVectors';
+allDist=cell(1, nEncoding);
 
+n_vladVectors1=NormalizeRowsUnit(PowerNormalization(vladVectors1, 0.14));
+allDist{1}=n_vladVectors1 * n_vladVectors1';
+clear n_vladVectors1
+
+n_vladVectors2=NormalizeRowsUnit(PowerNormalization(vladVectors2, 0.14));
+allDist{2}=n_vladVectors2 * n_vladVectors2';
+clear n_vladVectors2
+
+n_vladVectors3=NormalizeRowsUnit(PowerNormalization(vladVectors3, 0.14));
+allDist{3}=n_vladVectors3 * n_vladVectors3';
+clear n_vladVectors3
+
+
+
+all_clfsOut=cell(1,nEncoding);
+all_accuracy=cell(1,nEncoding);
+
+% cRange = 100;
+% nReps = 1;
+% nFolds = 3;
+
+
+for k=1:nEncoding
+
+% 
 % Leave-one-group-out cross-validation
-for i=1:max(groups)
+parfor i=1:max(groups)
     testI = groups == i;
     trainI = ~testI;
-    trainDist = allDist(trainI, trainI);
-    testDist = allDist(testI, trainI);
+    trainDist = allDist{k}(trainI, trainI);
+    testDist = allDist{k}(testI, trainI);
     trainLabs = labs(trainI,:);
     testLabs = labs(testI, :);
     
     [~, clfsOut{i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs);
+    %[~, clfsOut{i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
     accuracy{i} = ClassificationAccuracy(clfsOut{i}, testLabs);
     fprintf('%d: accuracy: %.3f\n', i, mean(accuracy{i}));
 end
 
+all_clfsOut{k}=clfsOut;
+all_accuracy{k}=accuracy;
+
+k
 perGroupAccuracy = mean(cat(2, accuracy{:}))'
 
+end
 
-saveName = [DATAopts.resultsPath DescParam2Name(descParam) 'Fisher.mat'];
-save(saveName, '-v7.3', 'descParam', 'clfsOut', 'accuracy');
+delete(gcp('nocreate'))
+
+saveName = [DATAopts.resultsPath DescParam2Name(descParam) 'VLAD256.mat'];
+save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
+
