@@ -69,9 +69,9 @@ fisherVectors1= zeros(length(vids), 2*dimVlad);
 parpool(5);
 % Now object visual word frequency histograms
 fprintf('IDT FisherVector extraction  for %d vids: ', length(pathFeatures));
-for i=1:length(pathFeatures)
+parfor i=1:length(pathFeatures)
     
-    fprintf(' %d ', i)
+    fprintf('%d \n', i)
 
     % Extract descriptors
     [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
