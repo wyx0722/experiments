@@ -71,7 +71,7 @@ parpool(5);
 fprintf('IDT FisherVector extraction  for %d vids: ', length(pathFeatures));
 for i=1:length(pathFeatures)
     
-    fprintf('%d ', i)
+    fprintf(' %d ', i)
 
     % Extract descriptors
     [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
