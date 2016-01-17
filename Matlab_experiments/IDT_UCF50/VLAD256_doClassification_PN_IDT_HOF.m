@@ -69,11 +69,11 @@ vladVectors2= zeros(length(vids), 2*dimVlad);
 vladVectors3= zeros(length(vids), 3*dimVlad);
 
 
-parpool(13);
+parpool(5);
 % Now object visual word frequency histograms
 fprintf('IDT VLAD extraction  for %d vids: ', length(pathFeatures));
 parfor i=1:length(pathFeatures)
-    fprintf('\b%d\n', i)
+    fprintf('%d ', i)
     % Extract descriptors
     [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
     
