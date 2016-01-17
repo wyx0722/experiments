@@ -31,6 +31,16 @@ switch descType
     
     case 'infoTraj'
         text=fscanf(fileID, '%f');
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%        
+        
+        
         desc=zeros(size(text, 1)/436, 10);
         k=1;
         for i=1:size(desc, 1)
@@ -41,6 +51,15 @@ switch descType
     
     case 'Traj'
         text=fscanf(fileID, '%f');
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%
+        
         desc=zeros(size(text, 1)/436, 30);
         k=1;
         for i=1:size(desc, 1)
@@ -52,7 +71,19 @@ switch descType
     case 'HOG'
 
         text=fscanf(fileID, '%f');
+        
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%
+        
+        
         desc=zeros(size(text, 1)/436, 96);
+       
         k=1;
         for i=1:size(desc, 1)
               desc(i, :)=text(k+40:k+135);
@@ -60,6 +91,15 @@ switch descType
         end
     case 'HOF'
         text=fscanf(fileID, '%f');
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%
+        
         desc=zeros(size(text, 1)/436, 108);
         k=1;
         for i=1:size(desc, 1)
@@ -70,6 +110,15 @@ switch descType
     case 'MBHx'
 
         text=fscanf(fileID, '%f');
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%
+        
         desc=zeros(size(text, 1)/436, 96);
         k=1;
         for i=1:size(desc, 1)
@@ -80,6 +129,15 @@ switch descType
     case 'MBHy'
 
         text=fscanf(fileID, '%f');
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%
+        
         desc=zeros(size(text, 1)/436, 96);
         k=1;
         for i=1:size(desc, 1)
@@ -89,6 +147,15 @@ switch descType
         
     case 'ALL'
         text=fscanf(fileID, '%f');
+        %%%%%%%
+        %!!!!!! Problem with some files that are possible corrupted, where not all the lines has 436 values.        
+        if mod(size(text, 1),436)~=0
+            warning('Possible corrupted file. mod(size(text, 1),436): %d \n file: %s', mod(size(text, 1),436), features);
+            keepDesc=floor(size(text, 1)/436);
+            text=text(1:keepDesc*436);    
+        end
+        %%%%%%%
+        
         desc=zeros(size(text, 1)/436, 436);
         k=1;
         for i=1:size(desc, 1)
