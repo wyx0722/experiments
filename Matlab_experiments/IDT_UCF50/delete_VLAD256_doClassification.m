@@ -27,7 +27,7 @@ cRange = 100;
 nReps = 1;
 nFolds = 3;
 
-parpool(13);
+parpool(5);
 for k=1:nEncoding
 
 % 
