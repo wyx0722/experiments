@@ -2,22 +2,22 @@ function [desc]= fast_descIDT(features, descType)
 
 
 
-pozF=strfind(features, '.');
-filePath=features(1:pozF(end)-1);
+% pozF=strfind(features, '.');
+% filePath=features(1:pozF(end)-1);
+% 
+% command=['gunzip -c ' features ' > ' filePath];
+% 
+% 
+% [status cmdout]=system(command);
+% 
+% if status~=0
+%     error('The System command did not complete right: %s', command);
+%     keyboard;
+% end
 
-command=['gunzip -c ' features ' > ' filePath];
 
 
-[status cmdout]=system(command);
-
-if status~=0
-    error('The System command did not complete right: %s', command);
-    keyboard;
-end
-
-
-
-fileID=fopen(filePath);
+fileID=fopen(features);
 
 if fileID==-1
     error('Could not open the file');
@@ -170,10 +170,10 @@ end
 
 fclose(fileID);
 
-command2=['rm ' filePath];
-[status2 cmdout2]=system(command2);
-
-if status2~=0
-    warning('The System command did not proccess right: %s', command2);
-    %keyboard;
-end
+% command2=['rm ' filePath];
+% [status2 cmdout2]=system(command2);
+% 
+% if status2~=0
+%     warning('The System command did not proccess right: %s', command2);
+%     %keyboard;
+% end

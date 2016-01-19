@@ -40,4 +40,6 @@ addpath('/home/ionut/Matlab/Datasets/UCF50/Tests/Read_Video/');
 addpath('/home/ionut/Matlab/Datasets/UCF50/Tests/Read_Video/mmread/');
 
 addpath('/home/ionut/Matlab/Datasets/UCF50/Tests/improvingVLAD/');
+addpath('/home/ionut/experiments/Matlab_experiments/versions_VLAD/')
+
 
