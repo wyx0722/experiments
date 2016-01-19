@@ -20,10 +20,10 @@ descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
 %sRow = [1 3];
 %sCol = [1 1];
 
-if descParam.IDTfeature=='HOF'
+if strcmp(descParam.IDTfeature,'HOF')
     sizeDesc=108;
     
-elseif  descParam.IDTfeature=='HOG' || descParam.IDTfeature=='MBHx' || descParam.IDTfeature=='MBHy'   
+elseif  strcmp(descParam.IDTfeature,'HOG') || strcmp(descParam.IDTfeature,'MBHx') || strcmp(descParam.IDTfeature,'MBHy')  
     sizeDesc=96;   
 end
 
