@@ -28,7 +28,7 @@ vocabularyIms = GetVideosPlusLabels('smallEnd');
 vocabularyImsPaths=cell(size(vocabularyIms));
 
 for i=1:length(vocabularyImsPaths)
-    vocabularyImsPaths{i}=[bazePathFeatures char(vocabularyIms(i)) '.gz'];
+    vocabularyImsPaths{i}=[bazePathFeatures char(vocabularyIms(i))];
 end
     
 [gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
@@ -43,7 +43,7 @@ end
 pathFeatures=cell(size(vids));
 
 for i=1:length(pathFeatures)
-    pathFeatures{i}=[bazePathFeatures char(vids(i)) '.gz'];
+    pathFeatures{i}=[bazePathFeatures char(vids(i))];
 end
 
 
