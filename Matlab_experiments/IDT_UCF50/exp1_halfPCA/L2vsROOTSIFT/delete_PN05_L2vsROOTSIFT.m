@@ -18,7 +18,8 @@ n_vladVectors3=NormalizeRowsUnit(PowerNormalization(vladVectors3, 0.5));
 allDist{3}=n_vladVectors3 * n_vladVectors3';
 clear n_vladVectors3
 
-
+oldPN014_all_clfsOut=all_clfsOut;
+oldPN014_all_accuracy=all_accuracy;
 
 all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
