@@ -1,6 +1,3 @@
-clear intraN_vladVectors1
-clear intraN_vladVectors2
-clear intraN_vladVectors3
 
 
 
