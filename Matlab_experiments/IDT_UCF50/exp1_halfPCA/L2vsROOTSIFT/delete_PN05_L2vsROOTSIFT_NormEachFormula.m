@@ -1,3 +1,6 @@
+clear intraN_vladVectors1
+clear intraN_vladVectors2
+clear intraN_vladVectors3
 
 
 
@@ -7,7 +10,7 @@ nEncoding=3;
 
 allDist=cell(1, nEncoding);
 
-n_vladVectors1=NormalizeRowsUnit(PowerNormalization(intraN_vladVectors1, 0.5));
+n_vladVectors1=NormalizeRowsUnit(PowerNormalization(vladVectors1, 0.5));
 allDist{1}=n_vladVectors1 * n_vladVectors1';
 clear n_vladVectors1
 
