@@ -33,10 +33,18 @@ switch normStrategy
         desc = NormalizeRowsUnit(desc);
     case 'L1'
         desc = NormalizeRows(desc);
+        
+        %%%Ionut
     case 'PN'
-        desc=PowerNormalization(desc, 0.14);
+        desc=PowerNormalization(desc, descParam.alpha);
     case 'disp_traj'
         desc=norm_disp_traj(desc);
+    case 'L1PN' % L1 -> PN
+        desc=PowerNormalization(NormalizeRows(desc), descParam.alpha);
+    case 'PNL2'% PN -> L2
+        desc= NormalizeRowsUnit(PowerNormalization(desc, descParam.alpha));
+        %%%%%%%
+        
     case 'None'
         % No normalization happens here
     otherwise
