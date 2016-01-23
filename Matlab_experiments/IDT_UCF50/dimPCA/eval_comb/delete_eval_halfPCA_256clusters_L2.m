@@ -14,6 +14,7 @@ comb_vladVectors2=[];
 comb_vladVectors3=[];
 
 for d=1:length(videoDesc)
+    
     load(videoDesc{d});
     
     intraN_vladVectors1=intranormalizationFeatures(vladVectors1, size(vladVectors1, 2)/clusters);
@@ -30,6 +31,11 @@ tstop=toc(tS)
 clear intraN_vladVectors1
 clear intraN_vladVectors2
 clear intraN_vladVectors3
+
+
+
+
+[vids, labs, groups] = GetVideosPlusLabels('Full');
 
 
 %% Do classification
