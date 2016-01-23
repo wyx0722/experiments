@@ -43,17 +43,17 @@ nEncoding=3;
 
 allDist=cell(1, nEncoding);
 
-n_comb_vladVectors1=NormalizeRowsUnit(comb_vladVectors1);
-allDist{1}=n_comb_vladVectors1 * n_comb_vladVectors1';
-clear n_comb_vladVectors1
+%n_comb_vladVectors1=NormalizeRowsUnit(comb_vladVectors1);
+allDist{1}=distmj(comb_vladVectors1 * comb_vladVectors1);
+%clear n_comb_vladVectors1
 
-n_comb_vladVectors2=NormalizeRowsUnit(comb_vladVectors2);
-allDist{2}=n_comb_vladVectors2 * n_comb_vladVectors2';
-clear n_comb_vladVectors2
+%n_comb_vladVectors2=NormalizeRowsUnit(comb_vladVectors2);
+allDist{2}=distmj(comb_vladVectors2 * comb_vladVectors2);
+%clear n_comb_vladVectors2
 
-n_comb_vladVectors3=NormalizeRowsUnit(comb_vladVectors3);
-allDist{3}=n_comb_vladVectors3 * n_comb_vladVectors3';
-clear n_comb_vladVectors3
+%n_comb_vladVectors3=NormalizeRowsUnit(comb_vladVectors3);
+allDist{3}=distmj(comb_vladVectors3 * comb_vladVectors3);
+%clear n_comb_vladVectors3
 
 
 
