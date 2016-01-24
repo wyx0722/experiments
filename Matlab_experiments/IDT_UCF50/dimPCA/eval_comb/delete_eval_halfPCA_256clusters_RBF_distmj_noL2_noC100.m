@@ -1,41 +1,41 @@
 
-% tS=tic;
-% videoDesc=cell(4, 1);
-% 
-% videoDesc{1}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidHOG_IDTIDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48__VLAD256_doClassification_IDT_HOG_halfPCA_ROOTSIFT__.mat';
-% videoDesc{2}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidHOF_IDTIDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54__VLAD256_doClassification_IDT_HOF_halfPCA_ROOTSIFT__.mat';
-% videoDesc{3}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidMBHx_IDTIDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48__VLAD256_doClassification_IDT_MBHx_halfPCA_ROOTSIFT__.mat';
-% videoDesc{4}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidMBHy_IDTIDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48__VLAD256_doClassification_IDT_MBHy_halfPCA_ROOTSIFT__.mat';
-% 
-% clusters=256;
-% 
-% comb_vladVectors1=[];
-% comb_vladVectors2=[];
-% comb_vladVectors3=[];
-% 
-% for d=1:length(videoDesc)
-%     
-%     load(videoDesc{d});
-%     
-%     intraN_vladVectors1=intranormalizationFeatures(vladVectors1, size(vladVectors1, 2)/clusters);
-%     intraN_vladVectors2=intranormalizationFeatures(vladVectors2, size(vladVectors1, 2)/clusters);
-%     intraN_vladVectors3=intranormalizationFeatures(vladVectors3, size(vladVectors1, 2)/clusters);
-%     
-%     comb_vladVectors1=cat(2,comb_vladVectors1, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors1, 0.5)) );
-%     comb_vladVectors2=cat(2,comb_vladVectors2, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors2, 0.5)) );
-%     comb_vladVectors3=cat(2,comb_vladVectors3, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors3, 0.5)) );   
-% end
-% tstop=toc(tS)
-% 
-% 
-% clear intraN_vladVectors1
-% clear intraN_vladVectors2
-% clear intraN_vladVectors3
-% 
-% 
-% 
-% 
-% [vids, labs, groups] = GetVideosPlusLabels('Full');
+tS=tic;
+videoDesc=cell(4, 1);
+
+videoDesc{1}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidHOG_IDTIDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48__VLAD256_doClassification_IDT_HOG_halfPCA_ROOTSIFT__.mat';
+videoDesc{2}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidHOF_IDTIDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54__VLAD256_doClassification_IDT_HOF_halfPCA_ROOTSIFT__.mat';
+videoDesc{3}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidMBHx_IDTIDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48__VLAD256_doClassification_IDT_MBHx_halfPCA_ROOTSIFT__.mat';
+videoDesc{4}='/home/ionut/Data/results_desc_IDT/videoRep/FEVidMBHy_IDTIDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48__VLAD256_doClassification_IDT_MBHy_halfPCA_ROOTSIFT__.mat';
+
+clusters=256;
+
+comb_vladVectors1=[];
+comb_vladVectors2=[];
+comb_vladVectors3=[];
+
+for d=1:length(videoDesc)
+    
+    load(videoDesc{d});
+    
+    intraN_vladVectors1=intranormalizationFeatures(vladVectors1, size(vladVectors1, 2)/clusters);
+    intraN_vladVectors2=intranormalizationFeatures(vladVectors2, size(vladVectors1, 2)/clusters);
+    intraN_vladVectors3=intranormalizationFeatures(vladVectors3, size(vladVectors1, 2)/clusters);
+    
+    comb_vladVectors1=cat(2,comb_vladVectors1, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors1, 0.5)) );
+    comb_vladVectors2=cat(2,comb_vladVectors2, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors2, 0.5)) );
+    comb_vladVectors3=cat(2,comb_vladVectors3, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors3, 0.5)) );   
+end
+tstop=toc(tS)
+
+
+clear intraN_vladVectors1
+clear intraN_vladVectors2
+clear intraN_vladVectors3
+
+
+
+
+[vids, labs, groups] = GetVideosPlusLabels('Full');
 
 
 %% Do classification
