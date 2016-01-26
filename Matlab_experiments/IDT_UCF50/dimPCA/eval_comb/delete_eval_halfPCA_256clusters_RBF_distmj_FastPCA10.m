@@ -43,16 +43,19 @@ nEncoding=3;
 
 allDist=cell(1, nEncoding);
 
-pca_comb_vladVectors1=FastPCA(comb_vladVectors1',ceil(size(comb_vladVectors1, 2)/10));
-allDist{1}=distmj(pca_comb_vladVectors1.data.rot, pca_comb_vladVectors1.data.rot);
+pca_comb_vladVectors1=FastPCA(comb_vladVectors1,ceil(size(comb_vladVectors1, 2)/10));
+r_comb_vladVectors1=comb_vladVectors1 * pca_comb_vladVectors1.data.rot;
+allDist{1}=distmj(r_comb_vladVectors1, r_comb_vladVectors1);
 
 
 
-pca_comb_vladVectors2=FastPCA(comb_vladVectors2',ceil(size(comb_vladVectors2, 2)/10));
-allDist{2}=distmj(pca_comb_vladVectors2.data.rot, pca_comb_vladVectors2.data.rot);
+pca_comb_vladVectors2=FastPCA(comb_vladVectors2,ceil(size(comb_vladVectors2, 2)/10));
+r_comb_vladVectors2=comb_vladVectors2 * pca_comb_vladVectors2.data.rot;
+allDist{2}=distmj(r_comb_vladVectors2, r_comb_vladVectors2);
 
-pca_comb_vladVectors3=FastPCA(comb_vladVectors3',ceil(size(comb_vladVectors3, 2)/10));
-allDist{3}=distmj(pca_comb_vladVectors3.data.rot , pca_comb_vladVectors3.data.rot);
+pca_comb_vladVectors3=FastPCA(comb_vladVectors3,ceil(size(comb_vladVectors3, 2)/10));
+r_comb_vladVectors3=comb_vladVectors3 * pca_comb_vladVectors3.data.rot;
+allDist{3}=distmj(r_comb_vladVectors3 , r_comb_vladVectors3);
 
 
 
