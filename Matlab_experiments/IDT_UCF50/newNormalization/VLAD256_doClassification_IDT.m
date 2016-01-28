@@ -19,7 +19,12 @@ descParam.Func = @FEVid_IDT; %descParam.Func = @FEVidHOF_IDT;
 descParam.MediaType = 'IDT';
 descParam.IDTfeature=typeFeature; %descParam.IDTfeature='HOF';
 descParam.Normalisation=normStrategy; %descParam.Normalisation='L1PN'; % L2 or 'ROOTSIFT'
-descParam.alpha=alpha; %descParam.alpha=0.3;
+
+if nargin>2
+    descParam.alpha=alpha; %descParam.alpha=0.3;
+else
+    descParam.alpha=1;
+end
 
 %sRow = [1 3];
 %sCol = [1 1];
