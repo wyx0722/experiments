@@ -18,8 +18,8 @@ clear descParam
 descParam.Func = @FEVid_IDT; %descParam.Func = @FEVidHOF_IDT;
 descParam.MediaType = 'IDT';
 descParam.IDTfeature=typeFeature; %descParam.IDTfeature='HOF';
-descParam.Normalisation=normStrategy;%descParam.Normalisation='L1PN'; % L2 or 'ROOTSIFT'
-descParam.alpha=alpha;%descParam.alpha=0.3;
+descParam.Normalisation=normStrategy; %descParam.Normalisation='L1PN'; % L2 or 'ROOTSIFT'
+descParam.alpha=alpha; %descParam.alpha=0.3;
 
 %sRow = [1 3];
 %sCol = [1 1];
@@ -34,6 +34,8 @@ end
 % pcaDim & vocabulary size
 descParam.pcaDim = sizeDesc/2;
 descParam.numClusters = 256;
+
+descParam
 
 %%%%%%%%%%
 bazePathFeatures='/home/ionut/Features/Features/UCF50/IDT/Videos/'; %change
@@ -167,10 +169,43 @@ end
 delete(gcp('nocreate'))
 
 
-saveName = ['/home/ionut/Data/results_desc_IDT/' 'clfsOut/' 'dimPCA/' DescParam2Name(descParam) '_VLAD_.mat'];
+
+%%%%%%%%%%%%save results
+v1_meanAcc=mean(mean(cat(2, all_accuracy{1}{:})));
+v2_meanAcc=mean(mean(cat(2, all_accuracy{2}{:})));
+v3_meanAcc=mean(mean(cat(2, all_accuracy{3}{:})));
+
+try    
+    
+    fileName=['/home/ionut/Data/results_desc_IDT/rez_newNorm/results_UCF50_newNorm__' 'Desc' descParam.MediaType '_' descParam.IDTfeature '_norm' descParam.Normalisation '.txt'];
+    
+    fileID=fopen(fileName, 'a');
+    
+    fprintf(fileID, '%s %s norm:%s  alpha: %.2f --> v1: %.3f  v2: %.3f  v3: %.3f \r\n', ...
+            descParam.MediaType,descParam.IDTfeature, descParam.Normalisation,descParam.alpha,v1_meanAcc,v2_meanAcc, v3_meanAcc);
+    
+    fclose(fileID);
+    
+catch err
+    
+    fileName=['/home/ionut/Data/results_desc_IDT/rez_newNorm/backup/backup_results_UCF50_newNorm__' 'Desc' descParam.MediaType '_' descParam.IDTfeature '_norm' descParam.Normalisation '.txt'];
+    
+    fileID=fopen(fileName, 'a');
+    
+    fprintf(fileID, '%s %s norm:%s  alpha: %.2f --> v1: %.3f  v2: %.3f  v3: %.3f \r\n', ....
+              descParam.MediaType,descParam.IDTfeature, descParam.Normalisation,descParam.alpha,v1_meanAcc,v2_meanAcc, v3_meanAcc);
+    fclose(fileID);
+    
+    warning('error writing %s. Instead the file%s was saved in: ',err, fileName);
+        
+end
+
+
+
+saveName = ['/home/ionut/Data/results_desc_IDT/' 'clfsOut/' 'newNorm/' DescParam2Name(descParam) '_VLAD_.mat'];
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
-% saveName2 = ['/home/ionut/Data/results_desc_IDT/' 'videoRep/' 'dimPCA/' DescParam2Name(descParam) '_VLAD_.mat'];
-% save(saveName2, '-v7.3', 'vladVectors1', 'vladVectors2', 'vladVectors3');
+ saveName2 = ['/home/ionut/Data/results_desc_IDT/' 'videoRep/' 'newNorm/' DescParam2Name(descParam) '_VLAD_.mat'];
+ save(saveName2, '-v7.3', 'vladVectors1', 'vladVectors2', 'vladVectors3');
 
 end
