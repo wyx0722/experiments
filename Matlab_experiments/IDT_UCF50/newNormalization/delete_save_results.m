@@ -7,7 +7,7 @@ v3_meanAcc=mean(mean(cat(2, all_accuracy{3}{:})));
 try
     
     
-    fileName=['/home/Ionut/Data/results_desc_IDT/rez_newNorm/results_UCF50_newNorm__' 'Desc' descParam.MediaType '_' descParam.IDTfeature '_norm' descParam.Normalisation '.txt'];
+    fileName=['/home/ionut/Data/results_desc_IDT/rez_newNorm/results_UCF50_newNorm__' 'Desc' descParam.MediaType '_' descParam.IDTfeature '_norm' descParam.Normalisation '.txt'];
     
     fileID=fopen(fileName, 'a');
     
@@ -23,7 +23,7 @@ try
             
     
 catch err
-     fileName=['/home/Ionut/Data/results_desc_IDT/rez_newNorm/backup/backup_results_UCF50_newNorm__' 'Desc' descParam.MediaType '_' descParam.IDTfeature '_norm' descParam.Normalisation '.txt'];
+     fileName=['/home/ionut/Data/results_desc_IDT/rez_newNorm/backup/backup_results_UCF50_newNorm__' 'Desc' descParam.MediaType '_' descParam.IDTfeature '_norm' descParam.Normalisation '.txt'];
     
     fileID=fopen(fileName, 'a');
     
