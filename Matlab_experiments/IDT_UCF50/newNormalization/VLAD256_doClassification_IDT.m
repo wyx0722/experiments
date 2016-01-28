@@ -1,4 +1,4 @@
-function  []  = VLAD256_doClassification_IDT(typeFeature, normStrategy, alpha)
+function  [all_accuracy, all_clfsOut]  = VLAD256_doClassification_IDT(typeFeature, normStrategy, alpha)
 
 
 % function doClassificationFisher
