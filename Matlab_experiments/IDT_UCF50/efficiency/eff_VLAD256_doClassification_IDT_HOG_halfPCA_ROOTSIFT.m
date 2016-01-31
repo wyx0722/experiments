@@ -73,7 +73,7 @@ else
 end
 
 
-nSample=10;
+%nSample=10;
 
 sample=randperm(length(pathFeatures),nSample );
 
