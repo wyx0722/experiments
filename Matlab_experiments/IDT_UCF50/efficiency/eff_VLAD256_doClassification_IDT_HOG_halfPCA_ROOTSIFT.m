@@ -153,15 +153,15 @@ for i=1:length(sample)
     
     
     tStart=tic;
-    v1_intraL2(i, :)=intranormalizationFeatures(v1, size(vocabulary, 2));
+    v1_intraL2(i, :)=intranormalizationFeatures(v1(i, :), size(vocabulary, 2));
     time_v1_intraL2(i)=toc(tStart);
     
     tStart=tic;
-    v2_intraL2(i, :)=intranormalizationFeatures(v2, size(vocabulary, 2));
+    v2_intraL2(i, :)=intranormalizationFeatures(v2(i, :), size(vocabulary, 2));
     time_v2_intraL2(i)=toc(tStart);
     
     tStart=tic;
-    v3_intraL2(i, :)=intranormalizationFeatures(v3, size(vocabulary, 2));
+    v3_intraL2(i, :)=intranormalizationFeatures(v3(i, :), size(vocabulary, 2));
     time_v3_intraL2(i)=toc(tStart);
 
        
