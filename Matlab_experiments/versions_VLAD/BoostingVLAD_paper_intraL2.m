@@ -43,12 +43,13 @@ for i=1:K
         
 
           %compute VLAD1 "V"   
-          wordVLAD1{i} = nAssigned * (mean(desc(assigned, :), 1) - vocab(i, :));
- 
+          m_k=mean(desc(assigned, :), 1);
+          wordVLAD1{i} = nAssigned * (m_k - vocab(i, :));
+          
           if nAssigned>1
               
               
-              diff=bsxfun(@minus, desc(assigned, :), mean(desc(assigned, :), 1));
+              diff=bsxfun(@minus, desc(assigned, :), m_k);
               diff2=diff.^2;
 
               %compute VLAD2 "V_c"
