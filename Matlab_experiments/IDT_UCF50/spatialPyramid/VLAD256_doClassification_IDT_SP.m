@@ -33,10 +33,11 @@ end
 %sRow = [1 3];
 %sCol = [1 1];
 
-if strcmp(descParam.IDTfeature,'HOF')
+if strcmp(descParam.IDTfeature,'HOF') || strcmp(descParam.IDTfeature,'HOF_iTraj')
     sizeDesc=108;
     
-elseif  strcmp(descParam.IDTfeature,'HOG') || strcmp(descParam.IDTfeature,'MBHx') || strcmp(descParam.IDTfeature,'MBHy')  
+elseif  strcmp(descParam.IDTfeature,'HOG') || strcmp(descParam.IDTfeature,'MBHx') || strcmp(descParam.IDTfeature,'MBHy') ...
+        || strcmp(descParam.IDTfeature,'HOG_iTraj') || strcmp(descParam.IDTfeature,'MBHx_iTraj') || strcmp(descParam.IDTfeature,'MBHy_iTraj')
     sizeDesc=96;   
 end
 
