@@ -8,4 +8,6 @@ info.vidSize=0;
 info.imSize=0;
 info.mediaName=featurePath;
 
-[desc] = fast_descIDT(featurePath, descParam.IDTfeature);
+[desc, iTraj] = fast_descIDT(featurePath, descParam.IDTfeature);
+
+info.infoTraj=iTraj;
