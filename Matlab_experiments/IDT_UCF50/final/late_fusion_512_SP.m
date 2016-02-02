@@ -9,8 +9,8 @@ videoDesc{4}='/home/ionut/Data/results_desc_IDT/videoRep/SpatialPyramid/FEVid_ID
 
 clusters=256;
 
-comb_vladVectors1=[];
-%comb_vladVectors2=[];
+%comb_vladVectors1=[];
+comb_vladVectors2=[];
 %comb_vladVectors3=[];
 
 for d=1:length(videoDesc)
