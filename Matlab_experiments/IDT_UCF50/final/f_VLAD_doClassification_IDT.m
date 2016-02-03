@@ -90,7 +90,7 @@ vladVectors2= zeros(length(vids), 2*dimVlad);
 vladVectors3= zeros(length(vids), 3*dimVlad);
 
 
-parpool(5);
+parpool(10);
 % Now object visual word frequency histograms
 fprintf('IDT VLAD extraction  for %d vids: ', length(pathFeatures));
 parfor i=1:length(pathFeatures)
