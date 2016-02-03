@@ -9,23 +9,28 @@ videoDesc{2}='/home/ionut/Data/results_desc_IDT/videoRep/SpatialPyramid/FEVid_ID
 videoDesc{3}='/home/ionut/Data/results_desc_IDT/videoRep/SpatialPyramid/FEVid_IDTIDTfeatureMBHx_iTrajMediaTypeIDTNormalisationPNL2alpha1numClusters512pcaDim80sCol1sRow3_VLAD_DV_.mat';
 videoDesc{4}='/home/ionut/Data/results_desc_IDT/videoRep/SpatialPyramid/FEVid_IDTIDTfeatureMBHy_iTrajMediaTypeIDTNormalisationPNL2alpha1numClusters512pcaDim64sCol1sRow3_VLAD_DV_.mat';
 
-clusters=256;
+clusters=512;%!!!!!!!!!!!!!!!!!!!!
 
 %comb_vladVectors1=[];
 comb_vladVectors2=[];
 %comb_vladVectors3=[];
 
+noSP_comb_vladVectors2=[];
+
 for d=1:length(videoDesc)
+    d
     
     load(videoDesc{d});
     
     %intraN_vladVectors1=intranormalizationFeatures(vladVectors1, size(vladVectors1, 2)/clusters);
-    intraN_vladVectors2=intranormalizationFeatures(vladVectors2, size(vladVectors1, 2)/clusters);
+    intraN_vladVectors2=intranormalizationFeatures(vladVectors2, size(vladVectors2, 2)/(clusters*4*2));
     %intraN_vladVectors3=intranormalizationFeatures(vladVectors3, size(vladVectors1, 2)/clusters);
     
     %comb_vladVectors1=cat(2,comb_vladVectors1, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors1, 0.5)) );
     comb_vladVectors2=cat(2,comb_vladVectors2, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors2, 0.5)) );
-    %comb_vladVectors3=cat(2,comb_vladVectors3, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors3, 0.5)) );   
+    %comb_vladVectors3=cat(2,comb_vladVectors3, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors3, 0.5)) );  
+    
+    noSP_comb_vladVectors2=cat(2,noSP_comb_vladVectors2, NormalizeRowsUnit(PowerNormalization(intraN_vladVectors2(:, 1:size(intraN_vladVectors2, 2)/4), 0.5)));
 end
 tstop=toc(tS)
 
@@ -49,9 +54,9 @@ n_comb_vladVectors2=NormalizeRowsUnit(comb_vladVectors2);
 allDist{1}=n_comb_vladVectors2 * n_comb_vladVectors2';
 clear n_comb_vladVectors2
 
-n_comb_vladVectors2_1=NormalizeRowsUnit(comb_vladVectors2(:, 1:size(comb_vladVectors2, 2)/4));
-allDist{2}=n_comb_vladVectors2_1 * n_comb_vladVectors2_1';
-clear n_comb_vladVectors2_1
+noSP_comb_vladVectors2=NormalizeRowsUnit(noSP_comb_vladVectors2);
+allDist{2}=noSP_comb_vladVectors2 * noSP_comb_vladVectors2';
+clear noSP_comb_vladVectors2
 
 
 all_clfsOut=cell(1,nEncoding);
