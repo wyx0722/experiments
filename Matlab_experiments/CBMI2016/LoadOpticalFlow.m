@@ -1,8 +1,8 @@
 function [ opticalFLow ] = LoadOpticalFlow( path )
 
 
-xFlowPath=[path '/flow_x/'];
-yFlowPath=[path '/flow_y/'];
+xFlowPath=[path '/x_flow/'];
+yFlowPath=[path '/y_flow/'];
 
 flowImages=dir([xFlowPath '*.jpg']);
 
