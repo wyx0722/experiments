@@ -77,6 +77,7 @@ switch type
     case 'savedOF'
         [ opticalFLow ] = LoadOpticalFlow( mediaName );
         [desc, info, descParam] = Video2Descriptor(opticalFLow, descParam, pcaMap);
+        info.imSize = info.vidSize; % Hack to make it work. Rename to mediaSize
         %%%%%%%%%%%%%Ionut
         
     otherwise
