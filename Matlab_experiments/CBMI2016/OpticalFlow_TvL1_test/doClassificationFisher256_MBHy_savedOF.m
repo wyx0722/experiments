@@ -5,12 +5,11 @@ DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = @FEVidHOF_savedOpticalFlow;
+descParam.Func = @FEVidMBHy_savedOpticalFlow;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'savedOF';
 descParam.NumOr = 8;
-tvL1
 %descParam.FrameSampleRate = 1;
 %descParam.ColourSpace = colourSpace
 

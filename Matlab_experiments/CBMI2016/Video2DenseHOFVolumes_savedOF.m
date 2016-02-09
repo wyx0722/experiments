@@ -68,7 +68,7 @@ frameBlockCount = 1;
 idxF = 1;
 for i=rangeF
     % Get oriented magnitudes of opticalFlow field for current frame
-    omFrame = VectorField2D2OrientedMagnitude(numOr, double(opticalFlow(rangeR,rangeC,i)));  %ionut
+    omFrame = VectorField2D2OrientedMagnitude(numOr, opticalFlow(rangeR,rangeC,i));  %ionut
     
     % Aggregate responses over rows and columns and frames
     for j=1:size(omFrame,3)
