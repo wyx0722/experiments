@@ -46,7 +46,7 @@ for i=1:length(pathFeatures)
 end
 
 
-    [tDesc] = MediaName2Descriptor(vids{i}, descParam, pcaMap);
+    [tDesc] = MediaName2Descriptor(pathFeatures{1}, descParam, pcaMap);
     tDesc = tDesc'; 
     tFisher=mexFisherAssign(tDesc, gmmModelName)';
     
