@@ -15,7 +15,7 @@ if not os.path.isfile(caffe_root + 'models/VGG_ILSVRC_19/VGG_ILSVRC_19_layers.ca
     print("Download the pre-trained CaffeNet model first!!!!!")
 
 #set caffe to GPU mode, specify also the GPU id
-caffe.set_device(0)
+caffe.set_device(4)
 caffe.set_mode_gpu()
 
 #load the model for the network
@@ -42,8 +42,8 @@ rootPathSave='/home/ionut/asustor_ionut/Data/VGG_19_v-features_rawFrames_UCF50/V
 rootRawFrames='/home/ionut/Data/UCF50_tvL1_OpticalFlow/Videos/' #the root path where the raw frames are saved
 
 #extract features for each video from the list
-for video in range(0,1655):
-    print 'Features extraction for video (range(0,1655))', video+1, ': ', videoList[video] 
+for video in range(4965,len(videoList)):
+    print 'Features extraction for video (range(4965,len(videoList)))', video+1, ': ', videoList[video] 
     
     #for each video save the features layer in a .txt file. Each features layer are saved in a different .txt file, where each line represents the features layer for a frame within the video
     file_fc8=open(rootPathSave + videoList[video] + '/fc8.txt', 'w')
