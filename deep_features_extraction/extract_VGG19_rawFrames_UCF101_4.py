@@ -15,7 +15,7 @@ if not os.path.isfile(caffe_root + 'models/VGG_ILSVRC_19/VGG_ILSVRC_19_layers.ca
     print("Download the pre-trained CaffeNet model first!!!!!")
 
 #set caffe to GPU mode, specify also the GPU id
-caffe.set_device(3)
+caffe.set_device(4)
 caffe.set_mode_gpu()
 
 #load the model for the network
