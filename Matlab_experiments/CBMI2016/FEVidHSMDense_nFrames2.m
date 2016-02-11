@@ -21,7 +21,7 @@ function [desc, info, descParam] = FEVidHSMDense_nFrames2(video, descParam)
 simpleMotion_nF = video(:, :, 1:end-descParam.nFrames+1) - video(:, :, 2:end-descParam.nFrames+2);
 for i=2:descParam.nFrames-1
 
-        simpleMotion_nF = simpleMotion_nF2 + (video(:, :, i:end-(descParam.nFrames-i)) - video(:, :, i+1:end-(descParam.nFrames-i-1)));
+        simpleMotion_nF = simpleMotion_nF + (video(:, :, i:end-(descParam.nFrames-i)) - video(:, :, i+1:end-(descParam.nFrames-i-1)));
 end
 
    
