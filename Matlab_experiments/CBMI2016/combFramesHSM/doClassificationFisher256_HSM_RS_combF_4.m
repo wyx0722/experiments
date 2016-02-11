@@ -45,10 +45,10 @@ fisher2=zeros(length(vids), length(tFisher), 'like', tFisher);
 fisher3=zeros(length(vids), length(tFisher), 'like', tFisher);
 fisher4=zeros(length(vids), length(tFisher), 'like', tFisher);
 
-parpool(5);
+
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(vids));
-parfor i=1:length(vids)
+for i=1:length(vids)
     fprintf('%d \n', i)
     % Extract descriptors
     
@@ -98,7 +98,7 @@ cRange = 100;
 nReps = 1;
 nFolds = 3;
 
-
+parpool(5);
 for k=1:nEncoding
 
 % 
