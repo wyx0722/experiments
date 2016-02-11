@@ -5,11 +5,12 @@ DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = @FEVidMBHy_savedOpticalFlow;
+descParam.Func = @FEVidMBHyDense;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
-descParam.MediaType = 'savedOF';
+descParam.MediaType = 'Vid';
 descParam.NumOr = 8;
+descParam.Normalisation='L2'; %or 'ROOTSIFT'
 %descParam.FrameSampleRate = 1;
 %descParam.ColourSpace = colourSpace
 
@@ -23,30 +24,18 @@ descParam.numClusters = 256;
 descParam
 
 
-%%%%%%%%%%
-bazePathFeatures='/home/ionut/Data/UCF50_tvL1_OpticalFlow/Videos/'; %change
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
-vocabularyImsPaths=cell(size(vocabularyIms));
 
-for i=1:length(vocabularyImsPaths)
-    vocabularyImsPaths{i}=[bazePathFeatures char(vocabularyIms(i))];
-end
-
-[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
+[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyIms, descParam, ...
                                                 descParam.numClusters, descParam.pcaDim);
 
 % Now create set
 [vids, labs, groups] = GetVideosPlusLabels('Full');
 
-pathFeatures=cell(size(vids));
-
-for i=1:length(pathFeatures)
-    pathFeatures{i}=[bazePathFeatures char(vids(i))];
-end
 
 
-    [tDesc] = MediaName2Descriptor(pathFeatures{1}, descParam, pcaMap);
+    [tDesc] = MediaName2Descriptor(vids{1}, descParam, pcaMap);
     tDesc = tDesc'; 
     tFisher=mexFisherAssign(tDesc, gmmModelName)';
     
@@ -57,12 +46,12 @@ fisher4=zeros(length(vids), length(tFisher), 'like', tFisher);
 
 parpool(5);
 % Now object visual word frequency histograms
-fprintf('Descriptor extraction  for %d vids: ', length(pathFeatures));
-parfor i=1:length(pathFeatures)
+fprintf('Descriptor extraction  for %d vids: ', length(vids));
+parfor i=1:length(vids)
     fprintf('%d \n', i)
     % Extract descriptors
     
-    [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
+    [desc, info, descParamUsed] = MediaName2Descriptor(vids{i}, descParam, pcaMap);
     desc = desc';
     
         % Feature vector assignment with spatial pyramid
@@ -82,7 +71,7 @@ parfor i=1:length(pathFeatures)
 end
 fprintf('\nDone!\n');
 
-delete(gcp('nocreate'))
+
 
 
 %% Do classification
@@ -109,7 +98,6 @@ nReps = 1;
 nFolds = 3;
 
 
-parpool(13);
 for k=1:nEncoding
 
 % 
@@ -140,8 +128,8 @@ delete(gcp('nocreate'))
 % v1_meanAcc=mean(mean(cat(2, all_accuracy{1}{:})));
 % v2_meanAcc=mean(mean(cat(2, all_accuracy{2}{:})));
 
-saveName = ['/home/ionut/Data/results/CBMI2015_rezults/' 'clfsOut/' 'savedOF/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
+saveName = ['/home/ionut/Data/results/CBMI2015_rezults/' 'clfsOut/' 'RFvsL2/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
- saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'savedOF/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
+ saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'RFvsL2/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
  save(saveName2, '-v7.3', 'fisherAll');
