@@ -38,7 +38,7 @@ with open('/home/ionut/Data/UCF50_tvL1_OpticalFlow/matlabPathsUCF50.txt') as f:
 f.close()
 
 
-rootPathSave='/home/ionut/asustor_ionut/Data/VGG_19_v-features_rawFrames_UCF50/Videos/' #the root path to save the features
+rootPathSave='/home/ionut/Data/VGG_19_v-features_rawFrames_UCF50/Videos/' #the root path to save the features
 rootRawFrames='/home/ionut/Data/UCF50_tvL1_OpticalFlow/Videos/' #the root path where the raw frames are saved
 
 #extract features for each video from the list
