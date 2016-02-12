@@ -42,7 +42,7 @@ end
 [vids, labs, groups] = GetVideosPlusLabels('Full');
 fullPathVids=cell(size(vids));
 
-for i=1:length(pathFeatures)
+for i=1:length(fullPathVids)
     fullPathVids{i}=sprintf(DATAopts.videoPath, vids{i});
 end
 
