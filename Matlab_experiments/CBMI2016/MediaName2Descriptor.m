@@ -50,9 +50,10 @@ switch type
         [desc, info, descParam] = Image2Descriptor(image, descParam, pcaMap);
     case 'Vid' % Extract from video
         if isfield(descParam, 'ColourSpace')
-            video = VideoRead(mediaName, descParam.ColourSpace);
+            
+            video = i_VideoRead(mediaName, descParam.ColourSpace); %!!!!!ionut 
         else
-            video = VideoRead(mediaName);
+            video = i_VideoRead(mediaName); %!!!!ionut
         end
         [desc, info, descParam] = Video2Descriptor(video, descParam, pcaMap);
         %%%%%%%%%%%Ionut

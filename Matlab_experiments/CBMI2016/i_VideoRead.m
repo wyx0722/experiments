@@ -12,7 +12,7 @@ function video = i_VideoRead(videoName, colourSpace)
 %
 % This function works with http://www.mathworks.co.uk/matlabcentral/fileexchange/8028-mmread
 %
-%           Jasper Uijlings - 2013
+%           
 
 
 if nargin == 1

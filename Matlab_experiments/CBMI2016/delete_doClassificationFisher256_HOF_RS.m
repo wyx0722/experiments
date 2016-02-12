@@ -27,15 +27,28 @@ descParam
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
 
-[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyIms, descParam, ...
+vocabularyImsPaths=cell(size(vocabularyIms));
+
+for i=1:length(vocabularyImsPaths)
+    vocabularyImsPaths{i}=sprintf(DATAopts.videoPath, vocabularyIms{i});
+end
+
+
+
+[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
                                                 descParam.numClusters, descParam.pcaDim);
 
 % Now create set
 [vids, labs, groups] = GetVideosPlusLabels('Full');
+fullPathVids=cell(size(vids));
+
+for i=1:length(pathFeatures)
+    fullPathVids{i}=sprintf(DATAopts.videoPath, vids{i});
+end
 
 
 
-    [tDesc] = MediaName2Descriptor(vids{1}, descParam, pcaMap);
+    [tDesc] = MediaName2Descriptor(fullPathVids{1}, descParam, pcaMap);
     tDesc = tDesc'; 
     tFisher=mexFisherAssign(tDesc, gmmModelName)';
     
@@ -47,12 +60,12 @@ fisher4=zeros(length(vids), length(tFisher), 'like', tFisher);
 parpool(5);
 
 % Now object visual word frequency histograms
-fprintf('Descriptor extraction  for %d vids: ', length(vids));
-parfor i=1:length(vids)
+fprintf('Descriptor extraction  for %d vids: ', length(fullPathVids));
+parfor i=1:length(fullPathVids)
     fprintf('%d \n', i)
     % Extract descriptors
     
-    [desc, info, descParamUsed] = MediaName2Descriptor(vids{i}, descParam, pcaMap);
+    [desc, info, descParamUsed] = MediaName2Descriptor(fullPathVids{i}, descParam, pcaMap);
     desc = desc';
     
         % Feature vector assignment with spatial pyramid
