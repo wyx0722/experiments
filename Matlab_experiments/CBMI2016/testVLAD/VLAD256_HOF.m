@@ -5,7 +5,7 @@ DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = @FEVidHOFDense;
+descParam.Func = @FEVidHofDense;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'Vid';

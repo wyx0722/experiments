@@ -5,7 +5,7 @@ DATAopts.vocabularyPath = DATAopts.vocabularyPath;
 
 % Settings for feature extraction
 clear descParam
-descParam.Func = @FEVidHOGDense;
+descParam.Func = @FEVidHogDense;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'Vid';

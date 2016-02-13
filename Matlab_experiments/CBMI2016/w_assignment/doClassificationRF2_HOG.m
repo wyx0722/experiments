@@ -8,7 +8,7 @@ clear descParam
 
 %descParam.Func = @FEVidHogDense;
 
-descParam.Func = @FEVidHOGDense;
+descParam.Func = @FEVidHogDense;
 
 %descParam.Func = @FEVidMBHxDense;
 %descParam.Func = @FEVidMBHYDense;
