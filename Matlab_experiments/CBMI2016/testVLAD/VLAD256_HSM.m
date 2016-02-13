@@ -1,5 +1,3 @@
-function  [all_accuracy, all_clfsOut]  = VLADFramework(typeFeature, normStrategy, alpha, d, cl, BS, NB)
-
 
 
 global DATAopts;
@@ -7,32 +5,19 @@ DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = typeFeature;
-descParam.Normalisation=normStrategy;
-descParam.alpha=alpha;
-descParam.pcaDim = d;
-descParam.numClusters = cl;
-
-if nargin>5
-  descParam.BlockSize=BS;
-  descParam.NumBlocks=NB;
-else
-    descParam.BlockSize = [8 8 6];
-    descParam.NumBlocks = [3 3 2];
-end
-
-
+descParam.Func = @FEVidHSMDense;
+descParam.BlockSize = [8 8 6];
+descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'Vid';
 descParam.NumOr = 8;
+descParam.Normalisation='ROOTSIFT';
 
-%descParam.FrameSampleRate = 1;
-%descParam.ColourSpace = colourSpace
 
 sRow = [1 3];
 sCol = [1 1];
 
-
-
+descParam.numClusters=256;
+descParam.pcaDim=72;
 
 
 descParam
@@ -53,7 +38,7 @@ end
 [vocabulary, pcaMap] = CreateVocabularyKmeansPca(vocabularyImsPaths, descParam, ...
                                                 descParam.numClusters, descParam.pcaDim); 
                                             
-vocabulary = NormalizeRowsUnit(vocabulary); %make unit length
+%vocabulary = NormalizeRowsUnit(vocabulary); %make unit length
 
 % Now create set
 [vids, labs, groups] = GetVideosPlusLabels('Full');
@@ -74,25 +59,25 @@ vlad2=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 vlad3=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 vlad4=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 
-parpool(5);
+
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(fullPathVids));
-parfor i=1:length(fullPathVids)
-    fprintf('%d \n', i)
+for i=1:length(fullPathVids)
+    fprintf('%d ', i)
     % Extract descriptors
     
     [desc, info, descParamUsed] = MediaName2Descriptor(fullPathVids{i}, descParam, pcaMap);
-    desc = NormalizeRowsUnit(desc);
+    %desc = NormalizeRowsUnit(desc);
     
         % Feature vector assignment with spatial pyramid
     featSpIdx = SpatialPyramidSeparationIdx(info, sRow, sCol)';
     
     
-    vlad1(i, :)=VLAD_1_mean_fast(desc(featSpIdx(1,:), :), vocabulary);
-    vlad2(i, :)=VLAD_1_mean_fast(desc(featSpIdx(2,:), :), vocabulary);
-    vlad3(i, :)=VLAD_1_mean_fast(desc(featSpIdx(3,:), :), vocabulary);
-    vlad4(i, :)=VLAD_1_mean_fast(desc(featSpIdx(4,:), :), vocabulary);
+    vlad1(i, :)=VLAD_1(desc(featSpIdx(1,:), :), vocabulary);
+    vlad2(i, :)=VLAD_1(desc(featSpIdx(2,:), :), vocabulary);
+    vlad3(i, :)=VLAD_1(desc(featSpIdx(3,:), :), vocabulary);
+    vlad4(i, :)=VLAD_1(desc(featSpIdx(4,:), :), vocabulary);
     
         
          if i == 1
@@ -129,7 +114,7 @@ for k=1:nEncoding
 
 % 
 % Leave-one-group-out cross-validation
-parfor i=1:max(groups)
+for i=1:max(groups)
     testI = groups == i;
     trainI = ~testI;
     trainDist = allDist{k}(trainI, trainI);
@@ -148,46 +133,18 @@ all_accuracy{k}=accuracy;
 k
 perGroupAccuracy = mean(cat(2, accuracy{:}))'
 
-end
+mean(perGroupAccuracy)
 
-delete(gcp('nocreate'))
-
-
-
-
-acc=mean(mean(cat(2, all_accuracy{1}{:})))
-
-descType=func2str(descParam.Func);
-try    
-    
-    fileName=['/home/ionut/experiments/Matlab_experiments/CBMI2016/results/norm/results_UCF50_norm__' 'Desc' descType '_norm' descParam.Normalisation 'VLAD.txt'];
-    
-    fileID=fopen(fileName, 'a');
-    
-    fprintf(fileID, '%s norm:%s  alpha: %.2f --> acc: %.3f \r\n', ...
-            descType, descParam.Normalisation, descParam.alpha, acc);
-    
-    fclose(fileID);
-    
-catch err
-    
-    fileName=['/home/ionut/experiments/Matlab_experiments/CBMI2016/results/norm/backup/results_UCF50_norm__' 'Desc' descType '_norm' descParam.Normalisation 'VLAD.txt'];
-    
-    fileID=fopen(fileName, 'a');
-    
-    fprintf(fileID, '%s norm:%s  alpha: %.2f --> acc: %.3f \r\n', ...
-            descType, descParam.Normalisation, descParam.alpha, acc);
-    
-    fclose(fileID);
-    
-    warning('error writing %s. Instead the file%s was saved in: ',err, fileName);
-        
 end
 
 
 
-saveName = ['/home/ionut/Data/results/CBMI2015_rezults/' 'clfsOut/' 'norm/' DescParam2Name(descParam) '_sRow3_VLAD_.mat'];
+
+
+
+
+saveName = [DATAopts.resultsPath DescParam2Name(descParam) 'VLAD.mat'];
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
- saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'norm/' DescParam2Name(descParam) '_sRow3_VLAD_.mat'];
+ saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'wAssig/' DescParam2Name(descParam) '_VLAD_.mat'];
  save(saveName2, '-v7.3', 'VLADAll');
