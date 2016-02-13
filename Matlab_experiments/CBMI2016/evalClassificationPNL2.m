@@ -6,7 +6,7 @@ nEncoding=1;
 
 parpool(5);
 
-for a=p:length(alpha)
+for p=length(alpha)
 
 n_fisherAll=NormalizeRowsUnit(PowerNormalization(fisherAll, alpha(p)));
 allDist{1}=n_fisherAll * n_fisherAll';
