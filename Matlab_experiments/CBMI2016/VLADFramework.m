@@ -13,7 +13,7 @@ descParam.alpha=alpha;
 descParam.pcaDim = d;
 descParam.numClusters = cl;
 
-if nrgin>5
+if nargin>5
   descParam.BlockSize=BS;
   descParam.NumBlocks=NB;
 else
