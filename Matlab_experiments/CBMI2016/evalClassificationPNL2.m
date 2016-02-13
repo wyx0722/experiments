@@ -1,4 +1,4 @@
-function   [] = evalClassificationPNL2()
+
 
 alpha=cat(2, 0.1:0.1:0.4, 0.6:0.1:1)
 
@@ -84,5 +84,3 @@ end
 delete(gcp('nocreate'))
 
 
-
-end
