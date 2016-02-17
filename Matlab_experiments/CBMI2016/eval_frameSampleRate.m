@@ -12,7 +12,7 @@ for i=1:length(fsr)
     switch encodingMethod
         case 'FV'
             encodingMethod
-            FisherFramework(typeFeature, 'ROOTSIFT', 72, 256, fsr(i));
+            FisherFramework(typeFeature, 'ROOTSIFT', 72, 256, fsr(i), 1);
         case 'VLAD'
             
             encodingMethod
