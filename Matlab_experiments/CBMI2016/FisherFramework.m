@@ -1,4 +1,4 @@
-function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrategy, alpha, d, cl, BS, NB)
+function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrategy, d, cl, fsr)
 
 % function doClassificationFisher
 
@@ -9,16 +9,13 @@ DATAopts = UCFInit;
 clear descParam
 descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
-descParam.alpha=alpha;
 descParam.pcaDim = d;
 descParam.numClusters = cl;
-
-if nargin>5
-  descParam.BlockSize=BS;
-  descParam.NumBlocks=NB;
-else
-    descParam.BlockSize = [8 8 6];
-    descParam.NumBlocks = [3 3 2];
+descParam.BlockSize = [8 8 6];
+descParam.NumBlocks = [3 3 2];
+    
+if nargin>4
+descParam.FrameSampleRate = fsr;
 end
 
 
@@ -110,7 +107,7 @@ allDist=cell(1, nEncoding);
 fisherAll=cat(2, fisher1,fisher2, fisher3, fisher4);
 
 
-n_fisherAll=NormalizeRowsUnit(PowerNormalization(fisherAll, 0.5));
+n_fisherAll=NormalizeRowsUnit(PowerNormalization(fisherAll, 0.1));
 allDist{1}=n_fisherAll * n_fisherAll';
 clear n_fisherAll
 
@@ -157,23 +154,23 @@ acc=mean(mean(cat(2, all_accuracy{1}{:})))
 descType=func2str(descParam.Func);
 try    
     
-    fileName=['/home/ionut/experiments/Matlab_experiments/CBMI2016/results/norm/results_UCF50_norm__' 'Desc' descType '_norm' descParam.Normalisation 'Fisher.txt'];
+    fileName=['/home/ionut/experiments/Matlab_experiments/CBMI2016/results/frameSampleRate/results_UCF50_frameSampleRate__' 'Desc' descType '_norm' descParam.Normalisation 'FisherV.txt'];
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, '%s norm:%s  alpha: %.2f --> acc: %.3f \r\n', ...
-            descType, descParam.Normalisation, descParam.alpha, acc);
+    fprintf(fileID, 'FV256 with %s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
+            descType, descParam.Normalisation, descParam.FrameSampleRate, acc);
     
     fclose(fileID);
     
 catch err
     
-    fileName=['/home/ionut/experiments/Matlab_experiments/CBMI2016/results/norm/backup/results_UCF50_norm__' 'Desc' descType '_norm' descParam.Normalisation 'Fisher.txt'];
+    fileName=['/home/ionut/experiments/Matlab_experiments/CBMI2016/results/frameSampleRate/backup/results_UCF50__' 'Desc' descType '_norm' descParam.Normalisation 'FisherV.txt'];
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, '%s norm:%s  alpha: %.2f --> acc: %.3f \r\n', ...
-            descType, descParam.Normalisation, descParam.alpha, acc);
+    fprintf(fileID, '%s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize = [8 8 6], NumBlocks = [3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
+            descType, descParam.Normalisation, descParam.FrameSampleRate, acc);
     
     fclose(fileID);
     
@@ -182,9 +179,8 @@ catch err
 end
 
 
-
-saveName = ['/home/ionut/Data/results/CBMI2015_rezults/' 'clfsOut/' 'norm/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
+saveName = ['/home/ionut/Data/results/CBMI2015_rezults/' 'clfsOut/' 'frameSampleRate/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
- saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'norm/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
+ saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'frameSampleRate/' DescParam2Name(descParam) '_sRow3_Fisher_.mat'];
  save(saveName2, '-v7.3', 'fisherAll');
