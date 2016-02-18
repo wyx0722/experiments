@@ -1,4 +1,4 @@
-basedir = '/data/ionut/Matlab/';% % CHANGE!
+basedir = '/data/ionut/EUSIPCO2015/Matlab/';% % CHANGE!
 
 addpath([basedir 'BagOfWords']);
 addpath([basedir 'Misc']);
