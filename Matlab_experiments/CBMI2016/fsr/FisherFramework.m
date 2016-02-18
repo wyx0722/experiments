@@ -20,6 +20,8 @@ end
 
 if prop==1
   descParam.nDescV=floor(1000000/descParam.FrameSampleRate);
+else
+    descParam.nDescV=1000000;
 end
 
 descParam.MediaType = 'Vid';
