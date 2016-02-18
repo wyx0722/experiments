@@ -1,4 +1,4 @@
-function  [all_accuracy, all_clfsOut]  = VLADFramework(typeFeature, normStrategy, d, cl, fsr)
+function  [all_accuracy, all_clfsOut]  = VLADFramework(typeFeature, normStrategy, d, cl, fsr, prop)
 
 
 
@@ -17,6 +17,11 @@ descParam.NumBlocks = [3 3 2];
 if nargin>4
 descParam.FrameSampleRate = fsr;
 end
+
+if prop==1
+  descParam.nDescV=floor(1000000/descParam.FrameSampleRate);
+end
+
 
 
 descParam.MediaType = 'Vid';
@@ -48,7 +53,7 @@ end
 
                                             
 [vocabulary, pcaMap] = CreateVocabularyKmeansPca(vocabularyImsPaths, descParam, ...
-                                                descParam.numClusters, descParam.pcaDim); 
+                                                descParam.numClusters, descParam.pcaDim, descParam.nDescV, 1); 
                                             
 vocabulary = NormalizeRowsUnit(vocabulary); %make unit length
 

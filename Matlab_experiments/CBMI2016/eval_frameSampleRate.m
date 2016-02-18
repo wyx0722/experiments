@@ -16,7 +16,7 @@ for i=1:length(fsr)
         case 'VLAD'
             
             encodingMethod
-            VLADFramework(typeFeature, 'ROOTSIFT', 72, 512, fsr(i));
+            VLADFramework(typeFeature, 'ROOTSIFT', 72, 512, fsr(i), 1);
             
         otherwise
             warning('Unexpected parameter. Should be VLAD or FV');
