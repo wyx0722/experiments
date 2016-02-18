@@ -17,7 +17,7 @@
 %         simpleMotion_nF2 = simpleMotion_nF2 + (video(:, :, i:end-(descParam.nFrames-i)) - video(:, :, i+1:end-(descParam.nFrames-i-1)));
 % end
 
-sm=video2;
+sm=sm_sfr6;
 for i=1:size(sm, 3)
     i
     if i==1
@@ -25,9 +25,9 @@ for i=1:size(sm, 3)
     else
         imshow(sm(:, :, i));
     end
-    %pause(0.03);
-    pause('on');
-    pause;
+    pause(0.5);
+    %pause('on');
+    %pause;
 end
 % 
 % 
