@@ -1,86 +1,86 @@
-% function doClassificationFisher
-
-global DATAopts;
-DATAopts = UCFInit;
-
-% Parameter settings for descriptor extraction
-clear descParam
-descParam.Func = @FEVidHSMDense;
-descParam.BlockSize = [8 8 6];
-descParam.NumBlocks = [3 3 2];
-descParam.MediaType = 'Vid';
-descParam.NumOr = 8;
-descParam.Normalisation='ROOTSIFT';
-%descParam.FrameSampleRate = 1;
-%descParam.ColourSpace = colourSpace
-descParam.Pooling='maxTempPool';
-
-sRow = [1 3];
-sCol = [1 1];
-
-
-descParam.pcaDim = 72;
-descParam.numClusters = 256;
-
-descParam
-
-
-
-vocabularyIms = GetVideosPlusLabels('smallEnd');
-
-[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyIms, descParam, ...
-                                                descParam.numClusters, descParam.pcaDim);
-
-% Now create set
-[vids, labs, groups] = GetVideosPlusLabels('Full');
-
-
-
-    [tDesc] = MediaName2Descriptor(vids{1}, descParam, pcaMap);
-    tDesc = tDesc'; 
-    tFisher=mexFisherAssign(tDesc, gmmModelName)';
-    
-fisher1=zeros(length(vids), length(tFisher), 'like', tFisher);
-fisher2=zeros(length(vids), length(tFisher), 'like', tFisher);
-fisher3=zeros(length(vids), length(tFisher), 'like', tFisher);
-fisher4=zeros(length(vids), length(tFisher), 'like', tFisher);
-
-
-% Now object visual word frequency histograms
-fprintf('Descriptor extraction  for %d vids: ', length(vids));
-for i=1:length(vids)
-    fprintf('%d ', i)
-    % Extract descriptors
-    
-    [desc, info, descParamUsed] = MediaName2Descriptor(vids{i}, descParam, pcaMap);
-    desc = desc';
-    
-        % Feature vector assignment with spatial pyramid
-    featSpIdx = SpatialPyramidSeparationIdx(info, sRow, sCol)';
-    fisherVT = cell(1,size(featSpIdx,1));
-    
-    fisher1(i, :)=mexFisherAssign(desc(:,featSpIdx(1,:)), gmmModelName)';
-    fisher2(i, :)=mexFisherAssign(desc(:,featSpIdx(2,:)), gmmModelName)';
-    fisher3(i, :)=mexFisherAssign(desc(:,featSpIdx(3,:)), gmmModelName)';
-    fisher4(i, :)=mexFisherAssign(desc(:,featSpIdx(4,:)), gmmModelName)';
-    
-        
-         if i == 1
-             descParamUsed
-         end
-         
-end
-fprintf('\nDone!\n');
-
-
-
-
-%% Do classification
-
-nEncoding=2;
-allDist=cell(1, nEncoding);
-
-fisherAll=cat(2, fisher1,fisher2, fisher3, fisher4);
+% % function doClassificationFisher
+% 
+% global DATAopts;
+% DATAopts = UCFInit;
+% 
+% % Parameter settings for descriptor extraction
+% clear descParam
+% descParam.Func = @FEVidHSMDense;
+% descParam.BlockSize = [8 8 6];
+% descParam.NumBlocks = [3 3 2];
+% descParam.MediaType = 'Vid';
+% descParam.NumOr = 8;
+% descParam.Normalisation='ROOTSIFT';
+% %descParam.FrameSampleRate = 1;
+% %descParam.ColourSpace = colourSpace
+% descParam.Pooling='maxTempPool';
+% 
+% sRow = [1 3];
+% sCol = [1 1];
+% 
+% 
+% descParam.pcaDim = 72;
+% descParam.numClusters = 256;
+% 
+% descParam
+% 
+% 
+% 
+% vocabularyIms = GetVideosPlusLabels('smallEnd');
+% 
+% [gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyIms, descParam, ...
+%                                                 descParam.numClusters, descParam.pcaDim);
+% 
+% % Now create set
+% [vids, labs, groups] = GetVideosPlusLabels('Full');
+% 
+% 
+% 
+%     [tDesc] = MediaName2Descriptor(vids{1}, descParam, pcaMap);
+%     tDesc = tDesc'; 
+%     tFisher=mexFisherAssign(tDesc, gmmModelName)';
+%     
+% fisher1=zeros(length(vids), length(tFisher), 'like', tFisher);
+% fisher2=zeros(length(vids), length(tFisher), 'like', tFisher);
+% fisher3=zeros(length(vids), length(tFisher), 'like', tFisher);
+% fisher4=zeros(length(vids), length(tFisher), 'like', tFisher);
+% 
+% 
+% % Now object visual word frequency histograms
+% fprintf('Descriptor extraction  for %d vids: ', length(vids));
+% for i=1:length(vids)
+%     fprintf('%d ', i)
+%     % Extract descriptors
+%     
+%     [desc, info, descParamUsed] = MediaName2Descriptor(vids{i}, descParam, pcaMap);
+%     desc = desc';
+%     
+%         % Feature vector assignment with spatial pyramid
+%     featSpIdx = SpatialPyramidSeparationIdx(info, sRow, sCol)';
+%     fisherVT = cell(1,size(featSpIdx,1));
+%     
+%     fisher1(i, :)=mexFisherAssign(desc(:,featSpIdx(1,:)), gmmModelName)';
+%     fisher2(i, :)=mexFisherAssign(desc(:,featSpIdx(2,:)), gmmModelName)';
+%     fisher3(i, :)=mexFisherAssign(desc(:,featSpIdx(3,:)), gmmModelName)';
+%     fisher4(i, :)=mexFisherAssign(desc(:,featSpIdx(4,:)), gmmModelName)';
+%     
+%         
+%          if i == 1
+%              descParamUsed
+%          end
+%          
+% end
+% fprintf('\nDone!\n');
+% 
+% 
+% 
+% 
+% %% Do classification
+% 
+% nEncoding=2;
+% allDist=cell(1, nEncoding);
+% 
+% fisherAll=cat(2, fisher1,fisher2, fisher3, fisher4);
 
 
 n_fisherAll=NormalizeRowsUnit(PowerNormalization(fisherAll, 0.5));
