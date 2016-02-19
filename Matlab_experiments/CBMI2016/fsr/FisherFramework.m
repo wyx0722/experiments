@@ -1,4 +1,4 @@
-function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrategy, d, cl, fsr, prop)
+function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrategy, d, cl, fsr)
 
 % function doClassificationFisher
 
@@ -11,17 +11,15 @@ descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
 descParam.pcaDim = d;
 descParam.numClusters = cl;
-descParam.BlockSize = [8 8 6/fsr];
+
 descParam.NumBlocks = [3 3 2];
 
 if nargin>4
 descParam.FrameSampleRate = fsr;
-end
+descParam.BlockSize = [8 8 6/fsr];
 
-if prop==1
-  descParam.nDescV=floor(1000000/descParam.FrameSampleRate);
 else
-    descParam.nDescV=1000000;
+    descParam.BlockSize = [8 8 6];
 end
 
 descParam.MediaType = 'Vid';
@@ -52,7 +50,7 @@ end
 
 
 [gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
-                                                descParam.numClusters, descParam.pcaDim, descParam.nDescV, 1);
+                                                descParam.numClusters, descParam.pcaDim);
 
 % Now create set
 [vids, labs, groups] = GetVideosPlusLabels('Full');

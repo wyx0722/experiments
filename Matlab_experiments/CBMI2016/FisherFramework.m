@@ -1,4 +1,4 @@
-function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrategy, d, cl, fsr, prop)
+function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrategy, d, cl, fsr)
 
 % function doClassificationFisher
 
@@ -11,15 +11,15 @@ descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
 descParam.pcaDim = d;
 descParam.numClusters = cl;
-descParam.BlockSize = [8 8 6];
+
 descParam.NumBlocks = [3 3 2];
 
 if nargin>4
 descParam.FrameSampleRate = fsr;
-end
+descParam.BlockSize = [8 8 6/fsr];
 
-if prop==1
-  descParam.nDescV=floor(1000000/descParam.FrameSampleRate);
+else
+    descParam.BlockSize = [8 8 6];
 end
 
 descParam.MediaType = 'Vid';
@@ -50,7 +50,7 @@ end
 
 
 [gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
-                                                descParam.numClusters, descParam.pcaDim, descParam.nDescV, 1);
+                                                descParam.numClusters, descParam.pcaDim);
 
 % Now create set
 [vids, labs, groups] = GetVideosPlusLabels('Full');
@@ -161,7 +161,7 @@ try
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, 'FV256 with %s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
+    fprintf(fileID, 'FV256 with %s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
             descType, descParam.Normalisation, descParam.FrameSampleRate, acc);
     
     fclose(fileID);
@@ -172,7 +172,7 @@ catch err
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, '%s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize = [8 8 6], NumBlocks = [3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
+    fprintf(fileID, '%s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize = [8 8 6_Div_fsr], NumBlocks = [3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
             descType, descParam.Normalisation, descParam.FrameSampleRate, acc);
     
     fclose(fileID);

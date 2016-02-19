@@ -1,4 +1,4 @@
-function  [all_accuracy, all_clfsOut]  = VLADFramework(typeFeature, normStrategy, d, cl, fsr, prop)
+function  [all_accuracy, all_clfsOut]  = VLADFramework(typeFeature, normStrategy, d, cl, fsr)
 
 
 
@@ -11,15 +11,14 @@ descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
 descParam.pcaDim = d;
 descParam.numClusters = cl;
-descParam.BlockSize = [8 8 6];
+
 descParam.NumBlocks = [3 3 2];
 
 if nargin>4
 descParam.FrameSampleRate = fsr;
-end
-
-if prop==1
-  descParam.nDescV=floor(1000000/descParam.FrameSampleRate);
+descParam.BlockSize = [8 8 6/fsr];
+else
+    descParam.BlockSize = [8 8 6];
 end
 
 
@@ -53,7 +52,7 @@ end
 
                                             
 [vocabulary, pcaMap] = CreateVocabularyKmeansPca(vocabularyImsPaths, descParam, ...
-                                                descParam.numClusters, descParam.pcaDim, descParam.nDescV, 1); 
+                                                descParam.numClusters, descParam.pcaDim); 
                                             
 vocabulary = NormalizeRowsUnit(vocabulary); %make unit length
 
@@ -166,7 +165,7 @@ try
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, 'VLAD512 with %s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
+    fprintf(fileID, 'VLAD512 with %s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
             descType, descParam.Normalisation, descParam.FrameSampleRate, acc);
     
     fclose(fileID);
@@ -177,7 +176,7 @@ catch err
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, '%s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize = [8 8 6], NumBlocks = [3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
+    fprintf(fileID, '%s norm:%s and PNL2 before SVM  alpha:0.1; BlockSize = [8 8 6_Div_fsr], NumBlocks = [3 3 2]  --- Frame Sample Rate: %d --> acc: %.3f \r\n', ...
             descType, descParam.Normalisation, descParam.FrameSampleRate, acc);
     
     fclose(fileID);
