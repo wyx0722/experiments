@@ -1,7 +1,7 @@
 function [ ] = eval_frameSampleRate( typeFeature, encodingMethod )
 
 
-fsr=[2 3 6];
+fsr=[1];
 
 for i=1:length(fsr)
     encodingMethod
