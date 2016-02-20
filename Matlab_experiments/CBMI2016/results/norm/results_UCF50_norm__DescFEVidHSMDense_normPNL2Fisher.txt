@@ -1,0 +1,4 @@
+FEVidHSMDense norm:PNL2  alpha: 0.10 --> acc: 0.792 
+FEVidHSMDense norm:PNL2  alpha: 0.20 --> acc: 0.806 
+FEVidHSMDense norm:PNL2  alpha: 0.30 --> acc: 0.813 
+FEVidHSMDense norm:PNL2  alpha: 0.40 --> acc: 0.812 

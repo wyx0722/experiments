@@ -1,0 +1,5 @@
+FEVidHogDense norm:PNL2  alpha: 0.10 --> acc: 0.741 
+FEVidHogDense norm:PNL2  alpha: 0.20 --> acc: 0.754 
+FEVidHogDense norm:PNL2  alpha: 0.30 --> acc: 0.754 
+FEVidHogDense norm:PNL2  alpha: 0.40 --> acc: 0.757 
+FEVidHogDense norm:PNL2  alpha: 0.50 --> acc: 0.759 

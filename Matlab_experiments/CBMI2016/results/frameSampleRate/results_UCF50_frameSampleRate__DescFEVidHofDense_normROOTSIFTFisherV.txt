@@ -1,0 +1,10 @@
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 2 --> acc: 0.821 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 3 --> acc: 0.020 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 4 --> acc: 0.020 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 2 --> acc: 0.821 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 3 --> acc: 0.020 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 4 --> acc: 0.020 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6], NumBlocks=[3 3 2]  --- Frame Sample Rate: 5 --> acc: 0.020 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 2 --> acc: 0.820 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 3 --> acc: 0.817 
+FV256 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 6 --> acc: 0.799 
