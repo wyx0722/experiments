@@ -11,13 +11,13 @@ descParam.FlowMethod = 'Horn-Schunck'; % Horn-Schunk optical opticalFlow
 %%Load video
 tStart_loadVideo=tic;
 video = i_VideoRead(videoName);
-tElapsed_loadVideo=toc(tStart_loadVideo);
+tElapsed_loadVideo=toc(tStart_loadVideo)
 
 
 %compute optical flow
 tStart_OF=tic;
 opticalFlow = Video2OpticalFlow(video, descParam.FlowMethod);
-tElapsed_OF=toc(tStart_OF);
+tElapsed_OF=toc(tStart_OF)
 
 %extract hog
 tStart_hog=tic;
@@ -25,7 +25,7 @@ tStart_hog=tic;
                                      descParam.BlockSize, ...
                                      descParam.NumBlocks, ...
                                      descParam.NumOr);
- tElapsed_hog=toc(tStart_hog);
+ tElapsed_hog=toc(tStart_hog)
  
 %extract hsm
 tStart_hsm=tic;                                
@@ -34,7 +34,7 @@ simpleMotion=video(:, :, 1:end-1)-video(:, :, 2:end);
                                      descParam.BlockSize, ...
                                      descParam.NumBlocks, ...
                                      descParam.NumOr);                                 
-tElapsed_hsm=toc(tStart_hsm);                               
+tElapsed_hsm=toc(tStart_hsm)                              
 
 
 %extract hof
@@ -43,7 +43,7 @@ tStart_hof=tic;
                                      descParam.BlockSize, ...
                                      descParam.NumBlocks, ...
                                      descParam.NumOr);
- tElapsed_hof=toc(tStart_hof);
+ tElapsed_hof=toc(tStart_hof)
  
  
 %extract mbhx
@@ -53,7 +53,7 @@ xOpticalFlow=real(opticalFlow);
                                      descParam.BlockSize, ...
                                      descParam.NumBlocks, ...
                                      descParam.NumOr); 
- tElapsed_mbhx=toc(tStart_mbhx);                                
+ tElapsed_mbhx=toc(tStart_mbhx)                                
                                  
 %extract mbhy                                 
 tStart_mbhy=tic;                                
@@ -62,6 +62,6 @@ yOpticalFlow=imag(opticalFlow);
                                      descParam.BlockSize, ...
                                      descParam.NumBlocks, ...
                                      descParam.NumOr); 
-tElapsed_mbhy=toc(tStart_mbhy);
+tElapsed_mbhy=toc(tStart_mbhy)
                                  
-tElapsed_all=toc(tStart_all);                                 
+tElapsed_all=toc(tStart_all)                                
