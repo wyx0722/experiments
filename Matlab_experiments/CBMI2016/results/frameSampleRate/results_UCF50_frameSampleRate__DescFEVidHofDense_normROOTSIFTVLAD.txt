@@ -6,3 +6,4 @@ VLAD512 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSi
 VLAD512 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 2 --> acc: 0.817 
 VLAD512 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 3 --> acc: 0.805 
 VLAD512 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 6 --> acc: 0.784 
+VLAD512 with FEVidHofDense norm:ROOTSIFT and PNL2 before SVM  alpha:0.1; BlockSize=[8 8 6_Div_fsr], NumBlocks=[3 3 2]  --- Frame Sample Rate: 1 --> acc: 0.820 
