@@ -5,7 +5,7 @@ function [ all_clfsOut,  all_accuracy] = evalClassificationPNL2VLAD( file, alpha
 
 
 pathF='/home/ionut/Data/results/CBMI2015_rezults/videoRep/';
-VLADAll=load([pathF file]);
+load([pathF file]);
 
 pathC='/home/ionut/Data/results/CBMI2015_rezults/clfsOut/';
 load([pathC file]);
