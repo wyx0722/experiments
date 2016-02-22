@@ -32,7 +32,7 @@ fprintf('%d ', i);
 
 %%Load video
 tStart_loadVideo=tic;
-video = i_VideoRead(videoName);
+video = i_VideoRead(videosList{i});
 tElapsed_loadVideo(i)=toc(tStart_loadVideo);
 
 nrFrames(i)=size(video, 3);
