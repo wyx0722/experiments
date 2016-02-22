@@ -1,6 +1,12 @@
 
 
-tStart_all=tic;
+videosList = textread('video-list.txt', '%s', 'delimiter', '\n');
+
+for i=1:length(videosList)
+    videosList{i}=['/home/ionut/Data/UCF50/Videos/' videosList{i} '.avi'];
+end
+
+
 
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
@@ -9,6 +15,17 @@ descParam.NumOr = 8;
 descParam.FlowMethod = 'Horn-Schunck'; % Horn-Schunk optical opticalFlow
 
 
+
+tElapsed_loadVideo=zeros(1,length(videosList));
+tElapsed_OF=zeros(1,length(videosList));
+tElapsed_hog=zeros(1,length(videosList));
+tElapsed_hsm=zeros(1,length(videosList));
+tElapsed_hof=zeros(1,length(videosList));
+tElapsed_mbhx=zeros(1,length(videosList));
+tElapsed_mbhy=zeros(1,length(videosList));
+for i=1:length(videosList)
+
+tStart_all=tic;
 %%Load video
 tStart_loadVideo=tic;
 video = i_VideoRead(videoName);
@@ -64,5 +81,7 @@ yOpticalFlow=imag(opticalFlow);
                                      descParam.NumBlocks, ...
                                      descParam.NumOr); 
 tElapsed_mbhy=toc(tStart_mbhy)
+
+end
                                  
 tElapsed_all=toc(tStart_all)                                
