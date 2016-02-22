@@ -33,17 +33,17 @@ transformer.set_channel_swap('data', (2,1,0))  # the reference model has channel
 net.blobs['data'].reshape(1,3,224,224)
 
 #create a list with all the vidos from the dataset
-with open('/home/ionut/Data/UCF-101/listAllVideos2.txt') as f:
+with open('/home/ionut/Data/HMDB51/listVideos.txt') as f:
     videoList = f.read().splitlines()
 f.close()
 
 
-rootPathSave='/home/ionut/Data/VGG_19_features_rawFrames_UCF101/Videos/' #the root path to save the features
-rootRawFrames='/home/ionut/Data/UCF101_tvL1_OpticalFlow/Videos/' #the root path where the raw frames are saved
+rootPathSave='/home/ionut/asustor_ionut_2/ionut/Data/hmdb51_VGG_19_features_rawFrames/Videos/' #the root path to save the features
+rootRawFrames='/home/ionut/Data/HMDB51_tvL1_OpticalFlow/Videos/' #the root path where the raw frames are saved
 
 #extract features for each video from the list
-for video in range(0,3330):
-    print 'Features extraction for video (range(0,3330))', video+1, ': ', videoList[video] 
+for video in range(0,2):
+    print 'Features extraction for video (range(0,2))', video+1, ': ', videoList[video] 
     
     #for each video save the features layer in a .txt file. Each features layer are saved in a different .txt file, where each line represents the features layer for a frame within the video
     file_fc8=open(rootPathSave + videoList[video] + '/fc8.txt', 'w')
