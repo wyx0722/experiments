@@ -84,39 +84,39 @@ for video in range(0,2):
           				net.forward()
 
           				#extract fc8 features from the network and save them in a .txt file
-              		feat_fc8 = net.blobs['fc8'].data[0]
-              		np.savetxt(file_fc8, feat_fc8, fmt='%s', newline=' ', delimiter=',')
-              		file_fc8.write('\n')
+		              		feat_fc8 = net.blobs['fc8'].data[0]
+		              		np.savetxt(file_fc8, feat_fc8, fmt='%s', newline=' ', delimiter=',')
+		              		file_fc8.write('\n')
 
-                  #extract fc7 features from the network and save them in a .txt file
-              		feat_fc7 = net.blobs['fc7'].data[0]
-              		np.savetxt(file_fc7, feat_fc7, fmt='%s', newline=' ', delimiter=',')
-              		file_fc7.write('\n')
+		                  	#extract fc7 features from the network and save them in a .txt file
+		              		feat_fc7 = net.blobs['fc7'].data[0]
+		              		np.savetxt(file_fc7, feat_fc7, fmt='%s', newline=' ', delimiter=',')
+		              		file_fc7.write('\n')
 
-                  #extract fc6 features from the network and save them in a .txt file
-              		feat_fc6 = net.blobs['fc6'].data[0]
-              		np.savetxt(file_fc6, feat_fc6, fmt='%s', newline=' ', delimiter=',')
-              		file_fc6.write('\n')
+		                  	#extract fc6 features from the network and save them in a .txt file
+		              		feat_fc6 = net.blobs['fc6'].data[0]
+		              		np.savetxt(file_fc6, feat_fc6, fmt='%s', newline=' ', delimiter=',')
+		              		file_fc6.write('\n')
 
-                  #extract conv5_3 features from the network and save them in a .txt file
-              		feat_conv5_3 = net.blobs['conv5_3'].data[0]
-              		feat_conv5_3.tofile(file_conv5_3, sep=" ", format="%s")
-              		file_conv5_3.write('\n')
+		                  	#extract conv5_3 features from the network and save them in a .txt file
+		              		feat_conv5_3 = net.blobs['conv5_3'].data[0]
+		              		feat_conv5_3.tofile(file_conv5_3, sep=" ", format="%s")
+		              		file_conv5_3.write('\n')
 					
-                  #extract conv4_3 features from the network and save them in a .txt file
-              		feat_conv5_1 = net.blobs['conv5_1'].data[0]
-              		feat_conv5_1.tofile(file_conv5_1, sep=" ", format="%s")
-              		file_conv5_1.write('\n')
+		                  	#extract conv4_3 features from the network and save them in a .txt file
+		              		feat_conv5_1 = net.blobs['conv5_1'].data[0]
+		              		feat_conv5_1.tofile(file_conv5_1, sep=" ", format="%s")
+		              		file_conv5_1.write('\n')
 
-                  #extract pool5 features from the network and save them in a .txt file
-                  feat_pool5 = net.blobs['pool5'].data[0]
-                  feat_pool5.tofile(file_pool5, sep=" ", format="%s")
-                  file_pool5.write('\n')
+					#extract pool5 features from the network and save them in a .txt file
+					feat_pool5 = net.blobs['pool5'].data[0]
+					feat_pool5.tofile(file_pool5, sep=" ", format="%s")
+					file_pool5.write('\n')
 
-                  #extract pool4 features from the network and save them in a .txt file
-                  feat_pool4 = net.blobs['pool4'].data[0]
-                  feat_pool4.tofile(file_pool4, sep=" ", format="%s")
-                  file_pool4.write('\n')			
+					#extract pool4 features from the network and save them in a .txt file
+					feat_pool4 = net.blobs['pool4'].data[0]
+					feat_pool4.tofile(file_pool4, sep=" ", format="%s")
+					file_pool4.write('\n')			
 
           		else:
           			x_temp=misc.imread(rootRawFrames + videoList[video] + '/x_flow/' + file)
@@ -132,40 +132,40 @@ for video in range(0,2):
           			net.blobs['data'].data[0]=arrayStackFrames - mean_flow
           			net.forward()
 
-    				    #extract fc8 features from the network and save them in a .txt file
-                feat_fc8 = net.blobs['fc8'].data[0]
-                np.savetxt(file_fc8, feat_fc8, fmt='%s', newline=' ', delimiter=',')
-                file_fc8.write('\n')
-
-                #extract fc7 features from the network and save them in a .txt file
-                feat_fc7 = net.blobs['fc7'].data[0]
-                np.savetxt(file_fc7, feat_fc7, fmt='%s', newline=' ', delimiter=',')
-                file_fc7.write('\n')
-
-                #extract fc6 features from the network and save them in a .txt file
-                feat_fc6 = net.blobs['fc6'].data[0]
-                np.savetxt(file_fc6, feat_fc6, fmt='%s', newline=' ', delimiter=',')
-                file_fc6.write('\n')
-
-                #extract conv5_3 features from the network and save them in a .txt file
-                feat_conv5_3 = net.blobs['conv5_3'].data[0]
-                feat_conv5_3.tofile(file_conv5_3, sep=" ", format="%s")
-                file_conv5_3.write('\n')
-        
-                #extract conv4_3 features from the network and save them in a .txt file
-                feat_conv5_1 = net.blobs['conv5_1'].data[0]
-                feat_conv5_1.tofile(file_conv5_1, sep=" ", format="%s")
-                file_conv5_1.write('\n')
-
-                #extract pool5 features from the network and save them in a .txt file
-                feat_pool5 = net.blobs['pool5'].data[0]
-                feat_pool5.tofile(file_pool5, sep=" ", format="%s")
-                file_pool5.write('\n')
-
-                #extract pool4 features from the network and save them in a .txt file
-                feat_pool4 = net.blobs['pool4'].data[0]
-                feat_pool4.tofile(file_pool4, sep=" ", format="%s")
-                file_pool4.write('\n')
+				#extract fc8 features from the network and save them in a .txt file
+		                feat_fc8 = net.blobs['fc8'].data[0]
+		                np.savetxt(file_fc8, feat_fc8, fmt='%s', newline=' ', delimiter=',')
+		                file_fc8.write('\n')
+		
+		                #extract fc7 features from the network and save them in a .txt file
+		                feat_fc7 = net.blobs['fc7'].data[0]
+		                np.savetxt(file_fc7, feat_fc7, fmt='%s', newline=' ', delimiter=',')
+		                file_fc7.write('\n')
+		
+		                #extract fc6 features from the network and save them in a .txt file
+		                feat_fc6 = net.blobs['fc6'].data[0]
+		                np.savetxt(file_fc6, feat_fc6, fmt='%s', newline=' ', delimiter=',')
+		                file_fc6.write('\n')
+		
+		                #extract conv5_3 features from the network and save them in a .txt file
+		                feat_conv5_3 = net.blobs['conv5_3'].data[0]
+		                feat_conv5_3.tofile(file_conv5_3, sep=" ", format="%s")
+		                file_conv5_3.write('\n')
+		        
+		                #extract conv4_3 features from the network and save them in a .txt file
+		                feat_conv5_1 = net.blobs['conv5_1'].data[0]
+		                feat_conv5_1.tofile(file_conv5_1, sep=" ", format="%s")
+		                file_conv5_1.write('\n')
+		
+		                #extract pool5 features from the network and save them in a .txt file
+		                feat_pool5 = net.blobs['pool5'].data[0]
+		                feat_pool5.tofile(file_pool5, sep=" ", format="%s")
+		                file_pool5.write('\n')
+		
+		                #extract pool4 features from the network and save them in a .txt file
+		                feat_pool4 = net.blobs['pool4'].data[0]
+		                feat_pool4.tofile(file_pool4, sep=" ", format="%s")
+		                file_pool4.write('\n')
 
 	#close all the opened files
 	file_fc8.close()
@@ -175,7 +175,7 @@ for video in range(0,2):
 	file_conv5_1.close()
 	#file_conv4_3.close()
 	file_pool5.close()
-  file_pool4.close()
+  	file_pool4.close()
 
 
 
