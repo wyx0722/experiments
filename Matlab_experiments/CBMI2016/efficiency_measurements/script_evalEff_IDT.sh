@@ -1,3 +1,9 @@
+#!/bin/bash
+echo "Hi, $USER!"
+echo "The script starts now"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+i="1"
+
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/UCF50/Videos/BaseballPitch/v_BaseballPitch_g03_c02.avi | gzip > /home/ionut/IDT_code/improved_trajectory_release/del_out.features.gz 
 echo "video from list: $((i++))" 
