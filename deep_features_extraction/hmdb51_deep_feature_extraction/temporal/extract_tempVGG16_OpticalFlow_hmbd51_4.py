@@ -22,7 +22,7 @@ if not os.path.isfile(caffe_root + 'models/action_recognition/cuhk_action_tempor
 
 #caffe.set_mode_cpu()
 
-caffe.set_device(0)
+caffe.set_device(4)
 caffe.set_mode_gpu()
 
 net = caffe.Net(caffe_root + 'models/action_recognition/cuhk_action_temporal_vgg_16_flow_deploy.prototxt',
@@ -49,8 +49,8 @@ mean_flow=128
 
 arrayStackFrames=np.zeros((2*stackFrames, sizeImputNet, sizeImputNet))
 #extract features for each video from the list
-for video in range(0,1700):
-	print 'Features extraction for video (range(0,1700))', video+1,':  ', videoList[video]
+for video in range(5100,len(videoList)):
+	print 'Features extraction for video (range( 5100, len(videoList)))', video+1,':  ', videoList[video]
 
 	#for each video save the features layer in a .txt file. Each features layer are saved in a different .txt file, where each line represents the features layer for a frame within the video
 	file_fc8=open(rootPathSave + videoList[video] + '/fc8.txt', 'w')
