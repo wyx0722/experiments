@@ -2,7 +2,7 @@ videosList = textread('/Users/Ionut/Disk_E/experiments/Matlab_experiments/video-
 
 
 fileID=fopen('script_evalEff_IDT.sh', 'w');
-string1='echo "variable inc: $((i++))" \r\n';
+string1='echo "video from list: $((i++))" \r\n';
 
 for i=1:length(videosList)
     
