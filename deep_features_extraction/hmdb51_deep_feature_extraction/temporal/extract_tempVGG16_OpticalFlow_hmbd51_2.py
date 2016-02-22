@@ -22,7 +22,7 @@ if not os.path.isfile(caffe_root + 'models/action_recognition/cuhk_action_tempor
 
 #caffe.set_mode_cpu()
 
-caffe.set_device(1)
+caffe.set_device(2)
 caffe.set_mode_gpu()
 
 net = caffe.Net(caffe_root + 'models/action_recognition/cuhk_action_temporal_vgg_16_flow_deploy.prototxt',
