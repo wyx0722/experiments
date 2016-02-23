@@ -16,7 +16,7 @@ if not os.path.isfile(caffe_root + 'models/action_recognition/cuhk_action_spatia
     print("Download the pre-trained CaffeNet model first!!!!!")
 
 #set caffe to GPU mode, specify also the GPU id
-caffe.set_device(2)
+caffe.set_device(3)
 caffe.set_mode_gpu()
 
 #load the model for the network
