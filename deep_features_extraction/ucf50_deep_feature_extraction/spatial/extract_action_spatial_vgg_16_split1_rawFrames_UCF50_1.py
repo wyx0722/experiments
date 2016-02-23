@@ -73,7 +73,7 @@ for video in range(0,2):
                 net.forward() # forward pass for the frame to get the features
 
                 #extract fc8 features from the network and save them in a .txt file
-                feat_fc8 = net.blobs['fc8'].data[0]
+                feat_fc8 = net.blobs['fc8-1'].data[0]
                 np.savetxt(file_fc8, feat_fc8, fmt='%s', newline=' ', delimiter=',')
                 file_fc8.write('\n')
 
