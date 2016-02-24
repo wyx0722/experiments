@@ -67,6 +67,7 @@ for i=1:length(videosList)
                                              descParam.NumOr);                                 
         tElapsed_hsm(i)=toc(tStart_hsm);
         
+        hsm_info.imSize = hsm_info.vidSize; 
         original_hsm_desc=hsm_desc;
         
         %apply PCA
