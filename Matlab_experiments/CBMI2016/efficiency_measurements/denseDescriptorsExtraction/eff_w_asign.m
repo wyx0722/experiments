@@ -1,4 +1,8 @@
 
+global DATAopts;
+DATAopts = UCFInit;
+
+
 load('/home/ionut/halley_ionut/Data/UCF50/VisualVocabulary/KmeansFEVidHSMDenseBlockSize8_8_6_MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8Pca72Clusters4096.mat');
 vocab_optKmeans4096=vocabulary;
 
@@ -23,7 +27,7 @@ for i=1:length(videosList)
 end
 
 
-
+descParam.Func = @FEVidHSMDense;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'Vid';
@@ -32,8 +36,17 @@ descParam.FlowMethod = 'Horn-Schunck'; % Horn-Schunk optical opticalFlow
 sRow = [1 3];
 sCol = [1 1];
 
-nrFrames=zeros(1,length(videosList));
-tElapsed_loadVideo=zeros(1,length(videosList));
+
+
+
+
+
+
+
+
+
+
+
 tElapsed_hsm=zeros(1,length(videosList));
 tElapsed_unitL=zeros(1,length(videosList));
 tElapsed_OptKmenas=zeros(1,length(videosList));
@@ -45,35 +58,24 @@ tElapsed_VLAD512_s=zeros(1,length(videosList));
 tElapsed_VLAD512_ms=zeros(1,length(videosList));
 tElapsed_VLAD512_mf=zeros(1,length(videosList));
 tElapsed_VLAD512_dj=zeros(1,length(videosList));
-tElapsed_pca=zeros(1,length(videosList));
+%tElapsed_pca=zeros(1,length(videosList));
 
 for i=1:length(videosList)
 
         fprintf('%d ', i);
 
-        %%Load video
-        tStart_loadVideo=tic;
-        video = i_VideoRead(videosList{i});
-        tElapsed_loadVideo(i)=toc(tStart_loadVideo);
-
-        nrFrames(i)=size(video, 3);
-        
         %extract hsm
         tStart_hsm=tic;                                
-        %simpleMotion=video(:, :, 1:end-1)-video(:, :, 2:end);
-        [hsm_desc, hsm_info] = Video2DenseHOGVolumes((video(:, :, 1:end-1)-video(:, :, 2:end)), ...
-                                             descParam.BlockSize, ...
-                                             descParam.NumBlocks, ...
-                                             descParam.NumOr);                                 
+        [hsm_desc, hsm_info, descParamUsed] = MediaName2Descriptor(videosList{i}, descParam, pcaMap);                                      
         tElapsed_hsm(i)=toc(tStart_hsm);
         
-        hsm_info.imSize = hsm_info.vidSize; 
-        original_hsm_desc=hsm_desc;
         
-        %apply PCA
-        tStart_pca=tic;
-        hsm_desc=hsm_desc * pcaMap.data.rot;
-        tElapsed_pca(i)=toc(tStart_pca);
+ 
+        
+%         %apply PCA
+%         tStart_pca=tic;
+%         hsm_desc=hsm_desc * pcaMap.data.rot;
+%         tElapsed_pca(i)=toc(tStart_pca);
 
         %make unit length
         tStart_unitL=tic;
