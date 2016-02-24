@@ -111,7 +111,7 @@ for i=1:length(videosList)
         tStart_RF=tic;
         for spI=1:size(featSpIdx,2)
             for j=1:nTrees
-                rez_RF = mexTreeAssign(t_hsm_desc(:,spIdx(:,spI)), maps{j}, boundaries{j});
+                rez_RF = mexTreeAssign(t_hsm_desc(:,featSpIdx(:,spI)), maps{j}, boundaries{j});
             end
         end
         tElapsed_RF(i)=toc(tStart_RF);
