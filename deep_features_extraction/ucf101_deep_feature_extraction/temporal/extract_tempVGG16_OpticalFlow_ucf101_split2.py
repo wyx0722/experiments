@@ -49,7 +49,7 @@ mean_flow=128
 
 arrayStackFrames=np.zeros((2*stackFrames, sizeImputNet, sizeImputNet))
 #extract features for each video from the list
-for video in range(0,len(videoList)):
+for video in range(380,len(videoList)):
 	print ' <Split2> Features extraction for video (range(0,len(videoList)))', video+1,':  ', videoList[video]
 
 	#for each video save the features layer in a .txt file. Each features layer are saved in a different .txt file, where each line represents the features layer for a frame within the video
