@@ -35,7 +35,7 @@ vocabularyIms = GetVideosPlusLabels('smallEnd');
 vocabularyImsPaths=cell(size(vocabularyIms));
 
 for i=1:length(vocabularyImsPaths)
-    vocabularyImsPaths{i}=sprintf(bazePathFeatures, vocabularyIms{i});
+    vocabularyImsPaths{i}=[bazePathFeatures char(vocabularyIms(i))];
 end
 
 
@@ -48,7 +48,7 @@ end
 fullPathVids=cell(size(vids));
 
 for i=1:length(fullPathVids)
-    fullPathVids{i}=sprintf(bazePathFeatures, vids{i});
+    fullPathVids{i}=[bazePathFeatures char(vids(i))];
 end
 
 
