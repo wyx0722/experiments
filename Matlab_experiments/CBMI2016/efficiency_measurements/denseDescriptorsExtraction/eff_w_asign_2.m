@@ -135,7 +135,7 @@ for i=1:length(videosList)
         
         
         t_featSpIdx=featSpIdx';
-        
+        t_hsm_desc = hsm_desc'; % We need transposed descriptors
         %fast Random Forest
         tStart_fastRF=tic;
         for j=1:nTrees
