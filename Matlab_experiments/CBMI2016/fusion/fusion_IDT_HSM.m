@@ -1,15 +1,15 @@
 [vids, labs, groups] = GetVideosPlusLabels('Full');
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDTFEVid_IDTIDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54_Fisher_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/IDTFEVid_IDTIDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54_Fisher_.mat');
 idt_HOF=fisherV;
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/FEVid_IDTIDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/FEVid_IDTIDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
 idt_HOG=fisherV;
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/FEVid_IDTIDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/FEVid_IDTIDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
 idt_MBHx=fisherV;
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/FEVid_IDTIDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/FEVid_IDTIDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
 idt_MBHy=fisherV;
 
 
