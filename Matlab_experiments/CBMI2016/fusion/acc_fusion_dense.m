@@ -34,7 +34,7 @@ clear ul_all5dense
 
 
 ul_hof_hog_mbhxy=NormalizeRowsUnit(cat(2,hof_fisher01, hog_fisher01, mbhx_fisher01, mbhy_fisher01));
-allDist{2}=ul_all_IDT_hsm * ul_all_IDT_hsm';
+allDist{2}=ul_hof_hog_mbhxy * ul_hof_hog_mbhxy';
 clear ul_all_IDT_hsm
 
 

@@ -2,17 +2,17 @@
 
 %for real-time with VLAD
 %HSM: (1, 6)
-%HOF: (2, 3)
+%HOF: (3, 2)
 %HOG: (1, 6)
-%MBHx: (2, 3)
-%MBHy: (2, 3)
+%MBHx: (3, 2)
+%MBHy: (3, 2)
 
 
 load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidHSMDenseBlockSize8_8_1_FrameSampleRate6MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
 hsm_VLAD01=NormalizeRowsUnit(PowerNormalization(VLADAll, 0.1));
 hsm_VLAD01_noSP=NormalizeRowsUnit(PowerNormalization(VLADAll(:, 1:size(VLADAll, 2)/4), 0.1));
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidHofDenseBlockSize8_8_2_FrameSampleRate3MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidHofDenseBlockSize8_8_3_FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
 hof_VLAD01=NormalizeRowsUnit(PowerNormalization(VLADAll, 0.1));
 hof_VLAD01_noSP=NormalizeRowsUnit(PowerNormalization(VLADAll(:, 1:size(VLADAll, 2)/4), 0.1));
 
@@ -20,11 +20,11 @@ load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidHo
 hog_VLAD01=NormalizeRowsUnit(PowerNormalization(VLADAll, 0.1));
 hog_VLAD01_noSP=NormalizeRowsUnit(PowerNormalization(VLADAll(:, 1:size(VLADAll, 2)/4), 0.1));
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidMBHxDenseBlockSize8_8_2_FrameSampleRate3MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidMBHxDenseBlockSize8_8_3_FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
 mbhx_VLAD01=NormalizeRowsUnit(PowerNormalization(VLADAll, 0.1));
 mbhx_VLAD01_noSP=NormalizeRowsUnit(PowerNormalization(VLADAll(:, 1:size(VLADAll, 2)/4), 0.1));
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidMBHyDenseBlockSize8_8_2_FrameSampleRate3MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/frameSampleRate/FEVidMBHyDenseBlockSize8_8_3_FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters512pcaDim72_sRow3_VLAD_.mat');
 mbhy_VLAD01=NormalizeRowsUnit(PowerNormalization(VLADAll, 0.1));
 mbhy_VLAD01_noSP=NormalizeRowsUnit(PowerNormalization(VLADAll(:, 1:size(VLADAll, 2)/4), 0.1));
 
