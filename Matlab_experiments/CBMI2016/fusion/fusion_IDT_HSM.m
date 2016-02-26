@@ -1,6 +1,6 @@
 [vids, labs, groups] = GetVideosPlusLabels('Full');
 
-load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/IDTFEVid_IDTIDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54_Fisher_.mat');
+load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/FEVid_IDTIDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54_Fisher_.mat');
 idt_HOF=fisherV;
 
 load('/home/ionut/Data/results/CBMI2015_rezults/videoRep/IDT/FEVid_IDTIDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_Fisher_.mat');
