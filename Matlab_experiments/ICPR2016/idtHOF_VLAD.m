@@ -6,9 +6,8 @@ DATAopts = UCFInit;
 clear descParam
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG';
+descParam.IDTfeature='HOF';
 descParam.Normalisation='ROOTSIFT';
-
 
 descParam.numClusters = 512;
 

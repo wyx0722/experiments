@@ -1,42 +1,23 @@
 
-
-
-
 global DATAopts;
 DATAopts = UCFInit;
 
 % Parameter settings for descriptor extraction
 clear descParam
-descParam.Func = @FEVidHogDense;
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+descParam.net='spatialVGG19';
 descParam.Normalisation='ROOTSIFT';
 
-descParam.pcaDim = 72;
 descParam.numClusters = 512;
 
-descParam.NumBlocks = [3 3 2];
-
-%descParam.FrameSampleRate = fsr;
-
-descParam.BlockSize = [8 8 6];
-
-
-
-
-descParam.MediaType = 'Vid';
-descParam.NumOr = 8;
-
-%descParam.FrameSampleRate = 1;
-%descParam.ColourSpace = colourSpace
-
-%sRow = [1 3];
-%sCol = [1 1];
-
-
-
-
+descParam.pcaDim = 256;
 
 descParam
 
+%%%%%%%%%%
+bazePathFeatures='/home/ionut/halley_ionut/Data/VGG_19_v-features_rawFrames_UCF50/Videos/'; %change
 
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
@@ -44,50 +25,49 @@ vocabularyIms = GetVideosPlusLabels('smallEnd');
 vocabularyImsPaths=cell(size(vocabularyIms));
 
 for i=1:length(vocabularyImsPaths)
-    vocabularyImsPaths{i}=sprintf(DATAopts.videoPath, vocabularyIms{i});
+    vocabularyImsPaths{i}=[bazePathFeatures char(vocabularyIms(i)) '/pool5.txt'];
 end
-
 
 
                                             
 [vocabulary, pcaMap] = CreateVocabularyKmeansPca(vocabularyImsPaths, descParam, ...
                                                 descParam.numClusters, descParam.pcaDim); 
                                             
-vocabulary = NormalizeRowsUnit(vocabulary); %make unit length
+%vocabulary = NormalizeRowsUnit(vocabulary); %make unit length
 
 % Now create set
 [vids, labs, groups] = GetVideosPlusLabels('Full');
-fullPathVids=cell(size(vids));
+pathFeatures=cell(size(vids));
 
-for i=1:length(fullPathVids)
-    fullPathVids{i}=sprintf(DATAopts.videoPath, vids{i});
+for i=1:length(pathFeatures)
+    pathFeatures{i}=[bazePathFeatures char(vids(i)) '/pool5.txt'];
 end
 
 
 
-    [tDesc] = MediaName2Descriptor(fullPathVids{1}, descParam, pcaMap);
-    tDesc=NormalizeRowsUnit(tDesc);
-    tVLAD=VLAD_1_mean_fast(tDesc, vocabulary);
+    [tDesc] = MediaName2Descriptor(pathFeatures{1}, descParam, pcaMap);
+    %tDesc=NormalizeRowsUnit(tDesc);
+    tVLAD=VLAD_1_mean(tDesc, vocabulary);
     
 vlad1=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 vlad2=zeros(length(vids), length(tVLAD), 'like', tVLAD);
-vlad3=zeros(length(vids), length(tVLAD), 'like', tVLAD);
-vlad4=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 
-parpool(5);
+
+parpool(9);
 
 % Now object visual word frequency histograms
-fprintf('Descriptor extraction  for %d vids: ', length(fullPathVids));
-parfor i=1:length(fullPathVids)
+fprintf('Descriptor extraction  for %d vids: ', length(pathFeatures));
+parfor i=1:length(pathFeatures)
     fprintf('%d \n', i)
     % Extract descriptors
     
-    [desc, info, descParamUsed] = MediaName2Descriptor(fullPathVids{i}, descParam, pcaMap);
+    [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
    % desc = NormalizeRowsUnit(desc);
    
     
     
     vlad1(i, :)=VLAD_1_mean(desc, vocabulary);
+    vlad2(i, :)=comb_percentage_minVocab_VLAD_1(desc, vocabulary, 1/2)
 
     
         
@@ -103,15 +83,17 @@ fprintf('\nDone!\n');
 
 %% Do classification
 
-nEncoding=1;
+nEncoding=2;
 allDist=cell(1, nEncoding);
 
-VLADAll=cat(2, vlad1,vlad2, vlad3, vlad4);
+n_vlad1=NormalizeRowsUnit(PowerNormalization(vlad1, 0.5));
+allDist{1}=n_vlad1 * n_vlad1';
+clear n_vlad1
 
+n_vlad2=NormalizeRowsUnit(PowerNormalization(vlad2, 0.5));
+allDist{2}=n_vlad2 * n_vlad2';
+clear n_vlad2
 
-n_VLADAll=NormalizeRowsUnit(PowerNormalization(VLADAll, 0.1));
-allDist{1}=n_VLADAll * n_VLADAll';
-clear n_VLADAll
 
 all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
@@ -151,12 +133,12 @@ delete(gcp('nocreate'))
 
 
 
-acc=mean(mean(cat(2, all_accuracy{1}{:})))
+mean(mean(cat(2, all_accuracy{1}{:})))
+mean(mean(cat(2, all_accuracy{2}{:})))
 
 
-
-saveName = ['/home/ionut/Data/results/CBMI2015_rezults/' 'clfsOut/' 'frameSampleRate/' DescParam2Name(descParam) '_sRow3_VLAD_.mat'];
+saveName = ['/home/ionut/Data/results/ICPR2016_rezults/' 'clfsOut/'  DescParam2Name(descParam) '_sRow3_VLAD_.mat'];
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
- saveName2 = ['/home/ionut/Data/results/CBMI2015_rezults/' 'videoRep/' 'frameSampleRate/' DescParam2Name(descParam) '_sRow3_VLAD_.mat'];
- save(saveName2, '-v7.3', 'VLADAll');
+ saveName2 = ['/home/ionut/Data/results/ICPR2016_rezults/' 'videoRep/' DescParam2Name(descParam) '_sRow3_VLAD_.mat'];
+ save(saveName2, '-v7.3', 'n_vlad1', 'n_vlad2');
