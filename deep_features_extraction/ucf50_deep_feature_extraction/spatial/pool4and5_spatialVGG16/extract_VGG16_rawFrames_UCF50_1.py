@@ -97,8 +97,8 @@ for video in range(0,1655):
         feat_pool4.tofile(file_pool4, sep=" ", format="%s")
         file_pool4.write('\n')
 
-'''
 
+    '''
     #close all the opened files
     file_fc8.close()
     file_fc7.close()
@@ -106,6 +106,6 @@ for video in range(0,1655):
     file_conv5_4.close()
     file_conv5_1.close()
     #file_conv4_3.close()
-'''
+    '''
     file_pool5.close()
     file_pool4.close()
