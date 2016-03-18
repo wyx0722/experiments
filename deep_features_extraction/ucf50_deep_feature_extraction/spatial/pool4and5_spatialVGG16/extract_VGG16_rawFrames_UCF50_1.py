@@ -60,7 +60,7 @@ for video in range(0,1655):
           if file.endswith(".jpg"):
                 net.blobs['data'].data[...] = transformer.preprocess('data', caffe.io.load_image(rootRawFrames + videoList[video] + '/frames/' + file )) # apply the preprocessing operations for each frame
                 net.forward() # forward pass for the frame to get the features
-'''
+                '''
                 #extract fc8 features from the network and save them in a .txt file
                 feat_fc8 = net.blobs['fc8'].data[0]
                 np.savetxt(file_fc8, feat_fc8, fmt='%s', newline=' ', delimiter=',')
@@ -85,7 +85,8 @@ for video in range(0,1655):
                 feat_conv5_1 = net.blobs['conv5_1'].data[0]
                 feat_conv5_1.tofile(file_conv5_1, sep=" ", format="%s")
                 file_conv5_1.write('\n')
-'''
+                '''
+
                 #extract pool5 features from the network and save them in a .txt file
                 feat_pool5 = net.blobs['pool5'].data[0]
                 feat_pool5.tofile(file_pool5, sep=" ", format="%s")
