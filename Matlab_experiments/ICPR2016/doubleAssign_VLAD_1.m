@@ -1,4 +1,4 @@
-function VLAD=VLAD_1_mean(desc, vocab)
+function VLAD=doubleAssign_VLAD_1(desc, vocab, percent)
 %VLAD=VLAD(desc, vocab)
 %Compute VLAD encoding for a set of descriptors (VLAD_1 is because is assigned only one cluster for each descriptor)
 
@@ -23,29 +23,37 @@ K=size(vocab, 1);  % the size of the vocabulary
 distance=distmj(desc, vocab);
 [~, assign]=min(distance, [], 2);
 
+[~, vocab_assign]=sort(distance, 1, 'ascend');
+
+
 %Calculate VLAD for each word of the vocabulary
 wordVLAD=cell(1, K);
 
 
 for i=1:K
-    
     assigned=(assign==i); % get the descriptors assigned to the cluster i;
     nAssigned=sum(assigned);
     if nAssigned>0 % compute VLAD for each visual word (cluster) that has at least one descriptor assigned
-        
+      minVocab=ceil(nAssigned * percent);
         %compute the difference between descriptors and visual word (cluster)
-        diff=bsxfun(@minus, desc(assigned, :), vocab(i, :));
+        tempDesc=zeros(nAssigned+minVocab, dimDesc);
+        tempDesc(1:nAssigned, :)=desc(assigned, :);
+        tempDesc(nAssigned+1:end, :)=desc(vocab_assign(1:minVocab, i), :);
+        
+        diff=bsxfun(@minus, tempDesc, vocab(i, :));
         
         
         %Calculate the sum over these differences
-        wordVLAD{i}=(1.0/nAssigned)*sum(diff, 1);
         %wordVLAD{i}=mean(diff, 1);
+        wordVLAD{i}=(1.0/(nAssigned+minVocab))*sum(diff, 1); %this can be faster then mean(diff, 1);
         
+                
     else
         % no desccriptor in the cluser then put zeros
         wordVLAD{i}=zeros(1, dimDesc);      
     end 
         
+       
         
 end
 
