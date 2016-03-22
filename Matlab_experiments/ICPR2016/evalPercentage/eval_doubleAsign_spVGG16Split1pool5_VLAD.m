@@ -189,7 +189,7 @@ end
 delete(gcp('nocreate'))
 
 
-fileName=fprintf('/home/ionut/experiments/Matlab_experiments/ICPR2016/results/evalDoubleAssign/results_UCF50_evalDoubleAssign_Features%s_Layer%s_Network%s_Clusters%d_PCAdim%d_norm%s__VLAD.txt', descParam.MediaType,descParam.Layer, descParam.net,descParam.numClusters,descParam.pcaDim, descParam.Normalisation); 
+fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ICPR2016/results/evalDoubleAssign/results_UCF50_evalDoubleAssign_Features%s_Layer%s_Network%s_Clusters%d_PCAdim%d_norm%s__VLAD.txt', descParam.MediaType,descParam.Layer, descParam.net,descParam.numClusters,descParam.pcaDim, descParam.Normalisation); 
 fileID=fopen(fileName, 'a');
     
 p=0:0.1:1;
