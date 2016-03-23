@@ -16,7 +16,7 @@ function [ featuresVideo, spInfo ] = maps2features( pathFeaturesVideo, layer )
 spInfo=[];
 switch layer
     
-     case 'conv5_3' || 'conv5_4' ||'conv5_1' ||'pool4'
+     case 'conv5_3' | 'conv5_4' |'conv5_1'
          %tic
         
         dimConvMap=14*14;
@@ -42,6 +42,34 @@ switch layer
         end
        % toc
        
+       %%%%%%%%%%%%%%%%%%%%%delete!!!
+      case 'pool4'
+         %tic
+        
+        dimConvMap=14*14;
+        channels=512;
+        dimFeatures=dimConvMap * channels;
+        fileID=fopen(pathFeaturesVideo); %open the file
+        [featMaps, count]=fscanf(fileID, '%f', [dimFeatures inf]); %read the opened file with the format coresponding to the layer
+        featMaps=featMaps';
+        nFeatursMaps=size(featMaps,1);
+        if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
+            fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
+        end      
+        fclose(fileID);
+        %toc
+        
+
+        
+        %tic
+        featuresVideo=zeros(dimConvMap * nFeatursMaps, channels);
+        step=nFeatursMaps;
+        for i=1:dimConvMap
+            featuresVideo(i*step-step+1:i*step,:)=featMaps(:, i:dimConvMap:end);
+        end
+       % toc
+ %%%%%%%%%%%%%%
+ 
    case 'conv5_3_withSpInfo' | 'conv5_4_withSpInfo'
         
         rows=14;
