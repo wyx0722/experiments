@@ -12,6 +12,7 @@ descParam.numClusters = 256;
 descParam.pcaDim = 256;
 descParam.Dataset='HMBD51Split1';
 descParam.DoubleAssign=int8(1);
+descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels();
 
@@ -69,8 +70,8 @@ end
 [tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
 tVLAD=doubleAssign_VLAD_1(tDesc, vocabulary, 1);
 
-vlad1=zeros(length(vids), length(tVLAD), 'like', tVLAD);
-vlad2=zeros(length(vids), length(tVLAD), 'like', tVLAD);
+vlad1=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
+vlad2=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
 parpool(24);
