@@ -3,15 +3,11 @@ DATAopts = HMDB51Init;
 
 % Parameter settings for descriptor extraction
 clear descParam
-
-
-descParam.Func = @FEVidHogDense;
-descParam.BlockSize = [8 8 6];
-descParam.NumBlocks = [3 3 2];
-descParam.MediaType = 'Vid';
-descParam.NumOr = 8;
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool4';
+descParam.net='tempSplit1VGG16';
 descParam.Normalisation='ROOTSIFT';
-
 descParam.numClusters = 256;
 descParam.pcaDim = 256;
 descParam.Dataset='HMBD51Split1';
@@ -20,16 +16,22 @@ descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels();
 
-for i=1:length(allVids)
-    allVids{i}=[DATAopts.videoPath allVids{i}];
+%the baze path for features
+bazePathFeatures='/home/ionut/halley_ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'; %change
+
+%create the full path of the fetures for each video
+allPathFeatures=cell(size(allVids));
+for i=1:size(allVids, 1)
+    allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/pool4.txt'];
 end
+
 
 %get the data for a specific split
 switch descParam.Dataset
     
     case 'HMBD51Split1'
         
-        trainTestSetPathFeatures=allVids(splits(:, 1)==1 | splits(:, 1)==2);%get all the paths for the current split
+        trainTestSetPathFeatures=allPathFeatures(splits(:, 1)==1 | splits(:, 1)==2);%get all the paths for the current split
         trainTestSetlabs=labs((splits(:, 1)==1 | splits(:, 1)==2), :); %get all the labels for the current split
         trainTestSplit=splits((splits(:, 1)==1 | splits(:, 1)==2), 1); %get the devision of date between training and testing set for the current split. Exclude the videos not included in the split (0 value)
         
@@ -38,7 +40,7 @@ switch descParam.Dataset
         
     case 'HMBD51Split2'
      
-        trainTestSetPathFeatures=allVids(splits(:, 2)==1 | splits(:, 2)==2);
+        trainTestSetPathFeatures=allPathFeatures(splits(:, 2)==1 | splits(:, 2)==2);
         trainTestSetlabs=labs((splits(:, 2)==1 | splits(:, 2)==2), :);
         trainTestSplit=splits((splits(:, 2)==1 | splits(:, 2)==2), 2);
         
@@ -47,7 +49,7 @@ switch descParam.Dataset
         
     case 'HMBD51Split3'
         
-        trainTestSetPathFeatures=allVids(splits(:, 3)==1 | splits(:, 3)==2);
+        trainTestSetPathFeatures=allPathFeatures(splits(:, 3)==1 | splits(:, 3)==2);
         trainTestSetlabs=labs((splits(:, 3)==1 | splits(:, 3)==2), :);
         trainTestSplit=splits((splits(:, 3)==1 | splits(:, 3)==2), 3);
         

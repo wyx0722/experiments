@@ -5,13 +5,14 @@ DATAopts = HMDB51Init;
 clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
-descParam.Layer='pool5';
+descParam.Layer='pool4';
 descParam.net='SpSplit1VGG16';
 descParam.Normalisation='ROOTSIFT';
 descParam.numClusters = 256;
 descParam.pcaDim = 256;
 descParam.Dataset='HMBD51Split1';
-descParam.DoubleAssign=int8(1);
+descParam.DoubleAssign=int8(1); %!!!!!!!!!!
+descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels();
 
@@ -21,7 +22,7 @@ bazePathFeatures='/home/ionut/halley_ionut/Data/hmdb51_action_spatial_vgg_16_spl
 %create the full path of the fetures for each video
 allPathFeatures=cell(size(allVids));
 for i=1:size(allVids, 1)
-    allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/pool5.txt'];
+    allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/pool4.txt'];
 end
 
 
@@ -69,24 +70,25 @@ end
 [tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
 tVLAD=doubleAssign_VLAD_1(tDesc, vocabulary, 1);
 
-vlad1=zeros(length(vids), length(tVLAD), 'like', tVLAD);
-vlad2=zeros(length(vids), length(tVLAD), 'like', tVLAD);
+vlad1=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
+vlad2=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
-parpool(nPar);
+parpool(24);
 parfor i=1:length(trainTestSetPathFeatures)
     fprintf('%d \n', i)
     
     [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
     
-    vlad1(i,:)=VLAD_1_mean(tDesc, vocabulary);
-    vlad2(i,:)=doubleAssign_VLAD_1(desc, vocabulary, descParam.DoubleAssign);
+    vlad1(i,:)=VLAD_1_mean(desc, vocabulary);
+    vlad2(i,:)=doubleAssign_VLAD_1(desc, vocabulary, 1); %!!!!!!!!
    
         
      if i == 1
          descParamUsed
      end
 end
+delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 %% Do classification
@@ -110,7 +112,9 @@ cRange = 100;
 nReps = 1;
 nFolds = 3;
 
-for k=1:nEncoding
+parpool(nEncoding);
+parfor k=1:nEncoding
+    k
     trainI=trainTestSplit==1;
     testI=~trainI;
     
@@ -119,11 +123,15 @@ for k=1:nEncoding
     trainLabs = trainTestSetlabs(trainI,:);
     testLabs = trainTestSetlabs(testI, :);
     
-    [~, clfsOut{i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-    accuracy{i} = ClassificationAccuracy(clfsOut{i}, testLabs);
-    fprintf('%d: accuracy: %.3f\n', i, mean(accuracy{i}));
+    [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+    accuracy = ClassificationAccuracy(clfsOut, testLabs);
+    fprintf('accuracy: %.3f\n', accuracy);
     
+    all_clfsOut{k}=clfsOut;
+    all_accuracy{k}=accuracy;
 end
 
+delete(gcp('nocreate'))
 
-
+all_accuracy{1}
+all_accuracy{2}
