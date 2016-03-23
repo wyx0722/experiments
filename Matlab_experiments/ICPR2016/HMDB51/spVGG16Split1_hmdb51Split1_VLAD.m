@@ -81,7 +81,7 @@ parfor i=1:length(trainTestSetPathFeatures)
     [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
     
     vlad1(i,:)=VLAD_1_mean(desc, vocabulary);
-    vlad2(i,:)=doubleAssign_VLAD_1(desc, vocabulary, descParam.DoubleAssign);
+    vlad2(i,:)=doubleAssign_VLAD_1(desc, vocabulary, 1); %!!!!!!!!
    
         
      if i == 1
