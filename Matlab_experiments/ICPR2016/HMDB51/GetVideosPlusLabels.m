@@ -19,7 +19,7 @@ allGroups = cell(DATAopts.nclasses,1);
 allLabs = cell(DATAopts.nclasses,1);
 for cI=theClasses
     % Get videos and splits through predefined splits
-    splitName = [DATAopts.datadir 'Splits/' DATAopts.classes{cI} '_test_split%d.txt'];
+    splitName = [DATAopts.datadir 'testTrainMulti_7030_splits/' DATAopts.classes{cI} '_test_split%d.txt'];
 
     ff = fopen(sprintf(splitName, 1));
     data = textscan(ff, '%s%d');
