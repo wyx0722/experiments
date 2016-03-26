@@ -7,7 +7,7 @@ layer='pool5';
 nCl=256;
 pcaD=256;
 nPar=8;
-norm='ROOTSIFT';
+norm='None';
 alpha=1;
 for i=1:length(normFM)
     i
