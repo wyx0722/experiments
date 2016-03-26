@@ -16,7 +16,7 @@ function [ featuresVideo, spInfo ] = maps2features( pathFeaturesVideo, layer )
 spInfo=[];
 switch layer
     
-     case 'conv5_3' | 'conv5_4' |'conv5_1'
+     case 'conv5_3' %| 'conv5_4' |'conv5_1'
          %tic
         
         dimConvMap=14*14;
