@@ -74,7 +74,7 @@ parfor i=1:length(pathFeatures)
    % desc = NormalizeRowsUnit(desc);
    
     
-    [idx] = SpatialPyramid_RowsMaps(info.spinfo, descParam.sRow)
+    [idx] = SpatialPyramid_RowsMaps(info.spinfo, sRow)
     
     
     
