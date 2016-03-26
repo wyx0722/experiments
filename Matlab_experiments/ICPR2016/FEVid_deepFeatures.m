@@ -8,5 +8,9 @@ info.vidSize=0;
 info.imSize=0;
 info.mediaName=featurePath;
 
-[desc, spInfo] = maps2features(featurePath, descParam.Layer);
+if ~isfield(descParam, 'NormFeatureMaps')
+    descParam.NormFeatureMaps='None';
+end
+
+[desc, spInfo] = maps2features(featurePath, descParam.Layer, descParam.NormFeatureMaps);
 info.spinfo=spInfo;

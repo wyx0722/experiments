@@ -1,4 +1,4 @@
-function [  ] = iter_normEval( bPathFeatures, network, norm, alpha )
+function [  ] = iter_normEval( bPathFeatures, network, normFM )
 
 
 func=@FEVid_deepFeatures;
@@ -6,11 +6,12 @@ mediaType='DeepF';
 layer='pool5';
 nCl=256;
 pcaD=256;
-nPar=10;
-
-for i=1:length(norm)
+nPar=8;
+norm='ROOTSIFT';
+alpha=1;
+for i=1:length(normFM)
     i
-    normEval_VLAD(func, mediaType, layer, network, norm{i}, alpha(i), nCl, pcaD, bPathFeatures, nPar)
+    normEval_VLAD(func, mediaType, layer, network, norm, alpha, nCl, pcaD, bPathFeatures, normFM{i}, nPar)
 
 end
 

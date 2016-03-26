@@ -1,4 +1,4 @@
-function [all_accuracy, all_clfsOut]=normEval_VLAD(func, mediaType, layer, network, norm, alpha, nCl, pcaD, bPathFeatures, nPar)
+function [all_accuracy, all_clfsOut]=normEval_VLAD(func, mediaType, layer, network, norm, alpha, nCl, pcaD, bPathFeatures,normFM, nPar)
 
 global DATAopts;
 DATAopts = UCFInit;
@@ -11,7 +11,7 @@ descParam.Layer=layer;
 descParam.net=network;
 descParam.Normalisation=norm;
 descParam.alpha=alpha;
-
+descParam.NormFeatureMaps=normFM;
 descParam.numClusters = nCl;
 
 descParam.pcaDim = pcaD;
@@ -141,7 +141,7 @@ fileID=fopen(fileName, 'a');
 acc1=mean(mean(cat(2, all_accuracy{1}{:})))
 acc2=mean(mean(cat(2, all_accuracy{2}{:})))
 acc3=mean(mean(cat(2, all_accuracy{3}{:})))
-fprintf(fileID, 'normalization  %s with alpha=%.2f--> VLAD acc= %.4f  VLAD-DA(0.5) acc= %.4f  VLAD-DA(1) acc= %.4f  \r\n', descParam.Normalisation, descParam.alpha, acc1, acc2, acc3);
+fprintf(fileID, 'normalization  %s with alpha=%.2f and normalization of FeatureMaps:%s    --> VLAD acc= %.4f  VLAD-DA(0.5) acc= %.4f  VLAD-DA(1) acc= %.4f  \r\n', descParam.Normalisation, descParam.alpha, descParam.NormFeatureMaps, acc1, acc2, acc3);
 fclose(fileID);
 
 
