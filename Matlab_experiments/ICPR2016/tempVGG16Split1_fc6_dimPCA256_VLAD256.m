@@ -7,7 +7,7 @@ clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='fc6';
-descParam.net='SpSplit1VGG16';
+descParam.net='TempSplit1VGG16';
 descParam.Normalisation='ROOTSIFT';
 
 descParam.numClusters = 256;
