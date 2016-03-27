@@ -74,8 +74,8 @@ vlad2=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
 vlad3=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
-parpool(15);
-parfor i=1:length(trainTestSetPathFeatures)
+%parpool(15);
+for i=1:length(trainTestSetPathFeatures)
     fprintf('%d \n', i)
     
     [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
@@ -89,7 +89,7 @@ parfor i=1:length(trainTestSetPathFeatures)
          descParamUsed
      end
 end
-delete(gcp('nocreate'))
+%delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 %% Do classification
