@@ -1,11 +1,11 @@
 nEncoding=2;
 allDist=cell(1, nEncoding);
 
-n_vlad1=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(tempVLAD1, 0.5)), NormalizeRowsUnit(PowerNormalization(spVGG19VLAD1, 0.5))));
+n_vlad1=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(tempVLAD1, 0.5)), NormalizeRowsUnit(PowerNormalization(spVLAD1, 0.5)), NormalizeRowsUnit(PowerNormalization(spVGG19VLAD1, 0.5))));
 allDist{1}=n_vlad1 * n_vlad1';
 clear n_vlad1
 
-n_vlad2=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(tempVLAD2, 0.5)), NormalizeRowsUnit(PowerNormalization(spVGG19VLAD3, 0.5))));
+n_vlad2=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(tempVLAD2, 0.5)), NormalizeRowsUnit(PowerNormalization(spVLAD2, 0.5)),  NormalizeRowsUnit(PowerNormalization(spVGG19VLAD3, 0.5))));
 allDist{2}=n_vlad2 * n_vlad2';
 clear n_vlad2
 
