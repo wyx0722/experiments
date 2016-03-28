@@ -61,7 +61,7 @@ function getFeatures
     featMaps=featMaps';
     nFeatursMaps=size(featMaps,1);
     if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
-        fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
+        fprintf('warning!!!!, check feature dimension, mod:  file: %s', mod(count, dimFeatures), pathFeaturesVideo);
     end      
     fclose(fileID);
 
