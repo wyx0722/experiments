@@ -31,8 +31,8 @@ switch layer
         
     case {'fc6', 'fc7'}
         rows=1;
-        cols=4096;
-        channels=1;
+        cols=1;
+        channels=4096;
         
         dimConvMap=rows*cols;
         dimFeatures=dimConvMap * channels;
@@ -41,7 +41,7 @@ switch layer
         featuresVideo=featuresVideo';
         nFeatursMaps=size(featuresVideo,1);
         if mod(count, dimFeatures)~=0 %supplementary check if there is something wrong with the dimension
-            fprintf('warning!!!!, check feature dimension, mod:', mod(count, dimFeatures));
+            fprintf('warning!!!!, check feature dimension, mod:  file: %s', mod(count, dimFeatures), pathFeaturesVideo);
         end      
         fclose(fileID);
         
