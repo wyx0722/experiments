@@ -10,7 +10,8 @@ nPar=5;
 
 for i=1:length(clustesDim)
     i
-    evalPCAdim_VLAD(func, mediaType, layer, network, norm, clustesDim(i), dimPCA, bPathFeatures, nPar)
+    evalClustersNum_VLAD(func, mediaType, layer, network, norm, clustesDim(i), dimPCA, bPathFeatures, nPar)
+   
 
 end
 
