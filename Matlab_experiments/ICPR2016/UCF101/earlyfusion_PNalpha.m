@@ -53,7 +53,7 @@ fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ICPR2016/results/re
 fileID=fopen(fileName, 'a');
     
 
-for k=1:length(alpha)
+for i=1:length(alpha)
     acc1=mean(all_accuracy{2*i-1});
     acc2=mean(all_accuracy{2*i});
     fprintf(fileID, 'early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=%.2f ---->   acc VLAD: %.4f    acc DA-VLAD(1): %.4f \r\n', alpha(i), acc1, acc2);   
