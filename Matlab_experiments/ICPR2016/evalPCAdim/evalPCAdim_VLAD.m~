@@ -68,9 +68,9 @@ parfor i=1:length(pathFeatures)
    % desc = NormalizeRowsUnit(desc);
    
     
-    vlad0(i,: )=VLAD_1_mean(desc, vocabulary);
-    vlad05(i,: )=doubleAssign_VLAD_1(desc, vocabulary, 0.5);
-    vlad1(i,: )=doubleAssign_VLAD_1(desc, vocabulary, 1);
+    
+    vlad0(i,: )=doubleAssign_VLAD_1(desc, vocabulary, descParam.DoubleAssign);
+    
 
     
         
@@ -86,20 +86,13 @@ fprintf('\nDone!\n');
 
 %% Do classification
 
-nEncoding=3;
+nEncoding=1;
 allDist=cell(1, nEncoding);
 
-n_vlad0=NormalizeRowsUnit(PowerNormalization(vlad0, 0.5));
-allDist{1}=n_vlad0 * n_vlad0';
-clear n_vlad0
+n_vlad=NormalizeRowsUnit(PowerNormalization(vlad0, 0.5));
+allDist{1}=n_vlad * n_vlad';
+clear n_vlad
 
-n_vlad05=NormalizeRowsUnit(PowerNormalization(vlad05, 0.5));
-allDist{2}=n_vlad05 * n_vlad05';
-clear n_vlad05
-
-n_vlad1=NormalizeRowsUnit(PowerNormalization(vlad1, 0.5));
-allDist{3}=n_vlad1 * n_vlad1';
-clear n_vlad1
 
 
 all_clfsOut=cell(1,nEncoding);
@@ -132,19 +125,16 @@ all_accuracy{k}=accuracy;
 
 k
 perGroupAccuracy = mean(cat(2, accuracy{:}))'
-mean(perGroupAccuracy)
 
 end
 
 delete(gcp('nocreate'))
 
 
-fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ICPR2016/results/evalPCAdim/results_UCF50_evalPCAdim_Features%s_Layer%s_Network%s_Clusters%d_norm%s_PNL05__VLAD.txt', descParam.MediaType,descParam.Layer, descParam.net,descParam.numClusters, descParam.Normalisation); 
+fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ICPR2016/results/evalPCAdim/results_UCF50_evalPCAdim_Features%s_Layer%s_Network%s_Clusters%d_DoubleAssign%f_norm%s_PNL05__VLAD.txt', descParam.MediaType,descParam.Layer, descParam.net,descParam.numClusters,descParam.DoubleAssign, descParam.Normalisation); 
 fileID=fopen(fileName, 'a');
-acc0=mean(mean(cat(2, all_accuracy{1}{:})))
-acc05=mean(mean(cat(2, all_accuracy{2}{:})))
-acc1=mean(mean(cat(2, all_accuracy{3}{:})))
-fprintf(fileID, 'PCAdim  %d --> VLAD acc= %.4f   DA-VLAD(0.5) acc= %.4f  DA-VLAD(1) acc= %.4f \r\n', descParam.pcaDim, acc0,acc05, acc1 );
+acc=mean(mean(cat(2, all_accuracy{1}{:})))
+fprintf(fileID, 'PCAdim  %d --> acc= %.4f \r\n', descParam.pcaDim, acc);
 fclose(fileID);
 
 
@@ -153,5 +143,5 @@ saveName = ['/home/ionut/Data/results/ICPR2016_rezults/' 'clfsOut/' 'dimPCA/'  D
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
  saveName2 = ['/home/ionut/Data/results/ICPR2016_rezults/' 'videoRep/' 'dimPCA/' DescParam2Name(descParam) '_VLAD_.mat'];
- save(saveName2, '-v7.3', 'vlad0', 'vlad05', 'vlad1');
+ save(saveName2, '-v7.3', 'vlad');
 end

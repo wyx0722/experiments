@@ -10,6 +10,8 @@ nPar=5;
 
 for i=1:length(dimsPCA)
     i
+    evalPCAdim_VLAD(func, mediaType, layer, network, norm, nCl, dimsPCA(i), bPathFeatures, dAssign, nPar)
+
     evalPCAdim_VLAD(func, mediaType, layer, network, norm, nCl, dimsPCA(i), bPathFeatures, nPar)
 
 end
