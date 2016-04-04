@@ -8,11 +8,11 @@ descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
 descParam.net='TempVGG16';
-descParam.Normalisation='ROOTSIFT';
+descParam.Normalisation='None'; %'ROOTSIFT';
 
 descParam.numClusters = 256;
 
-descParam.pcaDim = 256;
+descParam.pcaDim = 0;
 
 descParam
 
