@@ -7,17 +7,17 @@ clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
-descParam.net='tempVGG16';
-descParam.Normalisation='ROOTSIFT';
+descParam.net='SpVGG19';
+descParam.Normalisation='None'; %'ROOTSIFT';
 
 descParam.numClusters = 256;
 
-descParam.pcaDim = 256;
+descParam.pcaDim = 0;
 
 descParam
 
 %%%%%%%%%%
-bazePathFeatures='/home/ionut/Data/action_temporal_vgg_16_split1_features_opticalFlow_tvL1_UCF50/Videos/'; %change
+bazePathFeatures='/home/ionut/halley_ionut/Data/VGG_19_v-features_rawFrames_UCF50/Videos/'; %change
 
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
@@ -29,26 +29,12 @@ for i=1:length(vocabularyImsPaths)
 end
 
 
-vocabs=cell(1, 2);
-pcaMaps=cell(1, 2);
-
-
-parpool(2);
-parfor i=1:2
-    if i==1                                            
-        [vocabs{i}, pcaMaps{i}] = CreateVocabularyKmeansPca(vocabularyImsPaths, descParam, ...
+                                           
+        [vocabulary, pcaMap] = CreateVocabularyKmeansPca(vocabularyImsPaths, descParam, ...
                                                         descParam.numClusters, descParam.pcaDim);
-    else
-        [vocabs{i}, pcaMaps{i}] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
+
+        [gmmModelName, pcaMap2] = CreateVocabularyGMMPca(vocabularyImsPaths, descParam, ...
                                                         descParam.numClusters, descParam.pcaDim);
-    end
-
-end
-delete(gcp('nocreate'))
-
-pcaMap=pcaMaps{1};
-vocabulary=vocabs{1};
-gmmModelName=vocabs{2};
 
 
 
@@ -75,8 +61,8 @@ vlad1=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 avgEncode=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 maxEncode=zeros(length(vids), length(tVLAD), 'like', tVLAD);
 
-[tDesc] = MediaName2Descriptor(pathFeatures{1}, descParam, pcaMaps{2});
-FV=mexFisherAssign(tDesc', vocabs{2})';
+[tDesc] = MediaName2Descriptor(pathFeatures{1}, descParam, pcaMap);
+FV=mexFisherAssign(tDesc', gmmModelName)';
 
 fisherVectors=zeros(length(vids), length(FV), 'like', FV);
 
@@ -88,17 +74,16 @@ parfor i=1:length(pathFeatures)
     fprintf('%d \n', i)
     % Extract descriptors
     
-    [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMaps{1});
+    [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{i}, descParam, pcaMap);
    % desc = NormalizeRowsUnit(desc);
    
     
-    vladNoMean(i, :)=VLAD_1(desc, vocabulary{1});
-
-
-    vlad1(i, :)=VLAD_1_mean(desc, vocabulary);
-    vlad2(i, :)=comb_percentage_minVocab_VLAD_1(desc, vocabulary, 1/2)
-
+    vladNoMean(i, :)=VLAD_1(desc, vocabulary);
+    vlad(i, :)=VLAD_1_mean(desc, vocabulary);
+    vlad1(i, :)=doubleAssign_VLAD_1(desc, vocabulary, 1);
+    [avgEncode(i, :), maxEncode(i, :)]=avg_max_pooling(desc, vocabulary);
     
+    fisherVectors(i,:)=mexFisherAssign(desc', gmmModelName)';
         
          if i == 1
              descParamUsed
@@ -112,16 +97,28 @@ fprintf('\nDone!\n');
 
 %% Do classification
 
-nEncoding=2;
+nEncoding=6;
 allDist=cell(1, nEncoding);
 
-n_vlad1=NormalizeRowsUnit(PowerNormalization(vlad1, 0.5));
-allDist{1}=n_vlad1 * n_vlad1';
-clear n_vlad1
+temp=NormalizeRowsUnit(PowerNormalization(vladNoMean, 0.5));
+allDist{1}=temp * temp';
 
-n_vlad2=NormalizeRowsUnit(PowerNormalization(vlad2, 0.5));
-allDist{2}=n_vlad2 * n_vlad2';
-clear n_vlad2
+temp=NormalizeRowsUnit(PowerNormalization(vlad, 0.5));
+allDist{2}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(vlad1, 0.5));
+allDist{3}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(avgEncode, 0.5));
+allDist{4}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(maxEncode, 0.5));
+allDist{5}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(fisherVectors, 0.5));
+allDist{6}=temp * temp';
+
+clear temp
 
 
 all_clfsOut=cell(1,nEncoding);
@@ -155,6 +152,8 @@ all_accuracy{k}=accuracy;
 k
 perGroupAccuracy = mean(cat(2, accuracy{:}))'
 
+mean(perGroupAccuracy)
+
 end
 
 delete(gcp('nocreate'))
@@ -162,7 +161,6 @@ delete(gcp('nocreate'))
 
 
 
-mean(mean(cat(2, all_accuracy{1}{:})))
-mean(mean(cat(2, all_accuracy{2}{:})))
+
 
 
