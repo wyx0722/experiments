@@ -1,0 +1,20 @@
+
+
+temp=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(maxEncode, 0.5)), ...
+     NormalizeRowsUnit(PowerNormalization(vladNoMean, 0.5)) ));
+allDist{1}=temp * temp';
+
+
+temp=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(maxEncode, 0.5)), ...
+     NormalizeRowsUnit(PowerNormalization(fisherVectors, 0.5)) ));
+allDist{2}=temp * temp';
+
+temp=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(vladNoMean, 0.5)), ...
+     NormalizeRowsUnit(PowerNormalization(fisherVectors, 0.5)) ));
+allDist{3}=temp * temp';
+
+temp=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(maxEncode, 0.5)), ...
+     NormalizeRowsUnit(PowerNormalization(vladNoMean, 0.5)) ...
+        NormalizeRowsUnit(PowerNormalization(fisherVectors, 0.5)) ));
+allDist{1}=temp * temp';
+
