@@ -1,0 +1,9 @@
+PCAdim  64 --> acc= 0.9311 
+PCAdim  256 --> acc= 0.9442 
+PCAdim  448 --> acc= 0.9440 
+PCAdim  128 --> acc= 0.9386 
+PCAdim  320 --> acc= 0.9458 
+PCAdim  512 --> acc= 0.9411 
+PCAdim  192 --> acc= 0.9426 
+PCAdim  384 --> acc= 0.9458 
+PCAdim  0 --> acc= 0.9367 

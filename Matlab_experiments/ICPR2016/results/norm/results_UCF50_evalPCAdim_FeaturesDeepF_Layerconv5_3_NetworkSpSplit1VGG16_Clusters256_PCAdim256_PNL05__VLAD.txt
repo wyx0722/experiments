@@ -1,0 +1,1 @@
+normalization  ROOTSIFT with alpha=1.00--> VLAD acc= 0.9125  VLAD-DA(0.5) acc= 0.9131  VLAD-DA(1) acc= 0.9088  

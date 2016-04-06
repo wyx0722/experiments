@@ -1,0 +1,11 @@
+doble assignemnt VLAD with keeping the percentage  0.0 --> acc= 0.8918 
+doble assignemnt VLAD with keeping the percentage  0.1 --> acc= 0.8967 
+doble assignemnt VLAD with keeping the percentage  0.2 --> acc= 0.9002 
+doble assignemnt VLAD with keeping the percentage  0.3 --> acc= 0.9012 
+doble assignemnt VLAD with keeping the percentage  0.4 --> acc= 0.9032 
+doble assignemnt VLAD with keeping the percentage  0.5 --> acc= 0.9050 
+doble assignemnt VLAD with keeping the percentage  0.6 --> acc= 0.9080 
+doble assignemnt VLAD with keeping the percentage  0.7 --> acc= 0.9087 
+doble assignemnt VLAD with keeping the percentage  0.8 --> acc= 0.9096 
+doble assignemnt VLAD with keeping the percentage  0.9 --> acc= 0.9116 
+doble assignemnt VLAD with keeping the percentage  1.0 --> acc= 0.9128 

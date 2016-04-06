@@ -1,0 +1,10 @@
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.10 --> acc: 0.808 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.20 --> acc: 0.808 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.30 --> acc: 0.806 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.40 --> acc: 0.803 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.50 --> acc: 0.798 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.60 --> acc: 0.793 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.70 --> acc: 0.787 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.80 --> acc: 0.783 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 0.90 --> acc: 0.779 
+FEVidMBHxDense normBins:ROOTSIFT   PNL2 with alpha: 1.00 --> acc: 0.771 

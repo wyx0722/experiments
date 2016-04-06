@@ -1,0 +1,4 @@
+Number of clusters: 64 --> VLAD acc= 0.9395   DA-VLAD(0.5) acc= 0.9457  DA-VLAD(1) acc= 0.9464 
+Number of clusters: 256 --> VLAD acc= 0.9352   DA-VLAD(0.5) acc= 0.9436  DA-VLAD(1) acc= 0.9458 
+Number of clusters: 128 --> VLAD acc= 0.9352   DA-VLAD(0.5) acc= 0.9458  DA-VLAD(1) acc= 0.9460 
+Number of clusters: 512 --> VLAD acc= 0.9318   DA-VLAD(0.5) acc= 0.9393  DA-VLAD(1) acc= 0.9419 

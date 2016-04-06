@@ -1,0 +1,4 @@
+PCAdim  64 --> VLAD acc= 0.7922   DA-VLAD(0.5) acc= 0.8041  DA-VLAD(1) acc= 0.8066 
+PCAdim  256 --> VLAD acc= 0.8228   DA-VLAD(0.5) acc= 0.8303  DA-VLAD(1) acc= 0.8305 
+PCAdim  128 --> VLAD acc= 0.8078   DA-VLAD(0.5) acc= 0.8196  DA-VLAD(1) acc= 0.8200 
+PCAdim  512 --> VLAD acc= 0.8308   DA-VLAD(0.5) acc= 0.8385  DA-VLAD(1) acc= 0.8399 

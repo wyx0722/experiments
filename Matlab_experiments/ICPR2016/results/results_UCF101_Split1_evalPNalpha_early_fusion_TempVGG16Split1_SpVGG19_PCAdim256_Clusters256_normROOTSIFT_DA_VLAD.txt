@@ -1,0 +1,10 @@
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.10 ---->   acc VLAD: 0.8619    acc DA-VLAD(1): 0.8733 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.20 ---->   acc VLAD: 0.8631    acc DA-VLAD(1): 0.8757 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.30 ---->   acc VLAD: 0.8636    acc DA-VLAD(1): 0.8766 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.40 ---->   acc VLAD: 0.8633    acc DA-VLAD(1): 0.8776 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.50 ---->   acc VLAD: 0.8640    acc DA-VLAD(1): 0.8787 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.60 ---->   acc VLAD: 0.8638    acc DA-VLAD(1): 0.8782 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.70 ---->   acc VLAD: 0.8624    acc DA-VLAD(1): 0.8773 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.80 ---->   acc VLAD: 0.8584    acc DA-VLAD(1): 0.8758 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=0.90 ---->   acc VLAD: 0.8556    acc DA-VLAD(1): 0.8751 
+early fusion: TempVGG16Split1 + SpVGG19  PowerNormalization with alpha=1.00 ---->   acc VLAD: 0.8505    acc DA-VLAD(1): 0.8730 
