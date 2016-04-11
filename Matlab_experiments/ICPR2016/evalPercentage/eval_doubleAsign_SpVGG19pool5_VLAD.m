@@ -7,7 +7,7 @@ clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
-descParam.net='SpVGG19';
+descParam.net='__Second_SpVGG19__'; %descParam.net='SpVGG19';
 descParam.Normalisation='ROOTSIFT';
 
 descParam.numClusters = 256;
