@@ -171,8 +171,7 @@ save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
  saveName2 = ['/home/ionut/Data/results/ICPR2016_rezults/' 'videoRep/' 'encoding/' DescParam2Name(descParam) '_vladNoMean_maxEncode_fisherVectors_.mat'];
  save(saveName2, '-v7.3', 'vladNoMean', 'maxEncode', 'fisherVectors');
  
- 
- 
+
  
 
 end
