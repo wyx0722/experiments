@@ -17,7 +17,7 @@ descParam.net='SpVGG19';
 descParam.Normalisation='None';
 descParam.numClusters = 256;
 descParam.pcaDim = 0;
-descParam.Dataset=spl(s);
+descParam.Dataset=spl{s};
 descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels();
