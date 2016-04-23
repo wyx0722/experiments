@@ -33,39 +33,39 @@
 
 
 
-nEncoding=length(6);
-allDist=cell(1, nEncoding);
-
-
-    temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(NormalizeRows(maxEncode_split1_spVGG19)), ...
-                        NormalizeRowsUnit(NormalizeRows(maxEncode_split1_TempVGG16Split1))) );
-    allDist{1}=temp * temp';
-    
-   temp=NormalizeRowsUnit( cat(2, NormalizeRows(maxEncode_split1_spVGG19), ...
-                        NormalizeRows(maxEncode_split1_TempVGG16Split1)) );
-    allDist{2}=temp * temp';
-    
-    temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(maxEncode_split1_spVGG19), ...
-                        NormalizeRowsUnit(maxEncode_split1_TempVGG16Split1)) );
-    allDist{3}=temp * temp';
-    
-    temp=NormalizeRowsUnit( cat(2, maxEncode_split1_spVGG19, ...
-                        maxEncode_split1_TempVGG16Split1) );
-    allDist{4}=temp * temp';
-    
-     temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(maxEncode_split1_spVGG19), ...
-                        2.*(NormalizeRowsUnit(maxEncode_split1_TempVGG16Split1))) );
-    allDist{5}=temp * temp';
-    
-     temp=NormalizeRowsUnit( cat(2, maxEncode_split1_spVGG19, ...
-                        2.*maxEncode_split1_TempVGG16Split1) );
-    allDist{6}=temp * temp';
+nEncoding=6;
+% allDist=cell(1, nEncoding);
+% 
+% 
+%     temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(NormalizeRows(maxEncode_split1_spVGG19)), ...
+%                         NormalizeRowsUnit(NormalizeRows(maxEncode_split1_TempVGG16Split1))) );
+%     allDist{1}=temp * temp';
+%     
+%    temp=NormalizeRowsUnit( cat(2, NormalizeRows(maxEncode_split1_spVGG19), ...
+%                         NormalizeRows(maxEncode_split1_TempVGG16Split1)) );
+%     allDist{2}=temp * temp';
+%     
+%     temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(maxEncode_split1_spVGG19), ...
+%                         NormalizeRowsUnit(maxEncode_split1_TempVGG16Split1)) );
+%     allDist{3}=temp * temp';
+%     
+%     temp=NormalizeRowsUnit( cat(2, maxEncode_split1_spVGG19, ...
+%                         maxEncode_split1_TempVGG16Split1) );
+%     allDist{4}=temp * temp';
+%     
+%      temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(maxEncode_split1_spVGG19), ...
+%                         2.*(NormalizeRowsUnit(maxEncode_split1_TempVGG16Split1))) );
+%     allDist{5}=temp * temp';
+%     
+%      temp=NormalizeRowsUnit( cat(2, maxEncode_split1_spVGG19, ...
+%                         2.*maxEncode_split1_TempVGG16Split1) );
+%     allDist{6}=temp * temp';
     
     
    
     
 
-clear temp
+%clear temp
 
 all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
