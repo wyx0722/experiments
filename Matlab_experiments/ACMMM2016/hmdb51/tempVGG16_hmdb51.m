@@ -75,7 +75,7 @@ end
                                             
                                             
 [tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
-tVLAD=VLAD_1(tDesc, vocabulary, 1);
+tVLAD=VLAD_1(tDesc, vocabulary);
 
 vladNoMean=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
 maxEncode=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
