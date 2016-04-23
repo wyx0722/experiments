@@ -5,7 +5,7 @@ spl{1}='HMBD51Split1';
 spl{2}='HMBD51Split2';
 spl{3}='HMBD51Split3';
 
-for s=1:3
+for s=2:3
     
     
 % Parameter settings for descriptor extraction
