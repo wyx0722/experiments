@@ -52,7 +52,7 @@ allDist{5}=temp * temp';
 temp=NormalizeRowsUnit(maxEncode_split3_TempVGG16Split3);
 allDist{6}=temp * temp';
 
-
+sp=[1 2 3 1 2 3];
 
 clear temp
 
@@ -66,7 +66,7 @@ nFolds = 3;
 parpool(nEncoding);
 parfor k=1:nEncoding
     k
-    trainTestSplit=splits(:, k);
+    trainTestSplit=splits(:, sp(k));
     
     trainI=trainTestSplit==1;
     testI=~trainI;
