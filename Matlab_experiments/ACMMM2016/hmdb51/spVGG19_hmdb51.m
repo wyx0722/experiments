@@ -88,7 +88,7 @@ fisherVectors=zeros(length(trainTestSetPathFeatures), length(FV), 'like', FV);
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
 parpool(10);
-for i=1:length(trainTestSetPathFeatures)
+parfor i=1:length(trainTestSetPathFeatures)
     fprintf('%d \n', i)
     
     [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
