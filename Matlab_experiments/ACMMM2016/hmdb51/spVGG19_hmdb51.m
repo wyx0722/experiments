@@ -117,10 +117,10 @@ temp=NormalizeRowsUnit(vladNoMean);
 allDist{1}=temp * temp';
 
 temp=NormalizeRowsUnit(maxEncode);
-allDist{1}=temp * temp';
+allDist{2}=temp * temp';
 
 temp=NormalizeRowsUnit(fisherVectors);
-allDist{1}=temp * temp';
+allDist{3}=temp * temp';
 
 clear temp
 

@@ -13,17 +13,17 @@ clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
-descParam.net='SpVGG19';
+descParam.net='tempSplit1VGG16';
 descParam.Normalisation='None';
 descParam.numClusters = 256;
 descParam.pcaDim = 0;
-descParam.Dataset=spl(s);
+descParam.Dataset=spl{s};
 descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels();
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut/ionut/Data/hmdb51_VGG_19_features_rawFrames/Videos/' %change
+bazePathFeatures='/home/ionut/halley_ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
 
 %create the full path of the fetures for each video
 allPathFeatures=cell(size(allVids));
@@ -117,10 +117,10 @@ temp=NormalizeRowsUnit(vladNoMean);
 allDist{1}=temp * temp';
 
 temp=NormalizeRowsUnit(maxEncode);
-allDist{1}=temp * temp';
+allDist{2}=temp * temp';
 
 temp=NormalizeRowsUnit(fisherVectors);
-allDist{1}=temp * temp';
+allDist{3}=temp * temp';
 
 clear temp
 
@@ -160,7 +160,6 @@ acc3=mean(all_accuracy{3})
 
 fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ACMMM2016/results/results_HMDB51_Features%s_Layer%s_Network%s_PCAdim%d_clusters%d_norm%s__VLAD.txt', descParam.MediaType,descParam.Layer, descParam.net,descParam.pcaDim, descParam.numClusters, descParam.Normalisation); 
 fileID=fopen(fileName, 'a');
-
 fprintf(fileID, 'Dataset and Split: %s --> vladNoMean acc= %.4f   maxEncode acc= %.4f  fisherVectors acc= %.4f \r\n', descParam.Dataset, acc1,acc2, acc3 );
 fclose(fileID);
 
