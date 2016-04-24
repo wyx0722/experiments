@@ -71,6 +71,7 @@ time_maxEncode= zeros(1, length(sample));
 time_fisherVectors= zeros(1, length(sample));
 
 time_DescExtrac=zeros(1, length(sample));
+nFrames=zeros(1, length(sample));
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(pathFeatures));
@@ -84,6 +85,8 @@ for i=1:length(sample)
     [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{sample(i)}, descParam, pcaMap);
    % desc = NormalizeRowsUnit(desc);
    time_DescExtrac(i)=toc(tStart);
+   
+   nFrames(i)=size(desc, 1);
    
     tStart=tic;
     vladNoMean(i, :)=VLAD_1(desc, vocabulary);
