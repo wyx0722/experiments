@@ -81,7 +81,7 @@ for i=1:length(sample)
     fprintf('%d %s \n', i, pathFeatures{sample(i)});
     
     tStart=tic;
-    [desc, info, descParamUsed] = MediaName2Descriptor(sample{i}, descParam, pcaMap);
+    [desc, info, descParamUsed] = MediaName2Descriptor(pathFeatures{sample(i)}, descParam, pcaMap);
    % desc = NormalizeRowsUnit(desc);
    time_DescExtrac(i)=toc(tStart);
    
