@@ -63,6 +63,12 @@ allDist{7}=temp * temp';
 temp=NormalizeRowsUnit(PowerNormalization(intraN_vladVectors3(:,2*sizeV+1:end), 0.5));
 allDist{8}=temp * temp';
 
+all_clfsOut=cell(1,nEncoding);
+all_accuracy=cell(1,nEncoding);
+
+cRange = 100;
+nReps = 1;
+nFolds = 3;
 
 
 parpool(9);
