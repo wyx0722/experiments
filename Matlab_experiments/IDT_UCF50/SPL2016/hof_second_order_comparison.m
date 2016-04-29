@@ -19,7 +19,7 @@ mbhy='FEVidMBHy_IDTIDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256
 
 
 
-nameD=['/Data/results/results_desc_IDT/videoRep/' hof ]
+nameD=['/home/ionut/Data/results/results_desc_IDT/videoRep/' hof ]
 load(nameD);
 
 
