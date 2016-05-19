@@ -93,6 +93,7 @@ fprintf('\nDone!\n');
 
 nEncoding=4;
 allDist=cell(1, nEncoding);
+alpha=0.5;
 
 temp=NormalizeRowsUnit(PowerNormalization(vladNoMean, alpha));
 allDist{1}=temp * temp';

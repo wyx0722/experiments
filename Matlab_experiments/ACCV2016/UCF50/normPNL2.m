@@ -3,20 +3,20 @@
 
 
 %% Do classification
-
+alpha=0.5;
 nEncoding=4;
 allDist=cell(1, nEncoding);
 
 temp=NormalizeRowsUnit(PowerNormalization(vladNoMean, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(vladMean, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(maxPool, alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(stdDiff, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(multiVLAD, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(stdDiffMean, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(multiMaxPool, alpha));
 allDist{4}=temp * temp';
 
 clear temp
