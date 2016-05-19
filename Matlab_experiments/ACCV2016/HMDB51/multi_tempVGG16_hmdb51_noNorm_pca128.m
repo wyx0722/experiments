@@ -104,7 +104,7 @@ parfor i=1:length(trainTestSetPathFeatures)
     
      
     vladNoMean(i, :)=VLAD_1(desc, orgCluster.vocabulary);
-    maxPool(i, :)=maxPooling(desc, orgCluster.vocabulary);
+    maxPool(i, :)=max_pooling(desc, orgCluster.vocabulary);
     
     multiVLAD(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @VLAD_1);
     multiMaxPool(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @max_pooling);
