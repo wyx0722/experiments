@@ -1,20 +1,28 @@
+initDim=256;
+
+intraL2_vladNoMean = intranormalizationFeatures( vladNoMean, initDim );
+intraL2_vladMean = intranormalizationFeatures( vladMean, initDim );
+intraL2_stdDiff = intranormalizationFeatures( stdDiff, initDim );
+intraL2_stdDiffMean = intranormalizationFeatures( stdDiffMean, initDim );
+
 
 
 %% Do classification
+alpha=0.5;
 
 nEncoding=4;
 allDist=cell(1, nEncoding);
 
-temp=NormalizeRowsUnit(vladNoMean);
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_vladNoMean, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(vladMean);
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_vladMean, alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(stdDiff);
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_stdDiff, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(stdDiffMean);
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_stdDiffMean, alpha));
 allDist{4}=temp * temp';
 
 clear temp
@@ -27,7 +35,7 @@ cRange = 100;
 nReps = 1;
 nFolds = 3;
 
-
+parpool(13);
 for k=1:nEncoding
 
 % 
