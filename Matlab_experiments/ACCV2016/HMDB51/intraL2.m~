@@ -1,38 +1,29 @@
-initDim=128;
+initDim=4096;
 
 intraL2_vladNoMean = intranormalizationFeatures( vladNoMean, initDim );
-intraL2_maxPool = intranormalizationFeatures( maxPool, initDim );
-intraL2_multiVLAD = intranormalizationFeatures( multiVLAD, initDim );
-intraL2_multiMaxPool = intranormalizationFeatures( multiMaxPool, initDim );
+intraL2_vladMean = intranormalizationFeatures( vladMean, initDim );
+intraL2_stdDiff = intranormalizationFeatures( stdDiff, initDim );
+intraL2_stdDiffMean = intranormalizationFeatures( stdDiffMean, initDim );
 
-n_multiVLAD=intranormalizationFeatures( maxPool, 128*32 );
-n_multiMaxPool = intranormalizationFeatures( multiMaxPool, 128*32);
 
 
 %% Do classification
 alpha=0.5;
 
-nEncoding=6;
+nEncoding=4;
 allDist=cell(1, nEncoding);
 
 temp=NormalizeRowsUnit(PowerNormalization(intraL2_vladNoMean, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_maxPool, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_vladMean, alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_multiVLAD, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_stdDiff, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_multiMaxPool, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(intraL2_stdDiffMean, alpha));
 allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(n_multiVLAD, alpha));
-allDist{5}=temp * temp';
-
-
-temp=NormalizeRowsUnit(PowerNormalization(n_multiMaxPool, alpha));
-allDist{6}=temp * temp';
 
 clear temp
 
