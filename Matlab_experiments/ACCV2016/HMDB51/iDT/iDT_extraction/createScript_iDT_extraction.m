@@ -11,6 +11,10 @@ baseDirSaveFeat='/home/ionut/Data/iDT_Features_HMDB51/Videos/';
 
 for i=1:length(videosList)
     
+    if strfind(videosList{i}, '(')>0
+        videosList{i}=strrep(videosList{i}, '(', '\\(');
+        videosList{i}=strrep(videosList{i}, ')', '\\)');
+    end
     poz=strfind(videosList{i}, '/');
     videoName=videosList{i}(poz(1)+1:end);
     
