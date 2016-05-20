@@ -1,3 +1,8 @@
+#!/bin/bash
+echo "Hi, $USER!"
+echo "The script starts now"
+i="1"
+
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/flic_flac/anna_turnen_flic_flac_f_cm_np1_ri_bad_1.avi -H /home/ionut/IDT_code/bb_file/HMDB51/anna_turnen_flic_flac_f_cm_np1_ri_bad_1.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/flic_flac/anna_turnen_flic_flac_f_cm_np1_ri_bad_1
 echo "video from list: $((i++))" 
