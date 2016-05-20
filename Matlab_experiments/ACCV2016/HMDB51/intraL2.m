@@ -5,7 +5,7 @@ intraL2_maxPool = intranormalizationFeatures( maxPool, initDim );
 intraL2_multiVLAD = intranormalizationFeatures( multiVLAD, initDim );
 intraL2_multiMaxPool = intranormalizationFeatures( multiMaxPool, initDim );
 
-n_multiVLAD=intranormalizationFeatures( maxPool, 128*32 );
+n_multiVLAD=intranormalizationFeatures( multiVLAD, 128*32 );
 n_multiMaxPool = intranormalizationFeatures( multiMaxPool, 128*32);
 
 
