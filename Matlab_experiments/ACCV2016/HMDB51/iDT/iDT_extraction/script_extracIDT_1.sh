@@ -1,3 +1,8 @@
+#!/bin/bash
+echo "Hi, $USER!"
+echo "The script starts now"
+i="1"
+
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/brush_hair/April_09_brush_hair_u_nm_np1_ba_goo_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/April_09_brush_hair_u_nm_np1_ba_goo_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/brush_hair/April_09_brush_hair_u_nm_np1_ba_goo_0
 echo "video from list: $((i++))" 
@@ -305,13 +310,13 @@ echo "video from list: $((i++))"
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Estrela_mini_kelly_cartwheel_f_cm_np1_ri_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Estrela_mini_kelly_cartwheel_f_cm_np1_ri_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Estrela_mini_kelly_cartwheel_f_cm_np1_ri_med_0
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_fr_med_2.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_fr_med_2.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_fr_med_2
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_fr_med_2.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_fr_med_2.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_fr_med_2
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_le_med_3.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_le_med_3.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_le_med_3
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_le_med_3.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_le_med_3.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_le_med_3
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_ri_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_ri_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_ri_med_0
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_ri_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_ri_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_ri_med_0
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_ri_med_1.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_ri_med_1.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-)_cartwheel_f_cm_np1_ri_med_1
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_ri_med_1.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_ri_med_1.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/Geena_und_die_Radschl_ge___;-\)_cartwheel_f_cm_np1_ri_med_1
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/cartwheel/gimnasia_cartwheel_f_cm_np1_le_med_3.avi -H /home/ionut/IDT_code/bb_file/HMDB51/gimnasia_cartwheel_f_cm_np1_le_med_3.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/cartwheel/gimnasia_cartwheel_f_cm_np1_le_med_3
 echo "video from list: $((i++))" 

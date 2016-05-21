@@ -1,3 +1,8 @@
+#!/bin/bash
+echo "Hi, $USER!"
+echo "The script starts now"
+i="1"
+
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/flic_flac/anna_turnen_flic_flac_f_cm_np1_ri_bad_1.avi -H /home/ionut/IDT_code/bb_file/HMDB51/anna_turnen_flic_flac_f_cm_np1_ri_bad_1.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/flic_flac/anna_turnen_flic_flac_f_cm_np1_ri_bad_1
 echo "video from list: $((i++))" 
@@ -2233,11 +2238,11 @@ echo "video from list: $((i++))"
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Crazy_Drunk_Girl_Laugh_laugh_h_cm_np1_fr_goo_2.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Crazy_Drunk_Girl_Laugh_laugh_h_cm_np1_fr_goo_2.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Crazy_Drunk_Girl_Laugh_laugh_h_cm_np1_fr_goo_2
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_0
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_0
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_1.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_1.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_1
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_1.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_1.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_1
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_2.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_2.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0)_laugh_h_cm_np1_fr_med_2
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_2.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_2.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Der_Lachsack___Laughing_Bag___keep_on_smiling_;0\)_laugh_h_cm_np1_fr_med_2
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/laugh/Glory_laugh_h_cm_np1_fr_med_3.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Glory_laugh_h_cm_np1_fr_med_3.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/laugh/Glory_laugh_h_cm_np1_fr_med_3
 echo "video from list: $((i++))" 

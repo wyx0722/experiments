@@ -1,3 +1,8 @@
+#!/bin/bash
+echo "Hi, $USER!"
+echo "The script starts now"
+i="1"
+
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/push/Joshua_pushing_wagon_push_f_cm_np1_le_bad_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Joshua_pushing_wagon_push_f_cm_np1_le_bad_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/push/Joshua_pushing_wagon_push_f_cm_np1_le_bad_0
 echo "video from list: $((i++))" 
@@ -2817,11 +2822,11 @@ echo "video from list: $((i++))"
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/Show_my_what_smile_h_cm_np1_fr_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Show_my_what_smile_h_cm_np1_fr_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/Show_my_what_smile_h_cm_np1_fr_med_0
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/Show_Your_Smile_-)_1_smile_h_nm_np1_fr_goo_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Show_Your_Smile_-)_1_smile_h_nm_np1_fr_goo_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/Show_Your_Smile_-)_1_smile_h_nm_np1_fr_goo_0
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/Show_Your_Smile_-\)_1_smile_h_nm_np1_fr_goo_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/Show_Your_Smile_-\)_1_smile_h_nm_np1_fr_goo_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/Show_Your_Smile_-\)_1_smile_h_nm_np1_fr_goo_0
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/showyoursmile_smile_h_nm_np1_fr_goo_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/showyoursmile_smile_h_nm_np1_fr_goo_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/showyoursmile_smile_h_nm_np1_fr_goo_0
 echo "video from list: $((i++))" 
-/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/show_your_smile_-)_smile_h_nm_np1_fr_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/show_your_smile_-)_smile_h_nm_np1_fr_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/show_your_smile_-)_smile_h_nm_np1_fr_med_0
+/home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/show_your_smile_-\)_smile_h_nm_np1_fr_med_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/show_your_smile_-\)_smile_h_nm_np1_fr_med_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/show_your_smile_-\)_smile_h_nm_np1_fr_med_0
 echo "video from list: $((i++))" 
 /home/ionut/IDT_code/improved_trajectory_release/release/DenseTrackStab /home/ionut/Data/HMDB51/Videos/smile/smile_collection_7_smile_h_nm_np1_fr_goo_0.avi -H /home/ionut/IDT_code/bb_file/HMDB51/smile_collection_7_smile_h_nm_np1_fr_goo_0.bb > /home/ionut/Data/iDT_Features_HMDB51/Videos/smile/smile_collection_7_smile_h_nm_np1_fr_goo_0
 echo "video from list: $((i++))" 

@@ -9,12 +9,23 @@ fileID4=fopen('script_extracIDT_4.sh', 'w');
 string1='echo "video from list: $((i++))" \r\n';
 baseDirSaveFeat='/home/ionut/Data/iDT_Features_HMDB51/Videos/';
 
+i1=1;
+i2=1;
 for i=1:length(videosList)
     
     if strfind(videosList{i}, '(')>0
         videosList{i}=strrep(videosList{i}, '(', '\\(');
-        videosList{i}=strrep(videosList{i}, ')', '\\)');
+        firstBra{i1}=i;
+        i1=i1+1;
     end
+    
+    if strfind(videosList{i}, ')')>0
+        videosList{i}=strrep(videosList{i}, ')', '\\)');
+        secondtBra{i2}=i;
+        i2=i2+1;
+    end
+    
+    
     poz=strfind(videosList{i}, '/');
     videoName=videosList{i}(poz(1)+1:end);
     
