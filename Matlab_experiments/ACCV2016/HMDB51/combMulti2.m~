@@ -7,7 +7,7 @@ alpha=0.5;
 nEncoding=1;
 allDist=cell(1, nEncoding);
 
-temp=NormalizeRowsUnit(cat(2,intraL2_vladNoMean,intraL2_multiVLAD));
+temp=NormalizeRowsUnit(cat(2,intraPNL2_vladNoMean,intraPNL2_multiVLAD), ));
 allDist{1}=temp * temp';
 
 
