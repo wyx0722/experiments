@@ -4,12 +4,14 @@
 %% Do classification
 alpha=0.5;
 
-nEncoding=1;
+nEncoding=2;
 allDist=cell(1, nEncoding);
 
-temp=NormalizeRowsUnit(cat(2,intraPNL2_vladNoMean,intraPNL2_multiVLAD));
+temp=NormalizeRowsUnit(intraL2_vladNoMean);
 allDist{1}=temp * temp';
 
+temp=NormalizeRowsUnit(intraL2_multiVLAD);
+allDist{2}=temp * temp';
 
 
 clear temp
