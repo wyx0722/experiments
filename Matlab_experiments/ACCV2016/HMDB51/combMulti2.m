@@ -7,16 +7,16 @@ alpha=0.5;
 nEncoding=3;
 allDist=cell(1, nEncoding);
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,intraL2_vladNoMean,intraL2_multiVLAD), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(cat(2,intraPNL2_vladNoMean,intraPNL2_multiVLAD), alpha));
 allDist{1}=temp * temp';
 
 
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,NormalizeRowsUnit(intraL2_vladNoMean), NormalizeRowsUnit(intraL2_multiVLAD)), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(cat(2,NormalizeRowsUnit(intraPNL2_vladNoMean), NormalizeRowsUnit(intraPNL2_multiVLAD)), alpha));
 allDist{2}=temp * temp';
 
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,NormalizeRowsUnit(PowerNormalization(intraL2_vladNoMean, 0.5)), NormalizeRowsUnit(PowerNormalization(intraL2_multiVLAD, 0.5))), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(cat(2,NormalizeRowsUnit(PowerNormalization(intraPNL2_vladNoMean, 0.5)), NormalizeRowsUnit(PowerNormalization(intraPNL2_multiVLAD, 0.5))), alpha));
 allDist{3}=temp * temp';
 
 
