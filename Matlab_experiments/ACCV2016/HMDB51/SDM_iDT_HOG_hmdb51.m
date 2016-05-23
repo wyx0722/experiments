@@ -127,7 +127,7 @@ delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 %% Do classification
-initDim=length(orgCluster.vocabulary{1});
+initDim=size(orgCluster.vocabulary,2);
 alpha=0.5;
 
 intraL2_vladNoMean = intranormalizationFeatures( vladNoMean, initDim );

@@ -1,128 +1,128 @@
-global DATAopts;
-DATAopts = HMDB51Init;
-
-spl{1}='HMBD51Split1';
-spl{2}='HMBD51Split2';
-spl{3}='HMBD51Split3';
-
-%for s=2:3
-    
-    
-% Parameter settings for descriptor extraction
-clear descParam
-descParam.Func = @FEVid_deepFeatures;
-descParam.MediaType = 'DeepF';
-descParam.Layer='pool5';
-descParam.net='TempSplit1VGG16';
-descParam.Normalisation='None';
-
-descParam.Dataset=spl{1};%descParam.Dataset=spl{s};
-descParam
-descParam.pcaDim = 128;
-
-descParam.orgClusters=256;
-descParam.bovwCL=16;
-descParam.smallCL=32;
-
-
-[allVids, labs, splits] = GetVideosPlusLabels();
-
-%the baze path for features
-bazePathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
-
-%create the full path of the fetures for each video
-allPathFeatures=cell(size(allVids));
-for i=1:size(allVids, 1)
-    allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/pool5.txt'];
-end
-
-
-%get the data for a specific split
-switch descParam.Dataset
-    
-    case 'HMBD51Split1'
-        
-        trainTestSetPathFeatures=allPathFeatures(splits(:, 1)==1 | splits(:, 1)==2);%get all the paths for the current split
-        trainTestSetlabs=labs((splits(:, 1)==1 | splits(:, 1)==2), :); %get all the labels for the current split
-        trainTestSplit=splits((splits(:, 1)==1 | splits(:, 1)==2), 1); %get the devision of date between training and testing set for the current split. Exclude the videos not included in the split (0 value)
-        
-        trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1); %get the trining set feature paths 
-        vocabularyPathFeatures=trainingSetPathFeatures(1:2:end); % build the vocabulary for half of the videos of the training set
-        
-    case 'HMBD51Split2'
-     
-        trainTestSetPathFeatures=allPathFeatures(splits(:, 2)==1 | splits(:, 2)==2);
-        trainTestSetlabs=labs((splits(:, 2)==1 | splits(:, 2)==2), :);
-        trainTestSplit=splits((splits(:, 2)==1 | splits(:, 2)==2), 2);
-        
-        trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1);
-        vocabularyPathFeatures=trainingSetPathFeatures(1:2:end);
-        
-    case 'HMBD51Split3'
-        
-        trainTestSetPathFeatures=allPathFeatures(splits(:, 3)==1 | splits(:, 3)==2);
-        trainTestSetlabs=labs((splits(:, 3)==1 | splits(:, 3)==2), :);
-        trainTestSplit=splits((splits(:, 3)==1 | splits(:, 3)==2), 3);
-        
-        trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1);
-        vocabularyPathFeatures=trainingSetPathFeatures(1:2:end);
-
-    otherwise
-        warning('Not known argument: Should be:  HMBD51Split1, HMBD51Split2 or HMBD51Split3 ')    
-end
-
-
-%[vocabulary, pcaMap, st_d, skew, nElem, kurt] = CreateVocabularyKmeansPca_m(vocabularyPathFeatures, descParam, ...
-%                                                descParam.numClusters, descParam.pcaDim); 
-
-
-
-[pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
-
-                                           
-                                            
-[tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
-
-tVLAD=VLAD_1(tDesc, orgCluster.vocabulary);
-tRep=getRepresentationMultiClusters(tDesc,bovwCluster, cell_smallCls, @VLAD_1);
-
-vladNoMean=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD); 
-stdDiff=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
-
-multiVLAD=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);
-multiStdDiff=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);  
-
-
-
-fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
-parpool(10);
-parfor i=1:length(trainTestSetPathFeatures)
-    fprintf('%d \n', i)
-    
-    [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
-    
-    
-     
-    vladNoMean(i, :)=VLAD_1(desc, orgCluster.vocabulary);
-    stdDiff(i, :)=stdDiff_VLAD(desc, orgCluster.vocabulary, orgCluster.st_d);
-    
-    
-    multiVLAD(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @VLAD_1);
-    multiStdDiff(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @stdDiff_VLAD);
-
-
-     
-   
-        
-     if i == 1
-         descParamUsed
-     end
-end
-delete(gcp('nocreate'))
-fprintf('\nDone!\n');
+% global DATAopts;
+% DATAopts = HMDB51Init;
+% 
+% spl{1}='HMBD51Split1';
+% spl{2}='HMBD51Split2';
+% spl{3}='HMBD51Split3';
+% 
+% %for s=2:3
+%     
+%     
+% % Parameter settings for descriptor extraction
+% clear descParam
+% descParam.Func = @FEVid_deepFeatures;
+% descParam.MediaType = 'DeepF';
+% descParam.Layer='pool5';
+% descParam.net='TempSplit1VGG16';
+% descParam.Normalisation='None';
+% 
+% descParam.Dataset=spl{1};%descParam.Dataset=spl{s};
+% descParam
+% descParam.pcaDim = 128;
+% 
+% descParam.orgClusters=256;
+% descParam.bovwCL=16;
+% descParam.smallCL=32;
+% 
+% 
+% [allVids, labs, splits] = GetVideosPlusLabels();
+% 
+% %the baze path for features
+% bazePathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
+% 
+% %create the full path of the fetures for each video
+% allPathFeatures=cell(size(allVids));
+% for i=1:size(allVids, 1)
+%     allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/pool5.txt'];
+% end
+% 
+% 
+% %get the data for a specific split
+% switch descParam.Dataset
+%     
+%     case 'HMBD51Split1'
+%         
+%         trainTestSetPathFeatures=allPathFeatures(splits(:, 1)==1 | splits(:, 1)==2);%get all the paths for the current split
+%         trainTestSetlabs=labs((splits(:, 1)==1 | splits(:, 1)==2), :); %get all the labels for the current split
+%         trainTestSplit=splits((splits(:, 1)==1 | splits(:, 1)==2), 1); %get the devision of date between training and testing set for the current split. Exclude the videos not included in the split (0 value)
+%         
+%         trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1); %get the trining set feature paths 
+%         vocabularyPathFeatures=trainingSetPathFeatures(1:2:end); % build the vocabulary for half of the videos of the training set
+%         
+%     case 'HMBD51Split2'
+%      
+%         trainTestSetPathFeatures=allPathFeatures(splits(:, 2)==1 | splits(:, 2)==2);
+%         trainTestSetlabs=labs((splits(:, 2)==1 | splits(:, 2)==2), :);
+%         trainTestSplit=splits((splits(:, 2)==1 | splits(:, 2)==2), 2);
+%         
+%         trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1);
+%         vocabularyPathFeatures=trainingSetPathFeatures(1:2:end);
+%         
+%     case 'HMBD51Split3'
+%         
+%         trainTestSetPathFeatures=allPathFeatures(splits(:, 3)==1 | splits(:, 3)==2);
+%         trainTestSetlabs=labs((splits(:, 3)==1 | splits(:, 3)==2), :);
+%         trainTestSplit=splits((splits(:, 3)==1 | splits(:, 3)==2), 3);
+%         
+%         trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1);
+%         vocabularyPathFeatures=trainingSetPathFeatures(1:2:end);
+% 
+%     otherwise
+%         warning('Not known argument: Should be:  HMBD51Split1, HMBD51Split2 or HMBD51Split3 ')    
+% end
+% 
+% 
+% %[vocabulary, pcaMap, st_d, skew, nElem, kurt] = CreateVocabularyKmeansPca_m(vocabularyPathFeatures, descParam, ...
+% %                                                descParam.numClusters, descParam.pcaDim); 
+% 
+% 
+% 
+% [pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
+% 
+%                                            
+%                                             
+% [tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
+% 
+% tVLAD=VLAD_1(tDesc, orgCluster.vocabulary);
+% tRep=getRepresentationMultiClusters(tDesc,bovwCluster, cell_smallCls, @VLAD_1);
+% 
+% vladNoMean=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD); 
+% stdDiff=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
+% 
+% multiVLAD=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);
+% multiStdDiff=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);  
+% 
+% 
+% 
+% fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
+% parpool(10);
+% parfor i=1:length(trainTestSetPathFeatures)
+%     fprintf('%d \n', i)
+%     
+%     [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
+%     
+%     
+%      
+%     vladNoMean(i, :)=VLAD_1(desc, orgCluster.vocabulary);
+%     stdDiff(i, :)=stdDiff_VLAD(desc, orgCluster.vocabulary, orgCluster.st_d);
+%     
+%     
+%     multiVLAD(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @VLAD_1);
+%     multiStdDiff(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @stdDiff_VLAD);
+% 
+% 
+%      
+%    
+%         
+%      if i == 1
+%          descParamUsed
+%      end
+% end
+% delete(gcp('nocreate'))
+% fprintf('\nDone!\n');
 
 %% Do classification
-initDim=length(orgCluster.vocabulary{1});
+initDim=size(orgCluster.vocabulary,2);
 alpha=0.5;
 
 intraL2_vladNoMean = intranormalizationFeatures( vladNoMean, initDim );
