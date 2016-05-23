@@ -10,11 +10,11 @@ spl{3}='HMBD51Split3';
 clear descParam
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG';
+descParam.IDTfeature='HOF';
 descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
 
 
-descParam.pcaDim = 48;
+descParam.pcaDim = 56;
 
 descParam.orgClusters=256;
 descParam.bovwCL=16;
@@ -46,7 +46,7 @@ for i=1:length(spl)
         acc8=mean(all_accuracy{8})
         
         
-        fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ACCV2016/results/results_HMDB51_Features%s_Feature%s_Network%s_PCAdim%d_norm%s.txt', ...
+        fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ACCV2016/results/results_HMDB51_Features%s_Desc%s_PCAdim%d_norm%s.txt', ...
                 descParam.MediaType, descParam.IDTfeature, descParam.pcaDim, descParam.Normalisation);
             
         fileID=fopen(fileName, 'a');
