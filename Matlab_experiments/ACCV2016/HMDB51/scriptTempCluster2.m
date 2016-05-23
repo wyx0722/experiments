@@ -11,7 +11,7 @@ clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
-descParam.net='SPVGG19'; %!!!!!
+descParam.net='TempSplit1VGG16';
 descParam.Normalisation='None';
 
 
@@ -20,18 +20,20 @@ descParam.pcaDim = 128;
 descParam.orgClusters=256;
 
 descParam.smallCL=32;
-Cl=[8 32 64];
 
 
-bazePathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_VGG_19_features_rawFrames/Videos/'
+cl=[8 32 64];
+
+
+bazePathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
 
 
 for i=1:length(spl)
     descParam.Dataset=spl{i};%descParam.Dataset=spl{s};
     
-    for j=1:length(Cl)
+    for j=1:length(cl)
     
-        descParam.bovwCL=Cl(j);
+        descParam.bovwCL=cl(j);
         descParam
         
         [all_accuracy, all_clfsOut ]=hmdb51Framework(descParam, bazePathFeatures );
