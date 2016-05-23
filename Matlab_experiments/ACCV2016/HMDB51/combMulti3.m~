@@ -4,11 +4,10 @@
 %% Do classification
 alpha=0.5;
 
-nEncoding=7;
+nEncoding=9;
 allDist=cell(1, nEncoding);
 
 initDim=size(intraL2_multiVLAD, 2)/size(bovwCluster.vocabulary, 1);
-
 n_intraL2_multiVLAD=intranormalizationFeatures_L2_PN( intraL2_multiVLAD, initDim, 0.5 );
 n_intraL2_multiStdDiff=intranormalizationFeatures_L2_PN( intraL2_multiStdDiff, initDim, 0.5 );
 
@@ -23,21 +22,18 @@ temp=NormalizeRowsUnit(n_intraL2_multiVLAD);
 allDist{2}=temp * temp';
 
 temp=NormalizeRowsUnit(n_intraL2_multiStdDiff);
-allDist{3}=temp * temp';
+allDist{2}=temp * temp';
 
 
 temp=NormalizeRowsUnit(cat(2,n_intraL2_vladNoMean,n_intraL2_stdDiff ));
 allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(cat(2,n_intraL2_multiVLAD,n_intraL2_multiStdDiff ));
-allDist{5}=temp * temp';
 
 
 temp=NormalizeRowsUnit(cat(2,n_intraL2_vladNoMean, n_intraL2_multiVLAD ));
 allDist{6}=temp * temp';
 
 
-temp=NormalizeRowsUnit(cat(2,n_intraL2_vladNoMean,n_intraL2_stdDiff, n_intraL2_multiVLAD, n_intraL2_multiStdDiff));
+temp=NormalizeRowsUnit(cat(2,n_intraL2_vladNoMean,n_intraL2_stdDiff, n_intraL2_multiVLAD, n_intraL2_stdDiff));
 allDist{7}=temp * temp';
 
 
