@@ -4,37 +4,32 @@
 %% Do classification
 alpha=0.5;
 
-nEncoding=9;
+nEncoding=8;
 allDist=cell(1, nEncoding);
 
-temp=NormalizeRowsUnit(PowerNormalization(vladNoMean, alpha));
+temp=NormalizeRowsUnit(intraL2_vladNoMean);
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(stdDiff, alpha));
+temp=NormalizeRowsUnit(intraL2_stdDiff);
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(multiVLAD, alpha));
+temp=NormalizeRowsUnit(intraL2_multiVLAD);
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(multiStdDiff, alpha));
+temp=NormalizeRowsUnit(intraL2_multiStdDiff);
 allDist{4}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,vladNoMean,stdDiff ), alpha));
+temp=NormalizeRowsUnit(cat(2,intraL2_vladNoMean,intraL2_stdDiff ));
 allDist{5}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,multiVLAD, multiStdDiff ), alpha));
+temp=NormalizeRowsUnit(cat(2,intraL2_multiVLAD,intraL2_multiStdDiff ));
 allDist{6}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,vladNoMean, stdDiff, multiVLAD, multiStdDiff), alpha));
+temp=NormalizeRowsUnit(cat(2,intraL2_vladNoMean, intraL2_multiVLAD ));
 allDist{7}=temp * temp';
 
-
-temp=NormalizeRowsUnit(PowerNormalization(cat(2, vladNoMean,multiVLAD ), alpha));
+temp=NormalizeRowsUnit(cat(2,intraL2_vladNoMean,intraL2_stdDiff, intraL2_multiVLAD, intraL2_multiStdDiff));
 allDist{8}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(cat(2, stdDiff,multiStdDiff ), alpha));
-allDist{9}=temp * temp';
-
 
 clear temp
 
@@ -74,7 +69,7 @@ acc5=mean(all_accuracy{5})
 acc6=mean(all_accuracy{6})
 acc7=mean(all_accuracy{7})
 acc8=mean(all_accuracy{8})
-acc9=mean(all_accuracy{9})
+
 
 
 % fileName=sprintf('/home/ionut/experiments/Matlab_experiments/ACMMM2016/results/results_HMDB51_Features%s_Layer%s_Network%s_PCAdim%d_clusters%d_norm%s__VLAD.txt', descParam.MediaType,descParam.Layer, descParam.net,descParam.pcaDim, descParam.numClusters, descParam.Normalisation); 

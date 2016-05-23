@@ -1,0 +1,25 @@
+
+spl{1}='HMBD51Split1';
+spl{2}='HMBD51Split2';
+spl{3}='HMBD51Split3';
+
+%for s=2:3
+    
+    
+% Parameter settings for descriptor extraction
+clear descParam
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+descParam.net='TempSplit1VGG16';
+descParam.Normalisation='None';
+
+descParam.Dataset=spl{1};%descParam.Dataset=spl{s};
+descParam
+descParam.pcaDim = 128;
+
+descParam.orgClusters=256;
+descParam.bovwCL=16;
+descParam.smallCL=32;
+
+bazePathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
