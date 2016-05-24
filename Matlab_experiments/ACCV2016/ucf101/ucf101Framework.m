@@ -15,9 +15,9 @@ allPathFeatures=cell(size(allVids));
 for i=1:size(allVids, 1)
     
     if strfind(descParam.MediaType, 'DeepF')>0 
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer '.txt'];
+        allPathFeatures{i}=[bazePathFeatures allVids{i} '/' descParam.Layer '.txt'];
     elseif strfind(descParam.MediaType, 'IDT')>0 
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
+        allPathFeatures{i}=[bazePathFeatures allVids{i}];
     end
 end
 
