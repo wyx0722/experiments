@@ -1,5 +1,5 @@
-function [pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(imNames, descParam, numClusters_original, nCl_BOVW, nClSmall, pcaDim, ...
-                                                         numDescriptors, forceCreate)
+function [pcaMap, orgCluster, bovwCluster, cell_smallCls, bigCluster] = CreateVocabularyKmeansPca_sepVocab(imNames, descParam, numClusters_original, nCl_BOVW, nClSmall, pcaDim, ...
+                                                         sizeBigCluster, numDescriptors, forceCreate)
 % [vocabulary, pcaMap] = CreateVocabularyKmeansPca(imNames, descParam, numClusters, pcaDim, ...
 %                                                          numDescriptors, forceCreate)
 %
@@ -64,9 +64,26 @@ for i=1: size(vocabulary, 1)
 end
 orgCluster.vocabulary=vocabulary;
 
+%for big vocabulary
+if ~exist('sizeBigCluster', 'var')
+    sizeBigCluster = 512;
+end
+
+[assign, ~, vocabulary] = kmeansj(descriptors, sizeBigCluster, 100);
+
+bigCluster.st_d=zeros(size(vocabulary));
+bigCluster.skew=zeros(size(vocabulary));
+bigCluster.kurt=zeros(size(vocabulary));
+bigCluster.nElem=zeros(size(vocabulary, 1), 1);
+for i=1: size(vocabulary, 1)
+    bigCluster.st_d(i, :)=std(descriptors(assign==i, :), 1);
+    bigCluster.skew(i, :)=skewness(descriptors(assign==i, :));
+    bigCluster.kurt(i, :)=kurtosis(descriptors(assign==i, :));
+    bigCluster.nElem(i)=sum(assign==i);   
+end
+bigCluster.vocabulary=vocabulary;
 
 %for the BoVW cluster
-
 [assign, ~, vocabulary] = kmeansj(descriptors, nCl_BOVW, 100);
 
 bovwCluster.st_d=zeros(size(vocabulary));
