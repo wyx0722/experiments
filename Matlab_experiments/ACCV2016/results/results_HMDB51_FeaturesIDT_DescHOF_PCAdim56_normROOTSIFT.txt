@@ -22,3 +22,15 @@ Dataset and Split: HMBD51Split2, orgClusters:256, bovwCL:16, smallCL32, with int
 Dataset and Split: HMBD51Split2, orgClusters:256, bovwCL:16, smallCL64, with intraL2 and at the end PNL2 --> 
  --> vladNoMean acc= 0.4464   SD acc= 0.4529  M-VLAD acc= 0.4667  M-SD acc= 0.4654  SD-VLAD acc= 0.4902  SDM-VLAD (M-VLAD + M-SD) acc= 0.5033   VLAD + M-VLAD acc= 0.4765  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.5039 
 
+Dataset and Split: HMBD51Split3, orgClusters:256, bovwCL:16, smallCL8, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.4399   SD acc= 0.4549  M-VLAD acc= 0.4052  M-SD acc= 0.4196  SD-VLAD acc= 0.4948  SDM-VLAD (M-VLAD + M-SD) acc= 0.4608   VLAD + M-VLAD acc= 0.4366  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.4915 
+
+Dataset and Split: HMBD51Split3, orgClusters:256, bovwCL:16, smallCL16, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.4346   SD acc= 0.4510  M-VLAD acc= 0.4176  M-SD acc= 0.4490  SD-VLAD acc= 0.5000  SDM-VLAD (M-VLAD + M-SD) acc= 0.4837   VLAD + M-VLAD acc= 0.4418  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.5072 
+
+Dataset and Split: HMBD51Split3, orgClusters:256, bovwCL:16, smallCL32, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.4431   SD acc= 0.4353  M-VLAD acc= 0.4510  M-SD acc= 0.4569  SD-VLAD acc= 0.4980  SDM-VLAD (M-VLAD + M-SD) acc= 0.4993   VLAD + M-VLAD acc= 0.4654  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.5085 
+
+Dataset and Split: HMBD51Split3, orgClusters:256, bovwCL:16, smallCL64, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.4392   SD acc= 0.4490  M-VLAD acc= 0.4765  M-SD acc= 0.4706  SD-VLAD acc= 0.5033  SDM-VLAD (M-VLAD + M-SD) acc= 0.5098   VLAD + M-VLAD acc= 0.4876  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.5072 
+

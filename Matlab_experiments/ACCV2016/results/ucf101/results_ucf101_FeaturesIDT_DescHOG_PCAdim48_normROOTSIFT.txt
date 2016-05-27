@@ -1,0 +1,9 @@
+Dataset and Split: UCF101:1, orgClusters:256, bovwCL:16, smallCL32, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.5920   SD acc= 0.6025  M-VLAD acc= 0.5991  M-SD acc= 0.6100  SD-VLAD acc= 0.6503  SDM-VLAD (M-VLAD + M-SD) acc= 0.6525   VLAD + M-VLAD acc= 0.6076  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.6528 noMeanVLAD512 acc= 0.6014 
+
+Dataset and Split: UCF101:2, orgClusters:256, bovwCL:16, smallCL32, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.5882   SD acc= 0.6142  M-VLAD acc= 0.6008  M-SD acc= 0.6294  SD-VLAD acc= 0.6562  SDM-VLAD (M-VLAD + M-SD) acc= 0.6598   VLAD + M-VLAD acc= 0.6036  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.6665 noMeanVLAD512 acc= 0.6076 
+
+Dataset and Split: UCF101:3, orgClusters:256, bovwCL:16, smallCL32, with intraL2 and at the end PNL2 --> 
+ --> vladNoMean acc= 0.5787   SD acc= 0.6030  M-VLAD acc= 0.5917  M-SD acc= 0.6196  SD-VLAD acc= 0.6532  SDM-VLAD (M-VLAD + M-SD) acc= 0.6582   VLAD + M-VLAD acc= 0.5974  final SDM-VLAD (VLAD + SD + M-SD + SDM-VLAD) acc= 0.6626 noMeanVLAD512 acc= 0.5943 
+
