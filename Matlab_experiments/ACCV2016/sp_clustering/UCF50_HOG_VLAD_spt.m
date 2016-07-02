@@ -80,7 +80,7 @@ t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 
 spV256=zeros(length(vids), length(t), 'like', t);
 
 
-parpool(13);
+parpool(5);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(pathFeatures));
