@@ -7,7 +7,7 @@ clear descParam
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
 descParam.IDTfeature='HOG_iTraj';
-descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
+descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
 
 
 if strfind(descParam.IDTfeature,'HOF')
@@ -18,7 +18,7 @@ elseif  strfind(descParam.IDTfeature,'HOG') || strfind(descParam.IDTfeature,'MBH
 end
 
 % pcaDim & vocabulary size
-descParam.pcaDim = sizeDesc/2;
+descParam.pcaDim = 0;
 
 descParam.Clusters=[256 512];
 descParam.spClusters=[8 32 64 256];
@@ -67,20 +67,20 @@ v256=zeros(length(vids), length(t), 'like', t);
 t=max_pooling(tDesc, cell_Clusters{2}.vocabulary);
 v512=zeros(length(vids), length(t), 'like', t); 
 
-t=max_pooling_sp(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{1}.vocabulary);
+t=max_pooling_sp(tDesc,  cell_spClusters{1}.vocabulary, info.infoTraj(:, 8:9));
 spV8=zeros(length(vids), length(t), 'like', t);
 
-t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{2}.vocabulary);
+t=max_pooling_sp(tDesc,  cell_spClusters{2}.vocabulary, info.infoTraj(:, 8:9));
 spV32=zeros(length(vids), length(t), 'like', t);
 
-t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{3}.vocabulary);
+t=max_pooling_sp(tDesc,  cell_spClusters{3}.vocabulary, info.infoTraj(:, 8:9));
 spV64=zeros(length(vids), length(t), 'like', t);
 
-t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{4}.vocabulary);
+t=max_pooling_sp(tDesc,  cell_spClusters{4}.vocabulary, info.infoTraj(:, 8:9));
 spV256=zeros(length(vids), length(t), 'like', t);
 
 
-parpool(13);
+parpool(10);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(pathFeatures));
@@ -92,13 +92,13 @@ parfor i=1:length(pathFeatures)
    % desc = NormalizeRowsUnit(desc);
    
     
-    v256(i, :) = VLAD_1_mean(desc, cell_Clusters{1}.vocabulary);
-    v512(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
+    v256(i, :) = max_pooling(desc, cell_Clusters{1}.vocabulary);
+    v512(i, :) = max_pooling(desc, cell_Clusters{2}.vocabulary);
     
-    spV8(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{1}.vocabulary);
-    spV32(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{2}.vocabulary);
-    spV64(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{3}.vocabulary);
-    spV256(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{4}.vocabulary);
+    spV8(i, :) =  max_pooling_sp(desc,  cell_spClusters{1}.vocabulary, info.infoTraj(:, 8:9));
+    spV32(i, :) = max_pooling_sp(desc,  cell_spClusters{2}.vocabulary, info.infoTraj(:, 8:9));
+    spV64(i, :) = max_pooling_sp(desc,  cell_spClusters{3}.vocabulary, info.infoTraj(:, 8:9));
+    spV256(i, :) = max_pooling_sp(desc,  cell_spClusters{4}.vocabulary, info.infoTraj(:, 8:9));
     
    
          if i == 1
@@ -117,22 +117,22 @@ nEncoding=6;
 allDist=cell(1, nEncoding);
 alpha=0.5;
 
-temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
+temp=NormalizeRowsUnit(v256);
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
+temp=NormalizeRowsUnit(v512);
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
+temp=NormalizeRowsUnit(cat(2,v256, spV8));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
+temp=NormalizeRowsUnit(cat(2, v256, spV32));
 allDist{4}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
+temp=NormalizeRowsUnit(cat(2,v256, spV64));
 allDist{5}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
+temp=NormalizeRowsUnit(cat(2, v256, spV256));
 allDist{6}=temp * temp';
 
 clear temp
