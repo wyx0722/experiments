@@ -7,15 +7,30 @@ descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
 descParam.IDTfeature='HOG_iTraj';
 descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
+descParam.spInfo='sp';
+
+if strfind(descParam.IDTfeature,'HOF')
+    sizeDesc=108;
+    
+elseif  strfind(descParam.IDTfeature,'HOG') || strfind(descParam.IDTfeature,'MBHx') || strfind(descParam.IDTfeature,'MBHy')  
+    sizeDesc=96;   
+end
+
+% pcaDim & vocabulary size
+descParam.pcaDim = sizeDesc/2;
+
+descParam.Clusters=[256 512];
+descParam.spClusters=[8 32 64 256];
 
 
+descParam.Dataset='HMBD51Split1';
 
 
 
 [allVids, labs, splits] = GetVideosPlusLabels();
 
 %the baze path for features
-bazePathFeatures=pathFeat
+bazePathFeatures='/home/ionut/Data/iDT_Features_HMDB51/Videos/'
 descParam
 
 %create the full path of the fetures for each video
@@ -70,25 +85,36 @@ end
 
 
 
-[pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
-
+%[pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
+[cell_Clusters, cell_spClusters, pcaMap] = CreateVocabularyKmeansPca_spCl(vocabularyPathFeatures, descParam);
                                            
                                             
-[tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
 
-tVLAD=VLAD_1(tDesc, orgCluster.vocabulary);
-tRep=getRepresentationMultiClusters(tDesc,bovwCluster, cell_smallCls, @VLAD_1);
 
-vladNoMean=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD); 
-stdDiff=zeros(length(trainTestSetPathFeatures), length(tVLAD), 'like', tVLAD);
+[tDesc info] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);
+    
+t=VLAD_1_mean(tDesc, cell_Clusters{1}.vocabulary);
+v256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
-multiVLAD=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);
-multiStdDiff=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);  
+t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
+v512=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
+
+t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{1}.vocabulary);
+spV8=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{2}.vocabulary);
+spV32=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{3}.vocabulary);
+spV64=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{4}.vocabulary);
+spV256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
-parpool(10);
+parpool(5);
 parfor i=1:length(trainTestSetPathFeatures)
     fprintf('%d \n', i)
     
@@ -96,13 +122,14 @@ parfor i=1:length(trainTestSetPathFeatures)
     
     
      
-    vladNoMean(i, :)=VLAD_1(desc, orgCluster.vocabulary);
-    stdDiff(i, :)=stdDiff_VLAD(desc, orgCluster.vocabulary, orgCluster.st_d);
+    v256(i, :) = VLAD_1_mean(desc, cell_Clusters{1}.vocabulary);
+    v512(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
     
-    multiVLAD(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @VLAD_1);
-    multiStdDiff(i, :)=getRepresentationMultiClusters(desc,bovwCluster, cell_smallCls, @stdDiff_VLAD);
-
-
+    spV8(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{1}.vocabulary);
+    spV32(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{2}.vocabulary);
+    spV64(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{3}.vocabulary);
+    spV256(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:9), cell_spClusters{4}.vocabulary);
+    
      
    
         
@@ -114,40 +141,27 @@ delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 %% Do classification
-initDim=size(orgCluster.vocabulary,2);
+nEncoding=6;
+allDist=cell(1, nEncoding);
 alpha=0.5;
 
-intraL2_vladNoMean = intranormalizationFeatures( vladNoMean, initDim );
-intraL2_stdDiff = intranormalizationFeatures( stdDiff, initDim );
-intraL2_multiVLAD = intranormalizationFeatures( multiVLAD, initDim );
-intraL2_multiStdDiff = intranormalizationFeatures( multiStdDiff, initDim );
-
-nEncoding=8;
-allDist=cell(1, nEncoding);
-
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_vladNoMean, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_stdDiff, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_multiVLAD, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(intraL2_multiStdDiff, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
 allDist{4}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,intraL2_vladNoMean,intraL2_stdDiff ), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
 allDist{5}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,intraL2_multiVLAD,intraL2_multiStdDiff ), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
 allDist{6}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,intraL2_vladNoMean, intraL2_multiVLAD ), alpha));
-allDist{7}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(cat(2,intraL2_vladNoMean,intraL2_stdDiff, intraL2_multiVLAD, intraL2_multiStdDiff), alpha));
-allDist{8}=temp * temp';
 
 clear temp
 
