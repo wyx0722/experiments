@@ -8,7 +8,7 @@ addpath('./..')
 clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
-descParam.Layer='conv5_3';
+descParam.Layer='pool5';
 descParam.net='TempSplit1VGG16';
 descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
 
@@ -36,7 +36,7 @@ descParam.Dataset='HMBD51Split1';
 [allVids, labs, splits] = GetVideosPlusLabels();
 
 %the baze path for features
-bazePathFeatures='/home/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
+bazePathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
 descParam
 
 %create the full path of the fetures for each video
@@ -92,7 +92,7 @@ end
 
 
 %[pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
-[cell_Clusters, cell_spClusters, pcaMap] = CreateVocabularyKmeansPca_sptCl(vocabularyPathFeatures, descParam);
+[cell_Clusters, cell_spClusters, pcaMap] = CreateVocabularyDefaultKmeansPca_sptCl(vocabularyPathFeatures, descParam);
                                            
                                             
 
