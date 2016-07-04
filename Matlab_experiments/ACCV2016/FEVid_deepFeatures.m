@@ -13,4 +13,4 @@ if ~isfield(descParam, 'NormFeatureMaps')
 end
 
 [desc, spInfo] = maps2features(featurePath, descParam.Layer, descParam.NormFeatureMaps);
-info.spinfo=spInfo;
+info.spInfo=spInfo;

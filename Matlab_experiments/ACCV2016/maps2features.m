@@ -45,7 +45,8 @@ switch layer
         end      
         fclose(fileID);
         
-        spInfo=ones(size(featuresVideo, 1), 2);
+        spInfo=ones(size(featuresVideo, 1), 3);
+        spInfo(:, 3)=(1:nFeatursMaps)/nFeatursMaps;
         
     otherwise
        fprintf('Unkonwn parameter!!!! the layer should be pool4, conv5_1, conv5_3, conv5_4, pool5, fc6, fc7   ...'); 
@@ -74,12 +75,14 @@ function getFeatures
 
 
     %get spatial informaton of the features: the pozition on the featuresMap
-    spInfo=zeros(size(featuresVideo, 1), 2);
+    spInfo=zeros(size(featuresVideo, 1), 3);
+    pozFrame=(1:nFeatursMaps)./nFeatursMaps;
     k=1;
     for i=1:rows
         for j=1:cols
-           spInfo(k*step-step+1:k*step, 1)=i;
-           spInfo(k*step-step+1:k*step, 2)=j;
+           spInfo(k*step-step+1:k*step, 1)=i/rows;
+           spInfo(k*step-step+1:k*step, 2)=j/cols;
+           spInfo(k*step-step+1:k*step, 3)=pozFrame;
            k=k+1;             
         end
     end

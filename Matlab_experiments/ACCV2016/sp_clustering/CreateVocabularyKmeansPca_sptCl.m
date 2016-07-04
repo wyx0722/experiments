@@ -76,7 +76,13 @@ end
 
 
 cell_spClusters=cell(1, size(descParam.spClusters, 2));
-sptInfo=info.infoTraj(:, 8:10);
+
+if  strfind(descParam.MediaType,'IDT')
+    sptInfo=info.infoTraj(:, 8:10);
+else if strfind(descParam.MediaType,'DeepF')
+     sptInfo=info.spInfo; 
+    end
+end
 
 for i=1: size(descParam.spClusters, 2)
     
