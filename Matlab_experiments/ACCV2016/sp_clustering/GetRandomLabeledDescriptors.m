@@ -40,7 +40,15 @@ for i=1:length(imNames)
             numI = min(length(randI), numPerInstance(cI));
             
             descT{cI} = currDesc(randI(1:numI),:);
-            infoT{cI} = currInfo.infoTraj(randI(1:numI),:);%Ionut!!!!
+            
+            %Ionut!!!!
+            if strfind(descParam.MediaType,'DeepF')>0
+                infoT{cI} = currInfo.spInfo(randI(1:numI),:);
+            else if strfind(descParam.MediaType,'IDT')>0
+                    infoT{cI} = currInfo.infoTraj(randI(1:numI),:);
+                end
+            end
+            %end
             
             currLabs = zeros(numI,numClasses);
             currLabs(:,cI) = 1;
@@ -55,7 +63,16 @@ for i=1:length(imNames)
         totalNumDescriptors = sum(numPerInstance .* numExamples);
         desc = zeros(totalNumDescriptors, size(descTemp,2));
         descLabs = zeros(totalNumDescriptors, numClasses);
-        info.infoTraj=zeros(totalNumDescriptors, size(currInfo.infoTraj,2)); %Ionut
+        
+        %Ionut!!!!
+        if strfind(descParam.MediaType,'DeepF')>0
+            info.spInfo=zeros(totalNumDescriptors, size(currInfo.spInfo,2));
+        else if strfind(descParam.MediaType,'IDT')>0
+                info.infoTraj=zeros(totalNumDescriptors, size(currInfo.infoTraj,2));
+            end
+        end
+        %end
+        
     end
     
     % Add random descriptors to the final set
@@ -64,7 +81,16 @@ for i=1:length(imNames)
         iE = descI + numDescT - 1;
         desc(iB:iE,:) = cat(1, descT{:});
         descLabs(iB:iE,:) = cat(1, descLabsT{:});
-        info.infoTraj(iB:iE,:)=cat(1, infoT{:}); %Ionut!!!!
+ 
+        %Ionut!!!!
+        if strfind(descParam.MediaType,'DeepF')>0
+            info.spInfo(iB:iE,:)=cat(1, infoT{:});
+        else if strfind(descParam.MediaType,'IDT')>0
+                info.infoTraj(iB:iE,:)=cat(1, infoT{:});
+            end
+        end
+        %end
+        
         descI = iE+1;
     end
 end
@@ -73,4 +99,11 @@ fprintf('\n');
 % Delete overallocated memory
 desc = desc(1:descI-1,:);
 descLabs = descLabs(1:descI-1,:);
-info.infoTraj = info.infoTraj(1:descI-1,:); %Ionut!!!
+%Ionut!!!!
+if strfind(descParam.MediaType,'DeepF')>0
+    info.spInfo = info.spInfo(1:descI-1,:);
+else if strfind(descParam.MediaType,'IDT')>0
+        info.infoTraj = info.infoTraj(1:descI-1,:);
+    end
+end
+%end
