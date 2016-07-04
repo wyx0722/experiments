@@ -25,7 +25,7 @@ switch descParam.MediaType
 end
 
 
-descParam.Clusters=[256 512];
+descParam.Clusters=[256 320 512];
 descParam.spClusters=[8 32 64 256];
 
 
@@ -103,6 +103,9 @@ t=VLAD_1_mean(tDesc, cell_Clusters{1}.vocabulary);
 v256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
 t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
+v320=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
 v512=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
 t=VLAD_1_mean_spClustering(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
@@ -129,7 +132,8 @@ parfor i=1:length(trainTestSetPathFeatures)
     
      
     v256(i, :) = VLAD_1_mean(desc, cell_Clusters{1}.vocabulary);
-    v512(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
+    v320(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
+    v512(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
     
     spV8(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     spV32(i, :) = VLAD_1_mean_spClustering(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
@@ -147,27 +151,30 @@ delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 %% Do classification
-nEncoding=6;
+nEncoding=7;
 allDist=cell(1, nEncoding);
 alpha=0.5;
 
 temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(v320, alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
 allDist{4}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
 allDist{5}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
 allDist{6}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
+allDist{7}=temp * temp';
 
 clear temp
 
