@@ -6,10 +6,11 @@ addpath('./../..')
 addpath('./..')
 
 clear descParam
-descParam.Func = @FEVid_IDT;
-descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
-descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+descParam.net='SpVGG19';
+descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
 
 switch descParam.MediaType
     case 'IDT'
@@ -35,7 +36,7 @@ descParam.Dataset='HMBD51Split1';
 [allVids, labs, splits] = GetVideosPlusLabels();
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_VGG_19_features_rawFrames/Videos/'
 descParam
 
 %create the full path of the fetures for each video
@@ -107,16 +108,16 @@ v320=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
 v512=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
 spV8=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{2}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
 spV32=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{3}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
 spV64=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{4}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
 spV256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 
@@ -135,10 +136,10 @@ parfor i=1:length(trainTestSetPathFeatures)
     v320(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
     v512(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
     
-    spV8(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{2}.vocabulary);
-    spV64(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{3}.vocabulary);
-    spV256(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{4}.vocabulary);
+    spV8(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+    spV64(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    spV256(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
     
      
    
