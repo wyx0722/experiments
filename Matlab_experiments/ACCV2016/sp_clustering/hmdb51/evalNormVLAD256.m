@@ -1,27 +1,17 @@
 
 
 %% Do classification
-nEncoding=5;
+nEncoding=2;
 allDist=cell(1, nEncoding);
 alpha=0.5;
 
 
 
-
-temp=NormalizeRowsUnit(PowerNormalization(spV64_intraL2, alpha));
+temp=NormalizeRowsUnit(v256);
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64_intraPNL2, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
 allDist{2}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV64_compL2, alpha));
-allDist{3}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV64_compPNL2, alpha));
-allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(spV64);
-allDist{5}=temp * temp';
 
 
 clear temp
