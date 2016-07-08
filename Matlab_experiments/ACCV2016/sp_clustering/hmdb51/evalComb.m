@@ -1,7 +1,7 @@
 
 
 %% Do classification
-nEncoding=7;
+nEncoding=2;
 allDist=cell(1, nEncoding);
 alpha=0.5;
 
@@ -9,26 +9,13 @@ d=descParam.pcaDim
 clD=descParam.Clusters(1)
 spClD=descParam.spClusters(3)
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64(:, clD*d+1:end), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(cat(2,spV8,spV32(:, clD*d+1:end),spV64(:, clD*d+1:end), spV256(:, clD*d+1:end)), alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64(:, clD*d+1:end-(spClD*clD)), alpha));
+temp=NormalizeRowsUnit(PowerNormalization(cat(2, spV8, spV32(:, clD*d+1:end),spV64(:, clD*d+1:end)), alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64(:, end-(spClD*clD-1):end), alpha));
-allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
-allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
-allDist{5}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
-allDist{6}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
-allDist{7}=temp * temp';
 
 clear temp
 
