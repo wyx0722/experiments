@@ -9,7 +9,7 @@ clear descParam
 descParam.Func = @FEVid_deepFeatures;
 descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
-descParam.net='SpVGG19';
+descParam.net='TempSplit1VGG16';
 descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
 
 switch descParam.MediaType
@@ -36,7 +36,7 @@ descParam.Dataset='HMBD51Split1';
 [allVids, labs, splits] = GetVideosPlusLabels();
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_VGG_19_features_rawFrames/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
 descParam
 
 %create the full path of the fetures for each video
@@ -124,7 +124,7 @@ spM256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 nDesc=zeros(1, length(trainTestSetPathFeatures));
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
-parpool(2);
+parpool(3);
 parfor i=1:length(trainTestSetPathFeatures)
     fprintf('%d \n', i)
     
