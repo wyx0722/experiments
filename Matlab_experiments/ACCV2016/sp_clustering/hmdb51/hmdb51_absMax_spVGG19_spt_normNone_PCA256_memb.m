@@ -100,31 +100,31 @@ end
 [tDesc info] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);
     
 t=abs_max_pooling(tDesc, cell_Clusters{1}.vocabulary);
-v256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
+m256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
 t=abs_max_pooling(tDesc, cell_Clusters{2}.vocabulary);
-v320=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+m320=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 t=abs_max_pooling(tDesc, cell_Clusters{3}.vocabulary);
-v512=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
+m512=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
 t=abs_maxPooling_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-spV8=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+spM8=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 t=abs_maxPooling_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-spV32=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+spM32=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 t=abs_maxPooling_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-spV64=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+spM64=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 t=abs_maxPooling_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
-spV256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
+spM256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 
 nDesc=zeros(1, length(trainTestSetPathFeatures));
 
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
-parpool();
+parpool(2);
 parfor i=1:length(trainTestSetPathFeatures)
     fprintf('%d \n', i)
     
@@ -132,14 +132,14 @@ parfor i=1:length(trainTestSetPathFeatures)
     
     nDesc(i)=size(desc,1);
      
-    v256(i, :) = abs_max_pooling(desc, cell_Clusters{1}.vocabulary);
-    v320(i, :) = abs_max_pooling(desc, cell_Clusters{2}.vocabulary);
-    v512(i, :) = abs_max_pooling(desc, cell_Clusters{3}.vocabulary);
+    m256(i, :) = abs_max_pooling(desc, cell_Clusters{1}.vocabulary);
+    m320(i, :) = abs_max_pooling(desc, cell_Clusters{2}.vocabulary);
+    m512(i, :) = abs_max_pooling(desc, cell_Clusters{3}.vocabulary);
     
-    spV8(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    spV32(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-    spV64(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-    spV256(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
+    spM8(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    spM32(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+    spM64(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    spM256(i, :) = abs_maxPooling_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
     
      
    
@@ -156,25 +156,25 @@ nEncoding=7;
 allDist=cell(1, nEncoding);
 alpha=0.5;
 
-temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(m256, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(v320, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(m320, alpha));
 allDist{2}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(m512, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spM8, alpha));
 allDist{4}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spM32, alpha));
 allDist{5}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spM64, alpha));
 allDist{6}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spM256, alpha));
 allDist{7}=temp * temp';
 
 clear temp
