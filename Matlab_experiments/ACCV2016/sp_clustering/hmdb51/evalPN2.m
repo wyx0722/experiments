@@ -17,8 +17,10 @@ end
 
 clear temp
 
-all_clfsOut=cell(1,nEncoding);
-all_accuracy=cell(1,nEncoding);
+all_clfsOut=cell(nEncoding,3);
+all_accuracy=cell(nEncoding,3);
+mean_all_clfsOut=cell(nEncoding,1);
+mean_all_accuracy=cell(nEncoding,1);
 
 cRange = 100;
 nReps = 1;
