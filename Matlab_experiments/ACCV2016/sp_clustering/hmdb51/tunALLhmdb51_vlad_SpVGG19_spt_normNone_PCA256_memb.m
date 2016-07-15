@@ -26,8 +26,8 @@ switch descParam.MediaType
 end
 
 
-descParam.Clusters=[256 320 512];
-descParam.spClusters=[8 32 64 256];
+descParam.Clusters=[256 200 512];
+descParam.spClusters=[10:10:100];
 
 %the baze path for features
 bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_VGG_19_features_rawFrames/Videos/'
@@ -72,28 +72,46 @@ t=VLAD_1_mean(tDesc, cell_Clusters{1}.vocabulary);
 v256=zeros(length(allPathFeatures), length(t), 'like', t); 
 
 t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
-v320=zeros(length(allPathFeatures), length(t), 'like', t);
+v200=zeros(length(allPathFeatures), length(t), 'like', t);
 
 t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
 v512=zeros(length(allPathFeatures), length(t), 'like', t); 
 
 t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-spV8=zeros(length(allPathFeatures), length(t), 'like', t);
+spV10=zeros(length(allPathFeatures), length(t), 'like', t);
 
 t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-spV32=zeros(length(allPathFeatures), length(t), 'like', t);
+spV20=zeros(length(allPathFeatures), length(t), 'like', t);
 
 t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-spV64=zeros(length(allPathFeatures), length(t), 'like', t);
+spV30=zeros(length(allPathFeatures), length(t), 'like', t);
 
 t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
-spV256=zeros(length(allPathFeatures), length(t), 'like', t);
+spV40=zeros(length(allPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
+spV50=zeros(length(allPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary);
+spV60=zeros(length(allPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{7}.vocabulary);
+spV70=zeros(length(allPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{8}.vocabulary);
+spV80=zeros(length(allPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{9}.vocabulary);
+spV90=zeros(length(allPathFeatures), length(t), 'like', t);
+
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{10}.vocabulary);
+spV100=zeros(length(allPathFeatures), length(t), 'like', t);
 
 
 nDesc=zeros(1, length(allPathFeatures));
 
 fprintf('Feature extraction  for %d vids: ', length(allPathFeatures));
-parpool(4);
+parpool(3);
 parfor i=1:length(allPathFeatures)
     fprintf('%d \n', i)
     
@@ -102,13 +120,19 @@ parfor i=1:length(allPathFeatures)
     nDesc(i)=size(desc,1);
      
     v256(i, :) = VLAD_1_mean(desc, cell_Clusters{1}.vocabulary);
-    v320(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
+    v200(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
     v512(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
     
-    spV8(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-    spV64(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-    spV256(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
+    spV10(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    spV20(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+    spV30(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    spV40(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
+    spV50(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
+    spV60(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary);
+    spV70(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{7}.vocabulary);
+    spV80(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{8}.vocabulary);
+    spV90(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{9}.vocabulary);
+    spV100(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{10}.vocabulary);
     
      
    
@@ -121,30 +145,49 @@ delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 %% Do classification
-nEncoding=7;
+nEncoding=13;%!!!!!!!!change!!!!!!
 allDist=cell(1, nEncoding);
 alpha=0.5;
 
 temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(v320, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(v200, alpha));
 allDist{2}=temp * temp';
 
 temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV8, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV10, alpha));
 allDist{4}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV20, alpha));
 allDist{5}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV64, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV30, alpha));
 allDist{6}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(spV256, alpha));
+temp=NormalizeRowsUnit(PowerNormalization(spV40, alpha));
 allDist{7}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV50, alpha));
+allDist{8}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV60, alpha));
+allDist{9}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV70, alpha));
+allDist{10}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV80, alpha));
+allDist{11}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV90, alpha));
+allDist{12}=temp * temp';
+
+temp=NormalizeRowsUnit(PowerNormalization(spV100, alpha));
+allDist{13}=temp * temp';
+
 
 clear temp
 
@@ -159,7 +202,7 @@ nReps = 1;
 nFolds = 3;
 
 
-parpool(nEncoding);
+parpool(7);
 parfor k=1:nEncoding
     k
     for i=1:3
