@@ -107,16 +107,16 @@ v320=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 t=minVLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
 v512=zeros(length(trainTestSetPathFeatures), length(t), 'like', t); 
 
-t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{1}.vocabulary);
+t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
 spV8=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
-t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{2}.vocabulary);
+t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{2}.vocabulary);
 spV32=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
-t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{3}.vocabulary);
+t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{3}.vocabulary);
 spV64=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
-t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{4}.vocabulary);
+t=minVLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{4}.vocabulary);
 spV256=zeros(length(trainTestSetPathFeatures), length(t), 'like', t);
 
 
@@ -135,10 +135,10 @@ parfor i=1:length(trainTestSetPathFeatures)
     v320(i, :) = minVLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
     v512(i, :) = minVLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
     
-    spV8(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{1}.vocabulary);
-    spV32(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{2}.vocabulary);
-    spV64(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{3}.vocabulary);
-    spV256(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj, cell_spClusters{4}.vocabulary);
+    spV8(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
+    spV32(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{2}.vocabulary);
+    spV64(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{3}.vocabulary);
+    spV256(i, :) = minVLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{4}.vocabulary);
     
      
    
