@@ -35,7 +35,7 @@ descParam.Dataset='HMBD51Split1';
 [allVids, labs, splits] = GetVideosPlusLabels();
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
 descParam
 
 %create the full path of the fetures for each video
