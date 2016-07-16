@@ -19,7 +19,7 @@ switch descParam.MediaType
     case 'IDT'
         if strfind(descParam.IDTfeature,'HOF')>0
             sizeDesc=108;   
-        elseif  strfind(descParam.IDTfeature,'HOG')>0 || strfind(descParam.IDTfeature,'MBHx')>0 || strfind(descParam.IDTfeature,'MBHy')>0  
+        elseif  strfind(descParam.IDTfeature,'HOG')>0 | strfind(descParam.IDTfeature,'MBHx')>0 | strfind(descParam.IDTfeature,'MBHy')>0  
             sizeDesc=96;   
         end
         descParam.pcaDim = sizeDesc/2;
