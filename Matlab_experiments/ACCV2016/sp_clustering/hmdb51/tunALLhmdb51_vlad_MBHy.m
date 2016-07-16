@@ -19,14 +19,13 @@ switch descParam.MediaType
     case 'IDT'
         if strfind(descParam.IDTfeature,'HOF')>0
             sizeDesc=108;   
-        elseif  strfind(descParam.IDTfeature,'HOG')>0 || strfind(descParam.IDTfeature,'MBHx')>0 || strfind(descParam.IDTfeature,'MBHy')>0  
+        else%elseif  (strfind(descParam.IDTfeature,'HOG') + strfind(descParam.IDTfeature,'MBHx') + strfind(descParam.IDTfeature,'MBHy'))>0  
             sizeDesc=96;   
         end
         descParam.pcaDim = sizeDesc/2;
     case 'DeepF'
         descParam.pcaDim=256;%!!!
 end
-
 
 descParam.Clusters=[64 128 256 512];
 descParam.spClusters=[2     4     8    16    32    64   128   256];
