@@ -1,150 +1,150 @@
-
-global DATAopts;
-DATAopts = HMDB51Init;
-
-addpath('./../..')
-addpath('./..')
-
-clear descParam
-descParam.Dataset='HMBD51_t2__';
-descParam.Func = @FEVid_deepFeatures;
-descParam.MediaType = 'DeepF';
-descParam.Layer='pool5';
-descParam.net='TempSplit1VGG16';
-descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
-alpha=0.5;%for PN !!!!!!!change!!!!!!!
-
-
-
-switch descParam.MediaType
-    case 'IDT'
-        if strfind(descParam.IDTfeature,'HOF')>0
-            sizeDesc=108;   
-        elseif  strfind(descParam.IDTfeature,'HOG')>0 || strfind(descParam.IDTfeature,'MBHx')>0 || strfind(descParam.IDTfeature,'MBHy')>0  
-            sizeDesc=96;   
-        end
-        descParam.pcaDim = sizeDesc/2;
-    case 'DeepF'
-        descParam.pcaDim=256;%!!!
-end
-
-
-descParam.Clusters=[64 128 256 512];
-descParam.spClusters=[2     4     8    16    32    64   128   256];
-
-%the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
-descParam
-
-
-
-
-
-[allVids, labs, splits] = GetVideosPlusLabels();
-
-
-
-%create the full path of the fetures for each video
-allPathFeatures=cell(size(allVids));
-for i=1:size(allVids, 1)
-    
-    if strfind(descParam.MediaType, 'DeepF')>0 
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer '.txt'];
-    elseif strfind(descParam.MediaType, 'IDT')>0 
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
-    end
-end
-
-
-
-
-%[vocabulary, pcaMap, st_d, skew, nElem, kurt] = CreateVocabularyKmeansPca_m(vocabularyPathFeatures, descParam, ...
-%                                                descParam.numClusters, descParam.pcaDim); 
-
-vocabularyPathFeatures=allPathFeatures(1:5:end);%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-%[pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
-[cell_Clusters, cell_spClusters, pcaMap] = CreateVocabularyKmeansPca_sptCl(vocabularyPathFeatures, descParam);
-                                           
-                                            
-
-
-[tDesc info] = MediaName2Descriptor(allPathFeatures{2}, descParam, pcaMap);
-   
-t=VLAD_1_mean(tDesc, cell_Clusters{1}.vocabulary);
-v64=zeros(length(allPathFeatures), length(t), 'like', t); 
-
-t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
-v128=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
-v256=zeros(length(allPathFeatures), length(t), 'like', t); 
-
-t=VLAD_1_mean(tDesc, cell_Clusters{4}.vocabulary);
-v512=zeros(length(allPathFeatures), length(t), 'like', t); 
-
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-spV2=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-spV4=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-spV8=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
-spV16=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
-spV32=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary);
-spV64=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{7}.vocabulary);
-spV128=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{8}.vocabulary);
-spV256=zeros(length(allPathFeatures), length(t), 'like', t);
-
-
-
-nDesc=zeros(1, length(allPathFeatures));
-
-fprintf('Feature extraction  for %d vids: ', length(allPathFeatures));
-parpool(8);
-parfor i=1:length(allPathFeatures)
-    fprintf('%d \n', i)
-    
-    [desc, info, descParamUsed] = MediaName2Descriptor(allPathFeatures{i}, descParam, pcaMap);
-    
-    nDesc(i)=size(desc,1);
-     
-    v64(i, :) = VLAD_1_mean(desc, cell_Clusters{1}.vocabulary);
-    v128(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
-    v256(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
-    v512(i, :) = VLAD_1_mean(desc, cell_Clusters{4}.vocabulary);
-    
-    spV2(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    spV4(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-    spV8(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-    spV16(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
-    spV64(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary);
-    spV128(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{7}.vocabulary);
-    spV256(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{8}.vocabulary);
-
-    
-     
-   
-        
-     if i == 1
-         descParamUsed
-     end
-end
-delete(gcp('nocreate'))
-fprintf('\nDone!\n');
+% 
+% global DATAopts;
+% DATAopts = HMDB51Init;
+% 
+% addpath('./../..')
+% addpath('./..')
+% 
+% clear descParam
+% descParam.Dataset='HMBD51_t2__';
+% descParam.Func = @FEVid_deepFeatures;
+% descParam.MediaType = 'DeepF';
+% descParam.Layer='pool5';
+% descParam.net='TempSplit1VGG16';
+% descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
+% alpha=0.5;%for PN !!!!!!!change!!!!!!!
+% 
+% 
+% 
+% switch descParam.MediaType
+%     case 'IDT'
+%         if strfind(descParam.IDTfeature,'HOF')>0
+%             sizeDesc=108;   
+%         elseif  strfind(descParam.IDTfeature,'HOG')>0 || strfind(descParam.IDTfeature,'MBHx')>0 || strfind(descParam.IDTfeature,'MBHy')>0  
+%             sizeDesc=96;   
+%         end
+%         descParam.pcaDim = sizeDesc/2;
+%     case 'DeepF'
+%         descParam.pcaDim=256;%!!!
+% end
+% 
+% 
+% descParam.Clusters=[64 128 256 512];
+% descParam.spClusters=[2     4     8    16    32    64   128   256];
+% 
+% %the baze path for features
+% bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
+% descParam
+% 
+% 
+% 
+% 
+% 
+% [allVids, labs, splits] = GetVideosPlusLabels();
+% 
+% 
+% 
+% %create the full path of the fetures for each video
+% allPathFeatures=cell(size(allVids));
+% for i=1:size(allVids, 1)
+%     
+%     if strfind(descParam.MediaType, 'DeepF')>0 
+%         allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer '.txt'];
+%     elseif strfind(descParam.MediaType, 'IDT')>0 
+%         allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
+%     end
+% end
+% 
+% 
+% 
+% 
+% %[vocabulary, pcaMap, st_d, skew, nElem, kurt] = CreateVocabularyKmeansPca_m(vocabularyPathFeatures, descParam, ...
+% %                                                descParam.numClusters, descParam.pcaDim); 
+% 
+% vocabularyPathFeatures=allPathFeatures(1:5:end);%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% 
+% %[pcaMap, orgCluster, bovwCluster, cell_smallCls] = CreateVocabularyKmeansPca_sepVocab(vocabularyPathFeatures, descParam, descParam.orgClusters, descParam.bovwCL, descParam.smallCL, descParam.pcaDim);
+% [cell_Clusters, cell_spClusters, pcaMap] = CreateVocabularyKmeansPca_sptCl(vocabularyPathFeatures, descParam);
+%                                            
+%                                             
+% 
+% 
+% [tDesc info] = MediaName2Descriptor(allPathFeatures{2}, descParam, pcaMap);
+%    
+% t=VLAD_1_mean(tDesc, cell_Clusters{1}.vocabulary);
+% v64=zeros(length(allPathFeatures), length(t), 'like', t); 
+% 
+% t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
+% v128=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
+% v256=zeros(length(allPathFeatures), length(t), 'like', t); 
+% 
+% t=VLAD_1_mean(tDesc, cell_Clusters{4}.vocabulary);
+% v512=zeros(length(allPathFeatures), length(t), 'like', t); 
+% 
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+% spV2=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+% spV4=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+% spV8=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
+% spV16=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
+% spV32=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary);
+% spV64=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{7}.vocabulary);
+% spV128=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{8}.vocabulary);
+% spV256=zeros(length(allPathFeatures), length(t), 'like', t);
+% 
+% 
+% 
+% nDesc=zeros(1, length(allPathFeatures));
+% 
+% fprintf('Feature extraction  for %d vids: ', length(allPathFeatures));
+% parpool(8);
+% parfor i=1:length(allPathFeatures)
+%     fprintf('%d \n', i)
+%     
+%     [desc, info, descParamUsed] = MediaName2Descriptor(allPathFeatures{i}, descParam, pcaMap);
+%     
+%     nDesc(i)=size(desc,1);
+%      
+%     v64(i, :) = VLAD_1_mean(desc, cell_Clusters{1}.vocabulary);
+%     v128(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
+%     v256(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
+%     v512(i, :) = VLAD_1_mean(desc, cell_Clusters{4}.vocabulary);
+%     
+%     spV2(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+%     spV4(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+%     spV8(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+%     spV16(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{4}.vocabulary);
+%     spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
+%     spV64(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary);
+%     spV128(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{7}.vocabulary);
+%     spV256(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{8}.vocabulary);
+% 
+%     
+%      
+%    
+%         
+%      if i == 1
+%          descParamUsed
+%      end
+% end
+% delete(gcp('nocreate'))
+ fprintf('\nDone!\n');
 
 %% Do classification
 nEncoding=12;%!!!!!!!!change!!!!!!
