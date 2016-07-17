@@ -32,7 +32,7 @@ descParam.spClusters=[32];
 descParam
 
 %%%%%%%%%%
-bazePathFeatures='/home/ionut/asustor_ionut/Data/Features/UCF50/IDT/Videos/' %change
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/Features/UCF50/IDT/Videos/' %change
 
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
