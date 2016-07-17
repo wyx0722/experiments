@@ -9,7 +9,7 @@ clear descParam
 descParam.Dataset='UCF50';
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
+descParam.IDTfeature='MBHy_iTraj';
 descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
 alpha=0.1;%for PN !!!!!!!change!!!!!!!
 
@@ -25,9 +25,6 @@ switch descParam.MediaType
         descParam.pcaDim=256;%!!!
 end
 
-% pcaDim & vocabulary size
-descParam.pcaDim = sizeDesc/2;
-
 descParam.Clusters=[256 512];
 descParam.spClusters=[32];
 
@@ -35,7 +32,7 @@ descParam.spClusters=[32];
 descParam
 
 %%%%%%%%%%
-bazePathFeatures='/home/ionut/asustor_ionut/Data/Features/UCF50/IDT/Videos/' %change
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/Features/UCF50/IDT/Videos/' %change
 
 
 vocabularyIms = GetVideosPlusLabels('smallEnd');
