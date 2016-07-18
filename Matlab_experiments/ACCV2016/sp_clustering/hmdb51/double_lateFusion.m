@@ -65,9 +65,13 @@ lateF_accuracy=cell(nEncoding,3);
 poz=[3 4 9]
 enc=1;
 
-w1=0.25/4
-w2=0.25/2
-w3=0.5
+% w1=0.25/4
+% w2=0.25/2
+% w3=0.5
+
+w1
+w2
+w3
 
 %late fusion for iDT + two-stream
 for k=1:3
