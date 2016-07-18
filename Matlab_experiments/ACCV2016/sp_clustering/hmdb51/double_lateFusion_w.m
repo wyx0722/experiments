@@ -90,15 +90,15 @@ for k=1:3
         trainLabs = labs(trainI,:);
         testLabs = labs(testI,:);
         
-        tAcc(1)=ClassificationAccuracy(hof_clsfOut{poz(k), i}, testLabs);
-        tAcc(2)=ClassificationAccuracy(hog_clsfOut{poz(k), i}, testLabs);
-        tAcc(3)=ClassificationAccuracy(mbhx_clsfOut{poz(k), i}, testLabs);
-        tAcc(4)=ClassificationAccuracy(mbhy_clsfOut{poz(k), i}, testLabs);
+        tAcc(1)=mean(ClassificationAccuracy(hof_clsfOut{poz(k), i}, testLabs));
+        tAcc(2)=mean(ClassificationAccuracy(hog_clsfOut{poz(k), i}, testLabs));
+        tAcc(3)=mean(ClassificationAccuracy(mbhx_clsfOut{poz(k), i}, testLabs));
+        tAcc(4)=mean(ClassificationAccuracy(mbhy_clsfOut{poz(k), i}, testLabs));
         
-        tAcc(5)=ClassificationAccuracy(spVGG19_clsfOut{poz(k), i}, testLabs);
-        tAcc(6)=ClassificationAccuracy(tempVGG16_clsfOut{poz(k), i}, testLabs);
+        tAcc(5)=mean(ClassificationAccuracy(spVGG19_clsfOut{poz(k), i}, testLabs));
+        tAcc(6)=mean(ClassificationAccuracy(tempVGG16_clsfOut{poz(k), i}, testLabs));
         
-        tAcc(7)=ClassificationAccuracy(ealryFision_all_clfsOut{poz(k), i}, testLabs);
+        tAcc(7)=mean(ClassificationAccuracy(ealryFision_all_clfsOut{poz(k), i}, testLabs));
         
         mean_accMat(k, :)=mean_accMat(k, :)+tAcc;
         
