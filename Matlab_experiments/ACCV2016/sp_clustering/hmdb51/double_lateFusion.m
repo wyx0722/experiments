@@ -65,8 +65,9 @@ lateF_accuracy=cell(nEncoding,3);
 poz=[3 4 9]
 enc=1;
 
-w1=0.5/6
-w2=0.5
+w1=0.25/4
+w2=0.25/2
+w3=0.5
 
 %late fusion for iDT + two-stream
 for k=1:3
@@ -78,8 +79,8 @@ for k=1:3
         trainLabs = labs(trainI,:);
         testLabs = labs(testI,:);
         
-        clfsOut = w1 * hof_clsfOut{poz(k), i} + w1 *  hog_clsfOut{poz(k), i} + w1 * mbhx_clsfOut{poz(k), i} + w1 *  mbhy_clsfOut{poz(k), i} + w1 * spVGG19_clsfOut{poz(k), i} + w1 * tempVGG16_clsfOut{poz(k), i} ...
-                    + w2 * ealryFision_all_clfsOut{poz(k), i};
+        clfsOut = w1 * hof_clsfOut{poz(k), i} + w1 *  hog_clsfOut{poz(k), i} + w1 * mbhx_clsfOut{poz(k), i} + w1 *  mbhy_clsfOut{poz(k), i} + w2 * spVGG19_clsfOut{poz(k), i} + w2 * tempVGG16_clsfOut{poz(k), i} ...
+                    + w3 * ealryFision_all_clfsOut{poz(k), i};
         accuracy = ClassificationAccuracy(clfsOut, testLabs);
         fprintf('accuracy: %.3f\n', accuracy);
 
