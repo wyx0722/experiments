@@ -15,7 +15,7 @@ descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
 alpha=0.5;%for PN !!!!!!!change!!!!!!!
 
 split=2;%!!!!!!!!!!!!!!!change
-descParam.net=['TempSplit' split 'VGG16'];
+descParam.net=['TempSplit' num2str(split) 'VGG16'];
 
 
 switch descParam.MediaType
