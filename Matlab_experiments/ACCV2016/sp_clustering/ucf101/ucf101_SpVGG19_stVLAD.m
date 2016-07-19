@@ -7,11 +7,12 @@ addpath('./..')
 
 clear descParam
 descParam.Dataset='UCF101';
-descParam.Func = @FEVid_IDT;
-descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
-descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
-alpha=0.1;%for PN !!!!!!!change!!!!!!!
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+descParam.net='SpVGG19';
+descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
+alpha=0.5;%for PN !!!!!!!change!!!!!!!
 
 switch descParam.MediaType
     case 'IDT'
@@ -30,7 +31,7 @@ descParam.Clusters=[256 512];
 descParam.spClusters=[32];
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_UCF101/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/VGG_19_features_rawFrames_UCF101/Videos/'
 descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels('Challenge');
@@ -66,7 +67,7 @@ v256=zeros(length(allPathFeatures), length(t), 'like', t);
 t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
 v512=zeros(length(allPathFeatures), length(t), 'like', t); 
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
 spV32=zeros(length(allPathFeatures), length(t), 'like', t);
 
 
@@ -89,7 +90,7 @@ for i=1:length(allPathFeatures)
     v512(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
     
     
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
+    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
         
          if i == 1
              descParamUsed

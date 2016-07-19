@@ -7,11 +7,16 @@ addpath('./..')
 
 clear descParam
 descParam.Dataset='UCF101';
-descParam.Func = @FEVid_IDT;
-descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
-descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
-alpha=0.1;%for PN !!!!!!!change!!!!!!!
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+
+descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
+alpha=0.5;%for PN !!!!!!!change!!!!!!!
+
+split=1;%!!!!!!!!!!!!!!!change
+descParam.net=['TempSplit' split 'VGG16'];
+
 
 switch descParam.MediaType
     case 'IDT'
@@ -30,7 +35,7 @@ descParam.Clusters=[256 512];
 descParam.spClusters=[32];
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_UCF101/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/ucf101_action_temporal_vgg_16_split123_features_opticalFlow_tvL1/split1/Videos/'
 descParam
 
 [allVids, labs, splits] = GetVideosPlusLabels('Challenge');
@@ -66,7 +71,7 @@ v256=zeros(length(allPathFeatures), length(t), 'like', t);
 t=VLAD_1_mean(tDesc, cell_Clusters{2}.vocabulary);
 v512=zeros(length(allPathFeatures), length(t), 'like', t); 
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
 spV32=zeros(length(allPathFeatures), length(t), 'like', t);
 
 
@@ -89,7 +94,7 @@ for i=1:length(allPathFeatures)
     v512(i, :) = VLAD_1_mean(desc, cell_Clusters{2}.vocabulary);
     
     
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{1}.vocabulary);
+    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
         
          if i == 1
              descParamUsed
@@ -113,10 +118,8 @@ allDist{3}=temp * temp';
 
 clear temp
 
-all_clfsOut=cell(nEncoding,3);
-all_accuracy=cell(nEncoding,3);
-mean_all_clfsOut=cell(nEncoding,1);
-mean_all_accuracy=cell(nEncoding,1);
+all_clfsOut=cell(1,nEncoding);
+all_accuracy=cell(1,nEncoding);
 
 cRange = 100;
 nReps = 1;
@@ -125,8 +128,8 @@ nFolds = 3;
 
 for k=1:nEncoding
     k
-    for i=1:3
-        trainI=splits(:,i)==1;
+    
+        trainI=splits(:,split)==1;
         testI=~trainI;
 
         trainDist = allDist{k}(trainI, trainI);
@@ -138,19 +141,17 @@ for k=1:nEncoding
         accuracy = ClassificationAccuracy(clfsOut, testLabs);
         fprintf('accuracy: %.3f\n', mean(accuracy));
 
-        all_clfsOut{k,i}=clfsOut;
-        all_accuracy{k,i}=accuracy;
-    end
+        all_clfsOut{k}=clfsOut;
+        all_accuracy{k}=accuracy;
+    
 end
 
 
 
 finalAcc=zeros(1,nEncoding);
 for j=1:nEncoding
-    mean_all_clfsOut{j}=(all_clfsOut{j,1} + all_clfsOut{j,2} + all_clfsOut{j,3})./3;
-    mean_all_accuracy{j}=(all_accuracy{j,1} + all_accuracy{j,2} + all_accuracy{j,3})./3;
-    
-    finalAcc(j)=mean(mean_all_accuracy{j});
+
+    finalAcc(j)=mean(all_accuracy{j});
     fprintf('Encoding %d --> MAcc: %.3f \n', j, finalAcc(j));
 end
 

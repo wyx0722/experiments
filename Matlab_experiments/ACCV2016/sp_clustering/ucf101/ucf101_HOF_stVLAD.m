@@ -9,7 +9,7 @@ clear descParam
 descParam.Dataset='UCF101';
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
+descParam.IDTfeature='HOF_iTraj';
 descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
 alpha=0.1;%for PN !!!!!!!change!!!!!!!
 
