@@ -124,20 +124,22 @@ nFolds = 3;
 parpool(nEncoding);
 parfor k=1:nEncoding
     k
-    trainI=trainTestSplit==1;
-    testI=~trainI;
-    
-    trainDist = allDist{k}(trainI, trainI);
-    testDist = allDist{k}(testI, trainI);
-    trainLabs = labs(trainI,:);
-    testLabs = labs(testI, :);
-    
-    [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-    accuracy = ClassificationAccuracy(clfsOut, testLabs);
-    fprintf('accuracy: %.3f\n', mean(accuracy));
-    
-    all_clfsOut{k}=clfsOut;
-    all_accuracy{k}=accuracy;
+    for i=1:3
+        trainI=splits()
+        testI=~trainI;
+
+        trainDist = allDist{k}(trainI, trainI);
+        testDist = allDist{k}(testI, trainI);
+        trainLabs = labs(trainI,:);
+        testLabs = labs(testI, :);
+
+        [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        accuracy = ClassificationAccuracy(clfsOut, testLabs);
+        fprintf('accuracy: %.3f\n', mean(accuracy));
+
+        all_clfsOut{k}=clfsOut;
+        all_accuracy{k}=accuracy;
+    end
 end
 
 delete(gcp('nocreate'))

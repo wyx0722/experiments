@@ -70,7 +70,7 @@ t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.infoTra
 spV32=zeros(length(allPathFeatures), length(t), 'like', t);
 
 
-nDesc=zeros(1, length(pathFeatures));
+nDesc=zeros(1, length(allPathFeatures));
 
 fprintf('Feature extraction  for %d vids: ', length(allPathFeatures));
 
@@ -113,46 +113,52 @@ allDist{3}=temp * temp';
 
 clear temp
 
-
-all_clfsOut=cell(1,nEncoding);
-all_accuracy=cell(1,nEncoding);
+all_clfsOut=cell(nEncoding,3);
+all_accuracy=cell(nEncoding,3);
+mean_all_clfsOut=cell(nEncoding,1);
+mean_all_accuracy=cell(nEncoding,1);
 
 cRange = 100;
 nReps = 1;
 nFolds = 3;
 
-parpool(nEncoding);
-parfor k=1:nEncoding
+
+for k=1:nEncoding
     k
-    trainI=trainTestSplit==1;
-    testI=~trainI;
-    
-    trainDist = allDist{k}(trainI, trainI);
-    testDist = allDist{k}(testI, trainI);
-    trainLabs = labs(trainI,:);
-    testLabs = labs(testI, :);
-    
-    [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-    accuracy = ClassificationAccuracy(clfsOut, testLabs);
-    fprintf('accuracy: %.3f\n', mean(accuracy));
-    
-    all_clfsOut{k}=clfsOut;
-    all_accuracy{k}=accuracy;
+    for i=1:3
+        trainI=splits(:,i)==1;
+        testI=~trainI;
+
+        trainDist = allDist{k}(trainI, trainI);
+        testDist = allDist{k}(testI, trainI);
+        trainLabs = labs(trainI,:);
+        testLabs = labs(testI, :);
+
+        [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        accuracy = ClassificationAccuracy(clfsOut, testLabs);
+        fprintf('accuracy: %.3f\n', mean(accuracy));
+
+        all_clfsOut{k,i}=clfsOut;
+        all_accuracy{k,i}=accuracy;
+    end
 end
 
-delete(gcp('nocreate'))
-
-acc1=mean(all_accuracy{1})
-acc2=mean(all_accuracy{2})
-acc3=mean(all_accuracy{3})
-acc4=mean(all_accuracy{4})
-acc5=mean(all_accuracy{5})
-acc6=mean(all_accuracy{6})
-acc7=mean(all_accuracy{7})
-acc8=mean(all_accuracy{8})
-acc9=mean(all_accuracy{9})
 
 
-saveName2 = ['/home/ionut/Data/results/' 'accv2016/' 'ucf101/' DescParam2Name(descParam) '.mat']
-save(saveName2, '-v7.3', 'vladNoMean', 'stdDiff', 'multiVLAD', 'multiStdDiff', 'vladNoMean512');
+finalAcc=zeros(1,nEncoding);
+for j=1:nEncoding
+    mean_all_clfsOut{j}=(all_clfsOut{j,1} + all_clfsOut{j,2} + all_clfsOut{j,3})./3;
+    mean_all_accuracy{j}=(all_accuracy{j,1} + all_accuracy{j,2} + all_accuracy{j,3})./3;
+    
+    finalAcc(j)=mean(mean_all_accuracy{j});
+    fprintf('Encoding %d --> MAcc: %.3f \n', j, finalAcc(j));
+end
+
+saveName2 = ['/home/ionut/asustor_ionut_2/Data/results/' 'mmm2016/ucf101/' 'videoRep/' DescParam2Name(descParam) '.mat']
+save(saveName2, '-v7.3','v256','v512', 'spV32', 'descParam', 'nDesc');
+
+
+saveName3 = ['/home/ionut/asustor_ionut_2/Data/results/' 'mmm2016/ucf101/' 'clsfOut/' DescParam2Name(descParam) '.mat']
+save(saveName3, '-v7.3', 'all_clfsOut', 'all_accuracy', 'finalAcc', 'descParam');
+
 
