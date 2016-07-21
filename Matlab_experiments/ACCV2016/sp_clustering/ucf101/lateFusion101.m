@@ -71,9 +71,11 @@ nReps = 1;
 nFolds = 3;
 
 
+enc=1;
 
 
-for k=1:nEncoding
+
+for k=1:3
     k
     for i=1:3
         trainI=splits(:,i)==1;
@@ -84,21 +86,72 @@ for k=1:nEncoding
         trainLabs = labs(trainI,:);
         testLabs = labs(testI, :);
 
-        [~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        %[~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        lateF_clsfOut{enc,i} = hof_clsfOut{k, i} + hog_clsfOut{k, i} + mbhx_clsfOut{k, i} + mbhy_clsfOut{k, i};
         
-        lateF_accuracy{k,i} = ClassificationAccuracy(clfsOut, testLabs);
-        fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(accuracy));
+        lateF_accuracy{enc,i} = ClassificationAccuracy(clfsOut, testLabs);
+        fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(lateF_accuracy{enc,i}));
 
         %all_clfsOut{k,i}=clfsOut;
         %all_accuracy{k,i}=accuracy;
     end
+    
+    enc=enc+1;
 end
 
+for k=1:3
+    k
+    for i=1:3
+        trainI=splits(:,i)==1;
+        testI=~trainI;
+
+        %trainDist = allDist{k,i}(trainI, trainI);
+        %testDist = allDist{k,i}(testI, trainI);
+        trainLabs = labs(trainI,:);
+        testLabs = labs(testI, :);
+
+        %[~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        lateF_clsfOut{enc,i} = spVGG19_clsfOut{k, i} + tempVGG16_clsfOut{k, i};
+        
+        lateF_accuracy{enc,i} = ClassificationAccuracy(clfsOut, testLabs);
+        fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(lateF_accuracy{enc,i}));
+
+        %all_clfsOut{k,i}=clfsOut;
+        %all_accuracy{k,i}=accuracy;
+    end
+    
+    enc=enc+1;
+end
+
+
+for k=1:3
+    k
+    for i=1:3
+        trainI=splits(:,i)==1;
+        testI=~trainI;
+
+        %trainDist = allDist{k,i}(trainI, trainI);
+        %testDist = allDist{k,i}(testI, trainI);
+        trainLabs = labs(trainI,:);
+        testLabs = labs(testI, :);
+
+        %[~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        lateF_clsfOut{enc,i} = spVGG19_clsfOut{k, i} + tempVGG16_clsfOut{k, i} + hof_clsfOut{k, i} + hog_clsfOut{k, i} + mbhx_clsfOut{k, i} + mbhy_clsfOut{k, i};
+        
+        lateF_accuracy{enc,i} = ClassificationAccuracy(clfsOut, testLabs);
+        fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(lateF_accuracy{enc,i}));
+
+        %all_clfsOut{k,i}=clfsOut;
+        %all_accuracy{k,i}=accuracy;
+    end
+    
+    enc=enc+1;
+end
 
 
 finalAcc=zeros(1,nEncoding);
 for j=1:nEncoding
-    mean_all_accuracy{j}=(all_accuracy{j,1} + all_accuracy{j,2} + all_accuracy{j,3})./3;
+    mean_all_accuracy{j}=(lateF_accuracy{j,1} + lateF_accuracy{j,2} + lateF_accuracy{j,3})./3;
     
     finalAcc(j)=mean(mean_all_accuracy{j});
     fprintf('Encoding %d --> MAcc: %.3f \n', j, finalAcc(j));
