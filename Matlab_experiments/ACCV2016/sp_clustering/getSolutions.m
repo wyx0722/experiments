@@ -10,6 +10,7 @@ while ~isempty(stiva)
         s=sumStiva(stiva, val);
         if s==1
           solutions{i}=cell2mat(stiva);
+          i=i+1;
           stiva=stiva(1:end-1);
           
           if stiva{end}<sizeInterval
