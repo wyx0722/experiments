@@ -48,7 +48,7 @@ enc=1;
 
 maxAcc_iDT=zeros(1,3);
 weightsBest_iDT=zeros(3,4);
-weights=getSolutions( 0:0.1:1, 4);
+weights=getSolutions( 0:0.05:1, 4);
 
 %late fusion for iDT
 for w=1:size(weights, 1)
@@ -77,11 +77,13 @@ for w=1:size(weights, 1)
  
 
     end
-  fprintf('%d ', w);
+    if mod(w,100)==0
+        fprintf('%d ', w);
+    end
 end
 
 
-fprintf('\n Encoding --> MAcc: %.3f \n', maxAcc_iDT); 
+fprintf('\n Encoding --> MAcc: %.3f ', maxAcc_iDT); 
 weightsBest_iDT
 
 
@@ -90,7 +92,7 @@ weightsBest_iDT
 
 maxAcc_twoStream=zeros(1,3);
 weightsBest_twoStream=zeros(3,2);
-weights=getSolutions( 0:0.1:1, 2);
+weights=getSolutions( 0:0.05:1, 2);
 
 %late fusion for two-stream
 for w=1:size(weights, 1)
@@ -119,11 +121,13 @@ for w=1:size(weights, 1)
  
 
     end
-  fprintf('%d ', w);
+      if mod(w,100)==0
+        fprintf('%d ', w);
+    end
 end
 
 
-fprintf('\n Encoding --> MAcc: %.3f \n', maxAcc_twoStream); 
+fprintf('\n Encoding --> MAcc: %.3f ', maxAcc_twoStream); 
 weightsBest_twoStream
 
 
@@ -132,7 +136,7 @@ weightsBest_twoStream
 
 maxAcc_all=zeros(1,3);
 weightsBest_all=zeros(3,6);
-weights=getSolutions( 0:0.1:1, 6);
+weights=getSolutions( 0:0.05:1, 6);
 
 %late fusion for ALL
 for w=1:size(weights, 1)
@@ -162,9 +166,11 @@ for w=1:size(weights, 1)
  
 
     end
-  fprintf('%d ', w);
+      if mod(w,100)==0
+        fprintf('%d ', w);
+    end
 end
 
 
-fprintf('\n Encoding --> MAcc: %.3f \n', maxAcc_all); 
+fprintf('\n Encoding --> MAcc: %.3f ', maxAcc_all); 
 weightsBest_all
