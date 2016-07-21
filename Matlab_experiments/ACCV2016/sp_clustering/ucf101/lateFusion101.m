@@ -89,7 +89,7 @@ for k=1:3
         %[~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
         lateF_clsfOut{enc,i} = hof_clsfOut{k, i} + hog_clsfOut{k, i} + mbhx_clsfOut{k, i} + mbhy_clsfOut{k, i};
         
-        lateF_accuracy{enc,i} = ClassificationAccuracy(clfsOut, testLabs);
+        lateF_accuracy{enc,i} = ClassificationAccuracy(lateF_clsfOut{enc,i}, testLabs);
         fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(lateF_accuracy{enc,i}));
 
         %all_clfsOut{k,i}=clfsOut;
@@ -113,7 +113,7 @@ for k=1:3
         %[~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
         lateF_clsfOut{enc,i} = spVGG19_clsfOut{k, i} + tempVGG16_clsfOut{k, i};
         
-        lateF_accuracy{enc,i} = ClassificationAccuracy(clfsOut, testLabs);
+        lateF_accuracy{enc,i} = ClassificationAccuracy(lateF_clsfOut{enc,i}, testLabs);
         fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(lateF_accuracy{enc,i}));
 
         %all_clfsOut{k,i}=clfsOut;
@@ -138,7 +138,7 @@ for k=1:3
         %[~, lateF_clsfOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
         lateF_clsfOut{enc,i} = spVGG19_clsfOut{k, i} + tempVGG16_clsfOut{k, i} + hof_clsfOut{k, i} + hog_clsfOut{k, i} + mbhx_clsfOut{k, i} + mbhy_clsfOut{k, i};
         
-        lateF_accuracy{enc,i} = ClassificationAccuracy(clfsOut, testLabs);
+        lateF_accuracy{enc,i} = ClassificationAccuracy(lateF_clsfOut{enc,i}, testLabs);
         fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(lateF_accuracy{enc,i}));
 
         %all_clfsOut{k,i}=clfsOut;

@@ -148,7 +148,7 @@ parfor k=1:nEncoding
         testLabs = labs(testI, :);
 
         [~, all_clfsOut{k,i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-        all_accuracy{k,i} = ClassificationAccuracy(clfsOut, testLabs);
+        all_accuracy{k,i} = ClassificationAccuracy(all_clfsOut{k,i}, testLabs);
         fprintf('accuracy(%d,%d): %.3f\n', k,i, mean(all_accuracy{k,i}));
 
         %all_clfsOut{k,i}=clfsOut;
