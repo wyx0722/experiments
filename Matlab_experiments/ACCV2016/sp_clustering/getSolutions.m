@@ -1,39 +1,45 @@
 function [ solutions ] = getSolutions( val, elem)
 
 sizeInterval=length(val);
-stiva{1}=1;
+stiva(1)=1;
 i=1;
 poz=1;
 while ~isempty(stiva)
     
     if size(stiva,2)==elem
-        s=sumStiva(stiva, val);
-        if s==1
-          solutions{i}=cell2mat(stiva);
-          i=i+1;
-          stiva=stiva(1:end-1);
-          
-          if stiva{end}<sizeInterval
-            stiva(end)=stiva{end}+1;
-          else stiva=stiva(1:end-1);
-          end
-          
-        elseif s>1
-           stiva=stiva(1:end-1);
-           
-           if stiva{end}<sizeInterval
-                stiva(end)=stiva{end}+1;
-           else stiva=stiva(1:end-1);
-           end
-          
-        else
-            stiva(end)=stiva{end}+1;
-        end
-    elseif 
+            s=sum(val(stiva));
+            if s==1
+                  solutions(i, :)=val(stiva);
+                  i=i+1;
+                  
+                  stiva=stiva(1:end-1);
+                  while ~isempty(stiva)
+                      
+                      if stiva(end)<sizeInterval
+                            stiva(end)=stiva(end)+1;
+                            break;
+                      end
+                      stiva=stiva(1:end-1);
+                  end
+
+            elseif s>1
+                  stiva=stiva(1:end-1);
+                  while ~isempty(stiva)
+                      
+                      if stiva(end)<sizeInterval
+                            stiva(end)=stiva(end)+1;
+                            break;
+                      end
+                      stiva=stiva(1:end-1);
+                  end
+
+            else
+                    stiva(end)=stiva(end)+1;
+            end
+    else
+            stiva(end+1)=1;
         
-    end
-        
-    
+    end   
     
 end
 
@@ -57,6 +63,6 @@ end
 function s=sumStiva(stiva, val)
 s=0;
 for i=1:size(stiva,2)
-    s=s+val(stiva{i});
+    s=s+val(stiva(i));
 end
 end
