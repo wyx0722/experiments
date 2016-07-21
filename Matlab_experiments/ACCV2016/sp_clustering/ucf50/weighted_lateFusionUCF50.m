@@ -42,6 +42,10 @@ lateF_all_accuracy=cell(1,nEncoding);
 
 enc=1;
 
+
+
+
+
 maxAcc_iDT=zeros(1,3);
 weightsBest_iDT=zeros(3,4);
 weights=getSolutions( 0:0.1:1, 4);
@@ -70,18 +74,97 @@ for w=1:size(weights, 1)
             maxAcc_iDT(k)=acc;
             weightsBest_iDT(k, :)=weights(w, :);           
         end
-%         lateF_all_clfsOut{enc}=clfsOut;
-%         lateF_all_accuracy{enc}=accuracy;
-%         enc=enc+1;
-%         k
-%         perGroupAccuracy = mean(cat(2, accuracy{:}))'
-% 
-%         mean(perGroupAccuracy)
+ 
 
     end
+  fprintf('%d ', w);
 end
 
 
-fprintf('Encoding --> MAcc: %.3f \n', maxAcc_iDT); 
+fprintf('\n Encoding --> MAcc: %.3f \n', maxAcc_iDT); 
 weightsBest_iDT
 
+
+
+
+
+maxAcc_twoStream=zeros(1,3);
+weightsBest_twoStream=zeros(3,2);
+weights=getSolutions( 0:0.1:1, 2);
+
+%late fusion for two-stream
+for w=1:size(weights, 1)
+    for k=1:3
+
+        % 
+        % Leave-one-group-out cross-validation
+        for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);
+
+            clfsOut{i} = weights(w,1)*spVGG19_clsfOut{k}{i} + weights(w,2)*tempVGG16_clsfOut{k}{i};
+            accuracy{i} = ClassificationAccuracy(clfsOut{i}, testLabs);
+
+        end
+        
+        acc=mean(mean(cat(2, accuracy{:})));
+        %fprintf('%d: accuracy: %.3f\n', i, acc);
+        
+        if acc>maxAcc_twoStream(k)
+            maxAcc_twoStream(k)=acc;
+            weightsBest_twoStream(k, :)=weights(w, :);           
+        end
+ 
+
+    end
+  fprintf('%d ', w);
+end
+
+
+fprintf('\n Encoding --> MAcc: %.3f \n', maxAcc_twoStream); 
+weightsBest_twoStream
+
+
+
+
+
+maxAcc_all=zeros(1,3);
+weightsBest_all=zeros(3,6);
+weights=getSolutions( 0:0.1:1, 6);
+
+%late fusion for ALL
+for w=1:size(weights, 1)
+    for k=1:3
+
+        % 
+        % Leave-one-group-out cross-validation
+        for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);
+
+            clfsOut{i} = weights(w,1)*hof_clsfOut{k}{i} + weights(w,2)*hog_clsfOut{k}{i} + weights(w,3)*mbhx_clsfOut{k}{i} + weights(w,4)*mbhy_clsfOut{k}{i} ...
+                          + weights(w,5)*spVGG19_clsfOut{k}{i} + weights(w,6)*tempVGG16_clsfOut{k}{i};
+            accuracy{i} = ClassificationAccuracy(clfsOut{i}, testLabs);
+
+        end
+        
+        acc=mean(mean(cat(2, accuracy{:})));
+        %fprintf('%d: accuracy: %.3f\n', i, acc);
+        
+        if acc>maxAcc_all(k)
+            maxAcc_all(k)=acc;
+            weightsBest_all(k, :)=weights(w, :);           
+        end
+ 
+
+    end
+  fprintf('%d ', w);
+end
+
+
+fprintf('\n Encoding --> MAcc: %.3f \n', maxAcc_all); 
+weightsBest_all
