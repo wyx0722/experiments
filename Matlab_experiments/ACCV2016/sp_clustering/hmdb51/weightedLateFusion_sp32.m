@@ -55,14 +55,15 @@ lateF_accuracy=cell(nEncoding,3);
 
 enc=1
 
+interval=0:0.05:1;
 
 maxAcc_iDT=0;
 weightsBest_iDT=zeros(1,4);
-weights=getSolutions( 0:0.1:1, 4);
+weights=getSolutions( interval, 4);
 meanACC=zeros(1,3);
 
 %late fusion for iDT
-fprintf('\n Start iterating over: %d \n', size(weights,1));
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
     for i=1:3
         
@@ -97,11 +98,11 @@ fprintf('%.2f  ',weightsBest_iDT);
 
 maxAcc_iDT_d=0;
 weightsBest_iDT_d=zeros(1,5);
-weights=getSolutions( 0:0.1:1, 5);
+weights=getSolutions( interval, 5);
 meanACC=zeros(1,3);
 
 %late fusion for iDT
-fprintf('\n Start iterating over: %d \n', size(weights,1));
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
     for i=1:3
         
