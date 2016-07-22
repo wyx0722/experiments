@@ -116,7 +116,7 @@ for w=1:size(weights,1)
         acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
         if w == 1
           clfsOut_noW = hof_clsfOut{poz}{i} + hog_clsfOut{poz}{i} + mbhx_clsfOut{poz}{i} + mbhy_clsfOut{poz}{i} ...
-                    + ealryFision_all_clfsOut{3,i};  
+                    + ealryFision_all_clfsOut{3}{i};  
            ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
         end
     end
@@ -201,7 +201,7 @@ for w=1:size(weights,1)
             trainLabs = labs(trainI,:);
             testLabs = labs(testI, :);
         
-        clfsOut{i} = weights(w,1)*spVGG19_clsfOut{poz}{i} + weights(w,2)*tempVGG16_clsfOut{poz}{i} + weights(w,3)*ealryFision_all_clfsOut{6,i};  
+        clfsOut{i} = weights(w,1)*spVGG19_clsfOut{poz}{i} + weights(w,2)*tempVGG16_clsfOut{poz}{i} + weights(w,3)*ealryFision_all_clfsOut{6}{i};  
         acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);      
        if w == 1
           clfsOut_noW = spVGG19_clsfOut{poz}{i} + tempVGG16_clsfOut{poz}{i} + ealryFision_all_clfsOut{6}{i};  
@@ -292,7 +292,7 @@ for w=1:size(weights,1)
             testLabs = labs(testI, :);
         
         clfsOut{i} = weights(w,1)*hof_clsfOut{poz}{i} + weights(w,2)*hog_clsfOut{poz}{i} + weights(w,3)*mbhx_clsfOut{poz}{i} + weights(w,4)*mbhy_clsfOut{poz}{i} ...
-            + weights(w,5)*spVGG19_clsfOut{poz}{i} + weights(w,6)*tempVGG16_clsfOut{poz}{i} + weights(w,7)*ealryFision_all_clfsOut{9,i};      
+            + weights(w,5)*spVGG19_clsfOut{poz}{i} + weights(w,6)*tempVGG16_clsfOut{poz}{i} + weights(w,7)*ealryFision_all_clfsOut{9}{i};      
         acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);      
        if w == 1
           clfsOut_noW = hof_clsfOut{poz}{i} + hog_clsfOut{poz}{i} + mbhx_clsfOut{poz}{i} + mbhy_clsfOut{poz}{i} ...
