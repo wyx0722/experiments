@@ -62,7 +62,7 @@ weights=getSolutions( 0:0.1:1, 4);
 meanACC=zeros(1,3);
 
 %late fusion for iDT
-fprintf('Start iterating over: %d \n', size(weights,1));
+fprintf('\n Start iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
     for i=1:3
         
@@ -86,9 +86,10 @@ for w=1:size(weights,1)
     end
     
 end
-fprintf('The best MAcc for late fusion iDT: %.3f \n',maxAcc_iDT);
-fprintf('The best weights for late fusion iDT: %.2f \n',weightsBest_iDT);
-
+fprintf('Done!\n');
+fprintf('The best MAcc for double fusion iDT: %.3f \n',maxAcc_iDT);
+fprintf('The best weights for double fusion iDT: ');
+fprintf('%.2f  ',weightsBest_iDT);
 
 
 
@@ -100,7 +101,7 @@ weights=getSolutions( 0:0.1:1, 5);
 meanACC=zeros(1,3);
 
 %late fusion for iDT
-fprintf('Start iterating over: %d \n', size(weights,1));
+fprintf('\n Start iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
     for i=1:3
         
@@ -125,8 +126,10 @@ for w=1:size(weights,1)
     end
     
 end
+fprintf('Done!\n');
 fprintf('The best MAcc for double fusion iDT: %.3f \n',maxAcc_iDT_d);
-fprintf('The best weights for double fusion iDT: %.2f \n',weightsBest_iDT_d);
+fprintf('The best weights for double fusion iDT: ');
+fprintf('%.2f  ',weightsBest_iDT_d);
 
 
 % 
