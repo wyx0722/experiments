@@ -54,7 +54,7 @@ maxAcc_iDT=0;
 weightsBest_iDT=zeros(1,4);
 weights=getSolutions( interval, 4);
 
-ld=zeros(1,3);
+ 
 %late fusion for iDT
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
