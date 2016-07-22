@@ -65,17 +65,17 @@ for w=1:size(weights,1)
             testLabs = labs(testI, :);
         
         clfsOut{i} = weights(w,1)*hof_clsfOut{poz}{i} + weights(w,2)*hog_clsfOut{poz}{i} + weights(w,3)*mbhx_clsfOut{poz}{i} + weights(w,4)*mbhy_clsfOut{poz}{i};      
-        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+        acc{i}=mean(ClassificationAccuracy(clfsOut{i}, testLabs));  
         
        if w == 1
           clfsOut_noW = hof_clsfOut{poz}{i} + hog_clsfOut{poz}{i} + mbhx_clsfOut{poz}{i} + mbhy_clsfOut{poz}{i}; 
-           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+           ld{i}=mean(ClassificationAccuracy(clfsOut_noW, testLabs));  
        end
     end
     
     
-    if maxAcc_iDT<mean(mean(cat(2, acc{:})));
-        maxAcc_iDT=mean(mean(cat(2, acc{:})));;
+    if maxAcc_iDT<mean(acc)
+        maxAcc_iDT=mean(acc);
         weightsBest_iDT=weights(w,:);   
     end
     
@@ -83,7 +83,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d=mean(mean(cat(2, ld{:})));
+        d=mean(ld)
     end
     
     
@@ -113,17 +113,17 @@ for w=1:size(weights,1)
         
         clfsOut{i} = weights(w,1)*hof_clsfOut{poz}{i} + weights(w,2)*hog_clsfOut{poz}{i} + weights(w,3)*mbhx_clsfOut{poz}{i} + weights(w,4)*mbhy_clsfOut{poz}{i} ...
                     + weights(w,5)*ealryFision_all_clfsOut{3}{i};      
-        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+        acc{i}=mean(ClassificationAccuracy(clfsOut{i}, testLabs));  
         if w == 1
           clfsOut_noW = hof_clsfOut{poz}{i} + hog_clsfOut{poz}{i} + mbhx_clsfOut{poz}{i} + mbhy_clsfOut{poz}{i} ...
                     + ealryFision_all_clfsOut{3,i};  
-           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+           ld{i}=mean(ClassificationAccuracy(clfsOut_noW, testLabs));  
         end
     end
     
     
-    if maxAcc_iDT_d<mean(mean(cat(2, acc{:})));
-        maxAcc_iDT_d=mean(mean(cat(2, acc{:})));;
+    if maxAcc_iDT_d<mean(acc)
+        maxAcc_iDT_d=mean(acc);
         weightsBest_iDT_d=weights(w,:);   
     end
     
@@ -131,7 +131,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d2=mean(mean(cat(2, ld{:})));
+        d2=mean(ld)
     end    
 end
 fprintf('Done!\n');
@@ -157,16 +157,16 @@ for w=1:size(weights,1)
             testLabs = labs(testI, :);
         
         clfsOut{i} = weights(w,1)*spVGG19_clsfOut{poz}{i} + weights(w,2)*tempVGG16_clsfOut{poz}{i};      
-        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);      
+        acc{i}=mean(ClassificationAccuracy(clfsOut{i}, testLabs));      
        if w == 1
           clfsOut_noW = spVGG19_clsfOut{poz}{i} + tempVGG16_clsfOut{poz}{i}; 
-           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+           ld{i}=mean(ClassificationAccuracy(clfsOut_noW, testLabs));  
        end   
     end
     
     
-    if maxAcc_twoS<mean(mean(cat(2, acc{:})));
-        maxAcc_twoS=mean(mean(cat(2, acc{:})));
+    if maxAcc_twoS<mean(acc)
+        maxAcc_twoS=mean(acc);
         weightsBest_twoS=weights(w,:);   
     end
     
@@ -174,7 +174,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d3=mean(mean(cat(2, ld{:})));
+        d3=mean(ld)
     end    
 end
 fprintf('Done!\n');
@@ -202,7 +202,7 @@ for w=1:size(weights,1)
             testLabs = labs(testI, :);
         
         clfsOut{i} = weights(w,1)*spVGG19_clsfOut{poz}{i} + weights(w,2)*tempVGG16_clsfOut{poz}{i} + weights(w,3)*ealryFision_all_clfsOut{6,i};  
-        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);      
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs));      
        if w == 1
           clfsOut_noW = spVGG19_clsfOut{poz}{i} + tempVGG16_clsfOut{poz}{i} + ealryFision_all_clfsOut{6}{i};  
            ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
@@ -210,8 +210,8 @@ for w=1:size(weights,1)
     end
     
     
-    if maxAcc_twoS_d<mean(mean(cat(2, acc{:})));
-        maxAcc_twoS_d=mean(mean(cat(2, acc{:})));;
+    if maxAcc_twoS_d<mean(acc)
+        maxAcc_twoS_d=mean(acc);
         weightsBest_twoS_d=weights(w,:);   
     end
     
@@ -219,7 +219,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d4=mean(mean(cat(2, ld{:})));
+        d4=mean(ld)
     end    
 end
 fprintf('Done!\n');
@@ -247,17 +247,17 @@ for w=1:size(weights,1)
         
         clfsOut{i} = weights(w,1)*hof_clsfOut{poz}{i} + weights(w,2)*hog_clsfOut{poz}{i} + weights(w,3)*mbhx_clsfOut{poz}{i} + weights(w,4)*mbhy_clsfOut{poz}{i} ...
             + weights(w,5)*spVGG19_clsfOut{poz}{i} + weights(w,6)*tempVGG16_clsfOut{poz}{i};      
-        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);      
+        acc{i}=mean(ClassificationAccuracy(clfsOut{i}, testLabs));      
        if w == 1
           clfsOut_noW = hof_clsfOut{poz}{i} + hog_clsfOut{poz}{i} + mbhx_clsfOut{poz}{i} + mbhy_clsfOut{poz}{i} ...
             + spVGG19_clsfOut{poz}{i} + tempVGG16_clsfOut{poz}{i};  
-           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+           ld{i}=mean(ClassificationAccuracy(clfsOut_noW, testLabs));  
        end
     end
     
     
-    if maxAcc_iDT_twoS<mean(mean(cat(2, acc{:})));
-        maxAcc_iDT_twoS=mean(mean(cat(2, acc{:})));;
+    if maxAcc_iDT_twoS<mean(acc)
+        maxAcc_iDT_twoS=mean(acc);
         weightsBest_iDT_twoS=weights(w,:);   
     end
     
@@ -265,7 +265,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d5=mean(mean(cat(2, ld{:})));
+        d5=mean(ld)
     end    
 end
 fprintf('Done!\n');
@@ -293,17 +293,17 @@ for w=1:size(weights,1)
         
         clfsOut{i} = weights(w,1)*hof_clsfOut{poz}{i} + weights(w,2)*hog_clsfOut{poz}{i} + weights(w,3)*mbhx_clsfOut{poz}{i} + weights(w,4)*mbhy_clsfOut{poz}{i} ...
             + weights(w,5)*spVGG19_clsfOut{poz}{i} + weights(w,6)*tempVGG16_clsfOut{poz}{i} + weights(w,7)*ealryFision_all_clfsOut{9,i};      
-        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);      
+        acc{i}=mean(ClassificationAccuracy(clfsOut{i}, testLabs));      
        if w == 1
           clfsOut_noW = hof_clsfOut{poz}{i} + hog_clsfOut{poz}{i} + mbhx_clsfOut{poz}{i} + mbhy_clsfOut{poz}{i} ...
             + spVGG19_clsfOut{poz}{i} + tempVGG16_clsfOut{poz}{i} + ealryFision_all_clfsOut{9}{i};   
-           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+           ld{i}=mean(ClassificationAccuracy(clfsOut_noW, testLabs));  
        end
     end
     
     
-    if maxAcc_iDT_twoS_d<mean(mean(cat(2, acc{:})));
-        maxAcc_iDT_twoS_d=mean(mean(cat(2, acc{:})));;
+    if maxAcc_iDT_twoS_d<mean(acc)
+        maxAcc_iDT_twoS_d=mean(acc);
         weightsBest_iDT_twoS_d=weights(w,:);   
     end
     
@@ -311,7 +311,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d6=mean(mean(cat(2, ld{:})));
+        d6=mean(ld)
     end    
 end
 fprintf('Done!\n');
