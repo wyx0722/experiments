@@ -83,7 +83,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d=mean(mean(cat(2, ld{:})));
+        d=mean(mean(cat(2, ld{:})))
     end
     
     
@@ -131,7 +131,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d2=mean(mean(cat(2, ld{:})));
+        d2=mean(mean(cat(2, ld{:})))
     end    
 end
 fprintf('Done!\n');
@@ -174,7 +174,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d3=mean(mean(cat(2, ld{:})));
+        d3=mean(mean(cat(2, ld{:})))
     end    
 end
 fprintf('Done!\n');
@@ -219,7 +219,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d4=mean(mean(cat(2, ld{:})));
+        d4=mean(mean(cat(2, ld{:})))
     end    
 end
 fprintf('Done!\n');
@@ -265,7 +265,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d5=mean(mean(cat(2, ld{:})));
+        d5=mean(mean(cat(2, ld{:})))
     end    
 end
 fprintf('Done!\n');
@@ -311,7 +311,7 @@ for w=1:size(weights,1)
         fprintf('%d ', w);
     end
     if w==1
-        d6=mean(mean(cat(2, ld{:})));
+        d6=mean(mean(cat(2, ld{:})))
     end    
 end
 fprintf('Done!\n');
