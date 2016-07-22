@@ -65,13 +65,13 @@ lateF_accuracy=cell(nEncoding,3);
 
 enc=1
 
-interval=0:0.1:1;
+interval=0:0.05:1;
 
 maxAcc_iDT=0;
 weightsBest_iDT=zeros(1,4);
 weights=getSolutions( interval, 4);
 meanACC=zeros(1,3);
-
+ld=zeros(1,3);
 %late fusion for iDT
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
@@ -83,7 +83,12 @@ for w=1:size(weights,1)
         testLabs = labs(testI,:);
         
         clfsOut = weights(w,1)*hof_clsfOut{poz, i} + weights(w,2)*hog_clsfOut{poz, i} + weights(w,3)*mbhx_clsfOut{poz, i} + weights(w,4)*mbhy_clsfOut{poz, i};      
-        meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+        meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+        
+       if w == 1
+          clfsOut = hof_clsfOut{poz, i} + hog_clsfOut{poz, i} + mbhx_clsfOut{poz, i} + mbhy_clsfOut{poz, i}; 
+           ld(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+       end
     end
     
     
