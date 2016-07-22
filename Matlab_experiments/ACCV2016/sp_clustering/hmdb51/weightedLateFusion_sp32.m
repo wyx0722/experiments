@@ -78,7 +78,7 @@ for w=1:size(weights,1)
     
     if maxAcc_iDT<mean(meanACC)
         maxAcc_iDT=mean(meanACC);
-        weightsBest_iDT=weights(W,:);   
+        weightsBest_iDT=weights(w,:);   
     end
     
     if mod(w,100)==0
@@ -117,7 +117,7 @@ for w=1:size(weights,1)
     
     if maxAcc_iDT_d<mean(meanACC)
         maxAcc_iDT_d=mean(meanACC);
-        weightsBest_iDT_d=weights(W,:);   
+        weightsBest_iDT_d=weights(w,:);   
     end
     
     if mod(w,100)==0
