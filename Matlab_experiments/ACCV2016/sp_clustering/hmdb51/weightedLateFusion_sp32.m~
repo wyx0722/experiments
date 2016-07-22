@@ -55,14 +55,15 @@ lateF_accuracy=cell(nEncoding,3);
 
 enc=1
 
+interval=0:0.1:1;
 
 maxAcc_iDT=0;
 weightsBest_iDT=zeros(1,4);
-weights=getSolutions( 0:0.1:1, 4);
+weights=getSolutions( interval, 4);
 meanACC=zeros(1,3);
 
 %late fusion for iDT
-fprintf('\n Start iterating over: %d \n', size(weights,1));
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
     for i=1:3
         
@@ -87,8 +88,8 @@ for w=1:size(weights,1)
     
 end
 fprintf('Done!\n');
-fprintf('The best MAcc for double fusion iDT: %.3f \n',maxAcc_iDT);
-fprintf('The best weights for double fusion iDT: ');
+fprintf('The best MAcc for late fusion iDT: %.3f \n',maxAcc_iDT);
+fprintf('The best weights for late fusion iDT: ');
 fprintf('%.2f  ',weightsBest_iDT);
 
 
@@ -97,10 +98,10 @@ fprintf('%.2f  ',weightsBest_iDT);
 
 maxAcc_iDT_d=0;
 weightsBest_iDT_d=zeros(1,5);
-weights=getSolutions( 0:0.1:1, 5);
+weights=getSolutions( interval, 5);
 meanACC=zeros(1,3);
 
-%late fusion for iDT
+
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
     for i=1:3
@@ -135,42 +136,79 @@ fprintf('%.2f  ',weightsBest_iDT_d);
 % 
 % 
 % %late fusion for two-stream
-% 
-%     for i=1:3
-%         
-%         trainI = splits(:,i) == 1;
-%         testI  = splits(:,i) == 2;
-%         trainLabs = labs(trainI,:);
-%         testLabs = labs(testI,:);
-%         
-%         clfsOut = spVGG19_clsfOut{poz, i} + tempVGG16_clsfOut{poz, i}; 
-%         accuracy = ClassificationAccuracy(clfsOut, testLabs);
-%         fprintf('accuracy: %.3f\n', accuracy);
-% 
-%         lateF_clsfOut{enc,i}=clfsOut;
-%         lateF_accuracy{enc,i}=accuracy;
-%     end
-%     enc=enc+1
+maxAcc_twoS=0;
+weightsBest_twoS=zeros(1,2);
+weights=getSolutions( interval, 2);
+meanACC=zeros(1,3);
+
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
+for w=1:size(weights,1)
+    for i=1:3
+        
+        trainI = splits(:,i) == 1;
+        testI  = splits(:,i) == 2;
+        trainLabs = labs(trainI,:);
+        testLabs = labs(testI,:);
+        
+        clfsOut = weights(w,1)*spVGG19_clsfOut{poz, i} + weights(w,2)*tempVGG16_clsfOut{poz, i};      
+        meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+    end
+    
+    
+    if maxAcc_twoS<mean(meanACC)
+        maxAcc_twoS=mean(meanACC);
+        weightsBest_twoS=weights(w,:);   
+    end
+    
+    if mod(w,100)==0
+        fprintf('%d ', w);
+    end
+    
+end
+fprintf('Done!\n');
+fprintf('The best MAcc for late fusion two-Stream: %.3f \n',maxAcc_twoS);
+fprintf('The best weights for late fusion two-Stream: ');
+fprintf('%.2f  ',weightsBest_twoS);
+
+
 % 
 % 
 % 
 % %DOUBLE late fusion  two-stream
 % 
-%     for i=1:3
-%         
-%         trainI = splits(:,i) == 1;
-%         testI  = splits(:,i) == 2;
-%         trainLabs = labs(trainI,:);
-%         testLabs = labs(testI,:);
-%         
-%         clfsOut = spVGG19_clsfOut{poz, i} + tempVGG16_clsfOut{poz, i} + ealryFision_all_clfsOut{6,i};
-%         accuracy = ClassificationAccuracy(clfsOut, testLabs);
-%         fprintf('accuracy: %.3f\n', accuracy);
-% 
-%         lateF_clsfOut{enc,i}=clfsOut;
-%         lateF_accuracy{enc,i}=accuracy;
-%     end
-%     enc=enc+1
+maxAcc_twoS_d=0;
+weightsBest_twoS_d=zeros(1,3);
+weights=getSolutions( interval, 3);
+meanACC=zeros(1,3);
+
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
+for w=1:size(weights,1)
+    for i=1:3
+        
+        trainI = splits(:,i) == 1;
+        testI  = splits(:,i) == 2;
+        trainLabs = labs(trainI,:);
+        testLabs = labs(testI,:);
+        
+        clfsOut = weights(w,1)*spVGG19_clsfOut{poz, i} + weights(w,2)*tempVGG16_clsfOut{poz, i} + weights(w,3)*ealryFision_all_clfsOut{6,i};  
+        meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+    end
+    
+    
+    if maxAcc_twoS_d<mean(meanACC)
+        maxAcc_twoS_d=mean(meanACC);
+        weightsBest_twoS_d=weights(w,:);   
+    end
+    
+    if mod(w,100)==0
+        fprintf('%d ', w);
+    end
+    
+end
+fprintf('Done!\n');
+fprintf('The best MAcc for double fusion two-Stream: %.3f \n',maxAcc_twoS_d);
+fprintf('The best weights for double fusion two-Stream: ');
+fprintf('%.2f  ',weightsBest_twoS_d);
 % 
 % 
 % 
