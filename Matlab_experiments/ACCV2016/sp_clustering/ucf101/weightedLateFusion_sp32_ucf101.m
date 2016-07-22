@@ -65,7 +65,7 @@ lateF_accuracy=cell(nEncoding,3);
 
 enc=1
 
-interval=0:0.05:1;
+interval=0:0.1:1;
 
 maxAcc_iDT=0;
 weightsBest_iDT=zeros(1,4);
@@ -100,6 +100,10 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
+    if w==1
+        d=mean(ld(i))
+    end
+    
     
 end
 fprintf('Done!\n');
@@ -128,7 +132,11 @@ for w=1:size(weights,1)
         
         clfsOut = weights(w,1)*hof_clsfOut{poz, i} + weights(w,2)*hog_clsfOut{poz, i} + weights(w,3)*mbhx_clsfOut{poz, i} + weights(w,4)*mbhy_clsfOut{poz, i} ...
                     + weights(w,5)*ealryFision_all_clfsOut{3,i};      
-        meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+        meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+        if w == 1
+          clfsOut = hof_clsfOut{poz, i} + hog_clsfOut{poz, i} + mbhx_clsfOut{poz, i} + mbhy_clsfOut{poz, i}; 
+           ld(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+        end
     end
     
     
@@ -140,7 +148,9 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    
+    if w==1
+        d2=mean(ld(i))
+    end    
 end
 fprintf('Done!\n');
 fprintf('The best MAcc for double fusion iDT: %.3f \n',maxAcc_iDT_d);
@@ -167,6 +177,10 @@ for w=1:size(weights,1)
         
         clfsOut = weights(w,1)*spVGG19_clsfOut{poz, i} + weights(w,2)*tempVGG16_clsfOut{poz, i};      
         meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+       if w == 1
+          clfsOut = hof_clsfOut{poz, i} + hog_clsfOut{poz, i} + mbhx_clsfOut{poz, i} + mbhy_clsfOut{poz, i}; 
+           ld(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+       end   
     end
     
     
@@ -178,7 +192,9 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    
+    if w==1
+        d3=mean(ld(i))
+    end    
 end
 fprintf('Done!\n');
 fprintf('The best MAcc for late fusion two-Stream: %.3f \n',maxAcc_twoS);
@@ -207,6 +223,10 @@ for w=1:size(weights,1)
         
         clfsOut = weights(w,1)*spVGG19_clsfOut{poz, i} + weights(w,2)*tempVGG16_clsfOut{poz, i} + weights(w,3)*ealryFision_all_clfsOut{6,i};  
         meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+       if w == 1
+          clfsOut = hof_clsfOut{poz, i} + hog_clsfOut{poz, i} + mbhx_clsfOut{poz, i} + mbhy_clsfOut{poz, i}; 
+           ld(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+       end
     end
     
     
@@ -218,7 +238,9 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    
+    if w==1
+        d4=mean(ld(i))
+    end    
 end
 fprintf('Done!\n');
 fprintf('The best MAcc for double fusion two-Stream: %.3f \n',maxAcc_twoS_d);
@@ -247,6 +269,10 @@ for w=1:size(weights,1)
         clfsOut = weights(w,1)*hof_clsfOut{poz, i} + weights(w,2)*hog_clsfOut{poz, i} + weights(w,3)*mbhx_clsfOut{poz, i} + weights(w,4)*mbhy_clsfOut{poz, i} ...
             + weights(w,5)*spVGG19_clsfOut{poz, i} + weights(w,6)*tempVGG16_clsfOut{poz, i};      
         meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+       if w == 1
+          clfsOut = hof_clsfOut{poz, i} + hog_clsfOut{poz, i} + mbhx_clsfOut{poz, i} + mbhy_clsfOut{poz, i}; 
+           ld(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+       end
     end
     
     
@@ -258,7 +284,9 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    
+    if w==1
+        d5=mean(ld(i))
+    end    
 end
 fprintf('Done!\n');
 fprintf('The best MAcc for late fusion iDT + twoStream : %.3f \n',maxAcc_iDT_twoS);
@@ -287,6 +315,10 @@ for w=1:size(weights,1)
         clfsOut = weights(w,1)*hof_clsfOut{poz, i} + weights(w,2)*hog_clsfOut{poz, i} + weights(w,3)*mbhx_clsfOut{poz, i} + weights(w,4)*mbhy_clsfOut{poz, i} ...
             + weights(w,5)*spVGG19_clsfOut{poz, i} + weights(w,6)*tempVGG16_clsfOut{poz, i} + weights(w,7)*ealryFision_all_clfsOut{9,i};      
         meanACC(i)=mean(ClassificationAccuracy(clfsOut, testLabs));      
+       if w == 1
+          clfsOut = hof_clsfOut{poz, i} + hog_clsfOut{poz, i} + mbhx_clsfOut{poz, i} + mbhy_clsfOut{poz, i}; 
+           ld(i)=mean(ClassificationAccuracy(clfsOut, testLabs));  
+       end
     end
     
     
@@ -298,7 +330,9 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    
+    if w==1
+        d6=mean(ld(i))
+    end    
 end
 fprintf('Done!\n');
 fprintf('The best MAcc for DOUBLE fusion iDT + twoStream : %.3f \n',maxAcc_iDT_twoS_d);

@@ -65,7 +65,7 @@ lateF_accuracy=cell(nEncoding,3);
 
 enc=1
 
-interval=0:0.1:1;
+interval=0:0.05:1;
 
 maxAcc_iDT=0;
 weightsBest_iDT=zeros(1,4);
@@ -100,6 +100,10 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
+    if w==1
+        d=mean(ld(i))
+    end
+    
     
 end
 fprintf('Done!\n');
