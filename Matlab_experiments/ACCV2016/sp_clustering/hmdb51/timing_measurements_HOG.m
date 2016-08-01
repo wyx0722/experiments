@@ -86,7 +86,7 @@ spV32_fast=spV32;
 
 
 permV=randperm(length(allPathFeatures));
-randVideos=allPathFeatures{permV(1:500)};
+randVideos=allPathFeatures(permV(1:500));
 
 
 nDesc=zeros(1, length(randVideos));
