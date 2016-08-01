@@ -9,7 +9,7 @@ clear descParam
 descParam.Dataset='HMBD51';
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
+descParam.IDTfeature='HOF_iTraj';
 descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
 alpha=0.1;%for PN !!!!!!!change!!!!!!!
 
@@ -34,6 +34,8 @@ descParam.spClusters=[2     4     8    16    32    64   128   256];
 %the baze path for features
 bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
 descParam
+
+
 
 
 

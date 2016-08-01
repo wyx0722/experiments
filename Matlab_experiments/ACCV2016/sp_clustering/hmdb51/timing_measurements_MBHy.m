@@ -9,7 +9,7 @@ clear descParam
 descParam.Dataset='HMBD51';
 descParam.Func = @FEVid_IDT;
 descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
+descParam.IDTfeature='MBHy_iTraj';
 descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
 alpha=0.1;%for PN !!!!!!!change!!!!!!!
 
@@ -19,7 +19,7 @@ switch descParam.MediaType
     case 'IDT'
         if strfind(descParam.IDTfeature,'HOF')>0
             sizeDesc=108;   
-        elseif  strfind(descParam.IDTfeature,'HOG')>0 || strfind(descParam.IDTfeature,'MBHx')>0 || strfind(descParam.IDTfeature,'MBHy')>0  
+        else%elseif  (strfind(descParam.IDTfeature,'HOG') + strfind(descParam.IDTfeature,'MBHx') + strfind(descParam.IDTfeature,'MBHy'))>0  
             sizeDesc=96;   
         end
         descParam.pcaDim = sizeDesc/2;
@@ -27,13 +27,14 @@ switch descParam.MediaType
         descParam.pcaDim=256;%!!!
 end
 
-
 descParam.Clusters=[64 128 256 512];
 descParam.spClusters=[2     4     8    16    32    64   128   256];
 
 %the baze path for features
 bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
 descParam
+
+
 
 
 

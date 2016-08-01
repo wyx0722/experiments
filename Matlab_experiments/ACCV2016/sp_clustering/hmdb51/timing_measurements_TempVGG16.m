@@ -160,3 +160,6 @@ fprintf('Average time for %d videos VLAD512: %.3f \n', length(randVideos), mean(
 fprintf('Average time for %d videos VLAD512 *fast*: %.3f \n \n', length(randVideos), mean(t_v512_fast));
 fprintf('Average time for %d videos st32: %.3f \n', length(randVideos), mean(t_spV32));
 fprintf('Average time for %d videos st32 *fast*: %.3f \n \n', length(randVideos), mean(t_spV32_fast));
+
+name=['./rezTiming/' DescParam2Name(descParam) '.mat']
+save(name, '-v7.3', 'tDescExtr', 'nDesc', 'nFrames', 't_v256', 't_v256_fast', 't_v512', 't_v512_fast', 't_spV32', 't_spV32_fast');

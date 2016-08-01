@@ -7,11 +7,12 @@ addpath('./..')
 
 clear descParam
 descParam.Dataset='HMBD51';
-descParam.Func = @FEVid_IDT;
-descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
-descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
-alpha=0.1;%for PN !!!!!!!change!!!!!!!
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+descParam.net='SpVGG19';
+descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
+alpha=0.5;%for PN !!!!!!!change!!!!!!!
 
 
 
@@ -32,7 +33,7 @@ descParam.Clusters=[64 128 256 512];
 descParam.spClusters=[2     4     8    16    32    64   128   256];
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_VGG_19_features_rawFrames/Videos/'
 descParam
 
 
@@ -73,19 +74,20 @@ vocabularyPathFeatures=allPathFeatures(1:3:end);
 
 t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
 v256=zeros(length(allPathFeatures), length(t), 'like', t); 
+v256_fast=v256;
 
 t=VLAD_1_mean(tDesc, cell_Clusters{4}.vocabulary);
 v512=zeros(length(allPathFeatures), length(t), 'like', t); 
+v512_fast=v512;
 
 
 
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
 spV32=zeros(length(allPathFeatures), length(t), 'like', t);
 spV32_fast=spV32;
 
 
-permV=randperm(length(allPathFeatures));
+load('timing_permV.mat'); %permV=randperm(length(allPathFeatures));
 randVideos=allPathFeatures(permV(1:500));
 
 
@@ -95,7 +97,9 @@ nDesc=zeros(1, length(randVideos));
 tDescExtr=zeros(1, length(randVideos));
 nFrames=zeros(1, length(randVideos));
 t_v256=zeros(1, length(randVideos));
+t_v256_fast=zeros(1, length(randVideos));
 t_v512=zeros(1, length(randVideos));
+t_v512_fast=zeros(1, length(randVideos));
 t_spV32=zeros(1, length(randVideos));
 t_spV32_fast=zeros(1, length(randVideos));
 
@@ -111,22 +115,32 @@ for i=1:length(randVideos)
     tDescExtr(i)=toc;
     
     nDesc(i)=size(desc,1);
-    nFrames(i)=max(info.infoTraj(:, 1));
+    nFrames(i)=nDesc(i)/49;
     
     tic
     v256(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
     t_v256(i)=toc;
     
     tic
+    v256_fast(i, :) = fast_VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
+    t_v256_fast(i)=toc;    
+    
+    
+    
+    tic
     v512(i, :) = VLAD_1_mean(desc, cell_Clusters{4}.vocabulary);
     t_v512(i)=toc;
     
     tic
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+    v512_fast(i, :) = fast_VLAD_1_mean(desc, cell_Clusters{4}.vocabulary);
+    t_v512_fast(i)=toc;
+    
+    tic
+    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
     t_spV32(i)=toc;
     
     tic
-    spV32_fast(i, :) = fast_VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+    spV32_fast(i, :) = fast_VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
     t_spV32_fast(i)=toc;
     
       
@@ -139,7 +153,12 @@ end
 fprintf('\nDone!\n');
 
 
-fprintf('Average time for %d videos VLAD256: %.3f \n', length(randVideos), mean(t_v256(1:50)));
+fprintf('Average time for %d videos VLAD256: %.3f \n', length(randVideos), mean(t_v256));
+fprintf('Average time for %d videos VLAD256 *fast*: %.3f \n \n', length(randVideos), mean(t_v256_fast));
 fprintf('Average time for %d videos VLAD512: %.3f \n', length(randVideos), mean(t_v512));
+fprintf('Average time for %d videos VLAD512 *fast*: %.3f \n \n', length(randVideos), mean(t_v512_fast));
 fprintf('Average time for %d videos st32: %.3f \n', length(randVideos), mean(t_spV32));
-fprintf('Average time for %d videos st32 fast: %.3f \n', length(randVideos), mean(t_spV32_fast));
+fprintf('Average time for %d videos st32 *fast*: %.3f \n \n', length(randVideos), mean(t_spV32_fast));
+
+name=['./rezTiming/' DescParam2Name(descParam) '.mat']
+save(name, '-v7.3', 'tDescExtr', 'nDesc', 'nFrames', 't_v256', 't_v256_fast', 't_v512', 't_v512_fast', 't_spV32', 't_spV32_fast');
