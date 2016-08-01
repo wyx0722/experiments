@@ -7,11 +7,12 @@ addpath('./..')
 
 clear descParam
 descParam.Dataset='HMBD51';
-descParam.Func = @FEVid_IDT;
-descParam.MediaType = 'IDT';
-descParam.IDTfeature='HOG_iTraj';
-descParam.Normalisation='ROOTSIFT'; % L2 or 'ROOTSIFT'
-alpha=0.1;%for PN !!!!!!!change!!!!!!!
+descParam.Func = @FEVid_deepFeatures;
+descParam.MediaType = 'DeepF';
+descParam.Layer='pool5';
+descParam.net='TempSplit1VGG16';
+descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
+alpha=0.5;%for PN !!!!!!!change!!!!!!!
 
 
 
@@ -32,8 +33,9 @@ descParam.Clusters=[64 128 256 512];
 descParam.spClusters=[2     4     8    16    32    64   128   256];
 
 %the baze path for features
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
+bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
 descParam
+
 
 
 
@@ -81,7 +83,7 @@ v512_fast=v512;
 
 
 
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
 spV32=zeros(length(allPathFeatures), length(t), 'like', t);
 spV32_fast=spV32;
 
@@ -114,7 +116,7 @@ for i=1:length(randVideos)
     tDescExtr(i)=toc;
     
     nDesc(i)=size(desc,1);
-    nFrames(i)=max(info.infoTraj(:, 1));
+    nFrames(i)=nDesc(i)/49;
     
     tic
     v256(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
@@ -135,11 +137,11 @@ for i=1:length(randVideos)
     t_v512_fast(i)=toc;
     
     tic
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
     t_spV32(i)=toc;
     
     tic
-    spV32_fast(i, :) = fast_VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+    spV32_fast(i, :) = fast_VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
     t_spV32_fast(i)=toc;
     
       

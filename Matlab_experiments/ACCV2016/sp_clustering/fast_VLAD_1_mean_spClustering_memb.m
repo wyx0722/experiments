@@ -14,7 +14,6 @@ function finalVLAD=fast_VLAD_1_mean_spClustering_memb(desc, vocab, spInfo, spVoc
 
 
 dimDesc=size(desc, 2); % the dimension of the descriptors
-nDesc=size(desc, 1); % number of the descriptors
 k1=size(vocab, 1);  % the size of the standard VLAD vocabulary
 k2=size(spVocab, 1); %the size of ST vocabulary (number of video divisions)
 
