@@ -14,7 +14,6 @@ function finalVLAD=fast_VLAD_1_mean_spClustering_memb(desc, vocab, spInfo, spVoc
 
 
 dimDesc=size(desc, 2); % the dimension of the descriptors
-nDesc=size(desc, 1); % number of the descriptors
 k1=size(vocab, 1);  % the size of the standard VLAD vocabulary
 k2=size(spVocab, 1); %the size of ST vocabulary (number of video divisions)
 
@@ -58,13 +57,13 @@ for i=1:k1
         %Calculate the sum over these differences
         %wordVLAD{i}=(1.0/nAssigned)*sum(diff, 1);
         poz=sV+i*dimDesc-dimDesc;
-        finalVLAD(poz:poz+dimDesc)=(1.0/nAssigned)*sum(diff, 1);
+        finalVLAD(poz:poz+dimDesc-1)=(1.0/nAssigned)*sum(diff, 1);
         %wordVLAD{i}=mean(diff, 1);
         
     else
         % no desccriptor in the cluser then put zeros
-        poz=sV*i*dimDesc-dimDesc;
-        finalVLAD(poz+1:poz+dimDesc)=zV;      
+        poz=sV+i*dimDesc-dimDesc;
+        finalVLAD(poz:poz+dimDesc-1)=zV;      
     end 
         
         
@@ -90,19 +89,19 @@ for i=1:k2
     if nAssigned>0
         %spWordVlad{i}=(1.0/nAssigned) * sum(VLADs(spAssigned, :), 1);
         
-        poz=sR*i*dimDesc-dimDesc;
-        finalVLAD(poz+1:poz+dimDesc)=(1.0/nAssigned) * sum(VLADs(spAssigned, :), 1);
+        poz=sR+i*dimDesc-dimDesc;
+        finalVLAD(poz:poz+dimDesc-1)=(1.0/nAssigned) * sum(VLADs(spAssigned, :), 1);
         
         
         %spMemb{i}=sum(memb(spAssigned, :), 1);
-        poz=sM*i*k1-k1;
-        finalVLAD(poz+1:poz+k1)=sum(memb(spAssigned, :), 1);
+        poz=sM+i*k1-k1;
+        finalVLAD(poz:poz+k1-1)=sum(memb(spAssigned, :), 1);
     else
-        poz=sR*i*dimDesc-dimDesc;
-        finalVLAD(poz+1:poz+dimDesc)=zR;
+        poz=sR+i*dimDesc-dimDesc;
+        finalVLAD(poz:poz+dimDesc-1)=zR;
         
-        poz=sM*i*k1-k1;
-        finalVLAD(poz+1:poz+k1)=zM;
+        poz=sM+i*k1-k1;
+        finalVLAD(poz:poz+k1-1)=zM;
     end
 end
 

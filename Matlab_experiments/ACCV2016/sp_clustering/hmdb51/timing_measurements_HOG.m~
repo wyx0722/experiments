@@ -82,9 +82,11 @@ v512=zeros(length(allPathFeatures), length(t), 'like', t);
 
 t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
 spV32=zeros(length(allPathFeatures), length(t), 'like', t);
+spV32_fast=spV32;
+
 
 permV=randperm(length(allPathFeatures));
-randVideos=allPathFeatures{permV(1:500)};
+randVideos=allPathFeatures(permV(1:500));
 
 
 nDesc=zeros(1, length(randVideos));
@@ -124,11 +126,10 @@ for i=1:length(randVideos)
     t_spV32(i)=toc;
     
     tic
-    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
-    t_spV32(i)=toc;
+    spV32_fast(i, :) = fast_VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.infoTraj(:, 8:10), cell_spClusters{5}.vocabulary);
+    t_spV32_fast(i)=toc;
     
-     
-   
+      
         
      if i == 1
          descParamUsed
@@ -137,3 +138,8 @@ end
 %delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
+
+fprintf('Average time for %d videos VLAD256: %.3f \n', length(randVideos), mean(t_v256(1:50)));
+fprintf('Average time for %d videos VLAD512: %.3f \n', length(randVideos), mean(t_v512));
+fprintf('Average time for %d videos st32: %.3f \n', length(randVideos), mean(t_spV32));
+fprintf('Average time for %d videos st32 fast: %.3f \n', length(randVideos), mean(t_spV32_fast));
