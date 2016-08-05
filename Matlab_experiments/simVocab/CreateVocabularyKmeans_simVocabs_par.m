@@ -68,7 +68,7 @@ end
 function [vocabClass]=getVocabPCAClass(trainClass, descParam, numDescriptors)
 
 
-    [descriptors, info] = GetRandomDescriptors(trainClass, descParam, numDescriptors);
+    [descriptors] = GetRandomDescriptors(trainClass, descParam, numDescriptors);
     
     [labs, ~, vocabClass] = kmeansj(descriptors, descParam.sizeVocab, 100);
     

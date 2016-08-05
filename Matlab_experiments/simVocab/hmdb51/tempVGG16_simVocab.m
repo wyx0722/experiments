@@ -74,7 +74,7 @@ end
 
 nPar=5;
 [vocabsClass, pcaMap] = CreateVocabularyKmeans_simVocabs_par(trainClass, descParam, nPar, ...
-                                                         descParam.numDescriptors, 0);
+                                                         descParam.numDescriptors);
 
                                                      
 [tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
