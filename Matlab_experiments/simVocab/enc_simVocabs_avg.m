@@ -1,6 +1,5 @@
 function [ enc_vect ] = enc_simVocabs_avg( desc, vocabsClass)
 
-k=size(vocabsClass{1}, 1);
 enc_vect=cell(1,length(vocabsClass));
 
 for v=1:length(vocabsClass)
@@ -8,11 +7,11 @@ for v=1:length(vocabsClass)
     [distAssign, assign]=min(distance, [], 2);
     
     %check if all the vocabularies are the same size
-    if size(vocabsClass{v}, 1)~=k
-        fprintf('Size vacab%d: %d and size vocab%d: %d \n', 1, k, v,size(vocabsClass{v}, 1));
-        warning('The size of the vocabularies are not equal!!!!!!!!');
-        keyboard
-    end
+%     if size(vocabsClass{v}, 1)~=k
+%         fprintf('Size vacab%d: %d and size vocab%d: %d \n', 1, k, v,size(vocabsClass{v}, 1));
+%         warning('The size of the vocabularies are not equal!!!!!!!!');
+%         keyboard
+%     end
     
     %get the average distance for each cluster
     k=size(vocabsClass{v}, 1);
