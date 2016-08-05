@@ -108,7 +108,7 @@ allDist=cell(1, nEncoding);
 temp=NormalizeRowsUnit(repVocabSim);
 allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(1./repVocabSim);
+temp=NormalizeRowsUnit(1./repVocabSim); %!!!!!!!!!generates NaN!!!!!!!
 allDist{2}=temp * temp';
 
 clear temp
