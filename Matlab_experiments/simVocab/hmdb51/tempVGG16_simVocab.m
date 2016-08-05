@@ -12,6 +12,8 @@ descParam.MediaType = 'DeepF';
 descParam.Layer='pool5';
 descParam.net='TempSplit1VGG16';
 descParam.Normalisation='None'; % L2 or 'ROOTSIFT'
+descParam.numDescriptors=500000;
+
 alpha=0.5;%for PN !!!!!!!change!!!!!!!
 
 
@@ -27,16 +29,15 @@ alpha=0.5;%for PN !!!!!!!change!!!!!!!
 %     case 'DeepF'
 %         descParam.pcaDim=256;%!!!
 % end
-
 descParam.pcaDim=0;
 
 descParam.sizeVocab=256;
+
+
 %the baze path for features
 bazePathFeatures='/home/ionut/asustor_ionut_2/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
+
 descParam
-
-
-
 
 
 
@@ -71,32 +72,77 @@ for i=1:DATAopts.nclasses
     trainClass{i}=trainingSetPathFeatures(trainLabs(:,i)==1);   
 end
 
-% 
-% all_clfsOut=cell(1,nEncoding);
-% all_accuracy=cell(1,nEncoding);
-% 
-% cRange = 100;
-% nReps = 1;
-% nFolds = 3;
-% 
-% parpool(nEncoding);
-% parfor k=1:nEncoding
-%     k
-%     trainI=trainTestSplit==1;
-%     testI=~trainI;
-%     
-%     trainDist = allDist{k}(trainI, trainI);
-%     testDist = allDist{k}(testI, trainI);
-%     trainLabs = trainTestSetlabs(trainI,:);
-%     testLabs = trainTestSetlabs(testI, :);
-%     
-%     [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-%     accuracy = ClassificationAccuracy(clfsOut, testLabs);
-%     fprintf('accuracy: %.3f\n', accuracy);
-%     
-%     all_clfsOut{k}=clfsOut;
-%     all_accuracy{k}=accuracy;
-% end
-% 
-% delete(gcp('nocreate'))
-% 
+nPar=5;
+[vocabsClass, pcaMap] = CreateVocabularyKmeans_simVocabs_par(trainClass, descParam, nPar, ...
+                                                         descParam.numDescriptors);
+
+                                                     
+[tDesc] = MediaName2Descriptor(trainTestSetPathFeatures{1}, descParam, pcaMap);                                           
+tRep=enc_simVocabs_avg( tDesc, vocabsClass);
+
+repVocabSim=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);     
+
+                                                     
+fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
+parpool(5);
+parfor i=1:length(trainTestSetPathFeatures)
+    fprintf('%d \n', i)
+    
+    [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
+    
+    repVocabSim(i, :) = enc_simVocabs_avg( desc, vocabsClass);
+
+
+            
+     if i == 1
+         descParamUsed
+     end
+end
+delete(gcp('nocreate'))
+fprintf('\nDone!\n');
+
+
+nEncoding=2;
+allDist=cell(1, nEncoding);
+
+temp=NormalizeRowsUnit(repVocabSim);
+allDist{1}=temp * temp';
+
+temp=NormalizeRowsUnit(1./repVocabSim);
+allDist{2}=temp * temp';
+
+clear temp
+
+
+
+
+all_clfsOut=cell(1,nEncoding);
+all_accuracy=cell(1,nEncoding);
+
+cRange = 100;
+nReps = 1;
+nFolds = 3;
+
+parpool(nEncoding);
+parfor k=1:nEncoding
+    k
+    trainI=trainTestSplit==1;
+    testI=~trainI;
+    
+    trainDist = allDist{k}(trainI, trainI);
+    testDist = allDist{k}(testI, trainI);
+    trainLabs = trainTestSetlabs(trainI,:);
+    testLabs = trainTestSetlabs(testI, :);
+    
+    [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+    accuracy = ClassificationAccuracy(clfsOut, testLabs);
+    fprintf('accuracy: %.3f\n', accuracy);
+    
+    all_clfsOut{k}=clfsOut;
+    all_accuracy{k}=accuracy;
+end
+
+delete(gcp('nocreate'))
+
+acc1=mean(all_accuracy{1})
+acc2=mean(all_accuracy{2})

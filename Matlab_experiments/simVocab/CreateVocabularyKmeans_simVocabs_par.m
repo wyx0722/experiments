@@ -1,4 +1,4 @@
-function [cell_Clusters, cell_spClusters, pcaMap] = CreateVocabularyKmeans_simVocabs_par(imNames, descParam, ...
+function [vocabsClass, pcaMap] = CreateVocabularyKmeans_simVocabs_par(trainClass, descParam, nPar, ...
                                                          numDescriptors, forceCreate)
 % [vocabulary, pcaMap] = CreateVocabularyKmeansPca(imNames, descParam, numClusters, pcaDim, ...
 %                                                          numDescriptors, forceCreate)
@@ -35,82 +35,42 @@ end
 if ~exist('numDescriptors', 'var')
     numDescriptors = 1000000;
 end
+if ~exist('nPar', 'var')
+    nPar = 1;
+end
 
 
+vocabsClass=cell(size(trainClass));
 
-
-
-[descriptors, info] = GetRandomDescriptors(imNames, descParam, numDescriptors);
-
-% pcaMap
-if (descParam.pcaDim > size(descriptors,2)) || (descParam.pcaDim == 0)
-    pcaMap.data.rot = 1;
-    warning('descParam.pcaDim does not decrease dimensionality. Skipping PCA!!!');
+fprintf('Creating  %d vocabularies: \n', length(trainClass)); 
+if nPar<=1
+    for i=1:length(trainClass)
+        fprintf('%d ', i);
+        [vocabsClass{i}]=getVocabPCAClass(trainClass{i}, descParam, numDescriptors);    
+    end
 else
-    pcaMap = pca(descriptors(1:2:end,:), descParam.pcaDim);
-end
-
-% Descriptors to train Kmeans vocabulary, note these are disjunct from pca
-descriptors = descriptors(2:2:end,:) * pcaMap.data.rot;
-
-
-
-cell_Clusters=cell(1, size(descParam.Clusters, 2));
-
-for i=1: size(descParam.Clusters, 2)
-    
-    [labs, ~, vocab] = kmeansj(descriptors, descParam.Clusters(i), 100);
-    
-    par.st_d=zeros(size(vocab));
-    par.skew=zeros(size(vocab));
-    par.kurt=zeros(size(vocab));
-    par.nElem=zeros(size(vocab, 1), 1);  
-    for j=1: size(vocab, 1)
-        par.st_d(j, :)=std(descriptors(labs==j, :), 1);
-        par.skew(j, :)=skewness(descriptors(labs==j, :));
-        par.kurt(j, :)=kurtosis(descriptors(labs==j, :));
-        par.nElem(j)=sum(labs==j);
+    parpool(nPar);
+    parfor i=1:length(trainClass)
+        fprintf('%d \n', i);
+        [vocabsClass{i}]=getVocabPCAClass(trainClass{i}, descParam, numDescriptors);    
     end
-    
-    par.vocabulary=vocab;
-    
-    cell_Clusters{i}=par;
-    
+    delete(gcp('nocreate'))   
+end
+fprintf('\nDone creating the vocabularies!\n');
+
+pcaMap.data.rot = 1;
+
+
+save(vocabularySaveName, '-v7.3', 'vocabsClass', 'pcaMap');
 end
 
 
+function [vocabClass]=getVocabPCAClass(trainClass, descParam, numDescriptors)
 
-cell_spClusters=cell(1, size(descParam.spClusters, 2));
 
-if  strfind(descParam.MediaType,'IDT')
-    sptInfo=info.infoTraj(:, 8:10);
-else if strfind(descParam.MediaType,'DeepF')
-     sptInfo=info.spInfo; 
-    end
+    [descriptors, info] = GetRandomDescriptors(trainClass, descParam, numDescriptors);
+    
+    [labs, ~, vocabClass] = kmeansj(descriptors, descParam.sizeVocab, 100);
+    
+    %!!!!!!!!!!
 end
-
-for i=1: size(descParam.spClusters, 2)
-    
-    [labs, ~, vocab] = kmeansj(sptInfo, descParam.spClusters(i), 100);
-    
-    par.st_d=zeros(size(vocab));
-    par.skew=zeros(size(vocab));
-    par.kurt=zeros(size(vocab));
-    par.nElem=zeros(size(vocab, 1), 1);  
-    for j=1: size(vocab, 1)
-        par.st_d(j, :)=std(sptInfo(labs==j, :), 1);
-        par.skew(j, :)=skewness(sptInfo(labs==j, :));
-        par.kurt(j, :)=kurtosis(sptInfo(labs==j, :));
-        par.nElem(j)=sum(labs==j);
-    end
-    
-    par.vocabulary=vocab;
-    
-    cell_spClusters{i}=par;
-    
-end
-
-
-
-
-save(vocabularySaveName, '-v7.3', 'pcaMap', 'cell_Clusters', 'cell_spClusters');
