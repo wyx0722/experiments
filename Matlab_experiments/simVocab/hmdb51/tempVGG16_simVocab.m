@@ -64,9 +64,12 @@ trainTestSplit=splits((splits(:, descParam.Split)==1 | splits(:, descParam.Split
 trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1); %get the trining set feature paths 
 %vocabularyPathFeatures=trainingSetPathFeatures(1:2:end); % build the vocabulary for half of the videos of the training set
 
-trainLabs=trainTestSetlabs(trainTestSplit==1, :);
+trainLabs=trainTestSetlabs(trainTestSplit==1, :); %get the labels for the training set
 
-
+trainClass=cell(1,DATAopts.nclasses); %for saving the feature paths for training set for each class
+for i=1:DATAopts.nclasses
+    trainClass{i}=trainingSetPathFeatures(trainLabs(:,i)==1);   
+end
 
 % 
 % all_clfsOut=cell(1,nEncoding);

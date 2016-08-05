@@ -1,4 +1,4 @@
-lobal DATAopts;
+global DATAopts;
 DATAopts = HMDB51Init;
 
 
@@ -64,36 +64,41 @@ trainTestSplit=splits((splits(:, descParam.Split)==1 | splits(:, descParam.Split
 trainingSetPathFeatures=trainTestSetPathFeatures(trainTestSplit==1); %get the trining set feature paths 
 %vocabularyPathFeatures=trainingSetPathFeatures(1:2:end); % build the vocabulary for half of the videos of the training set
 
-trainLabs=labs()
+trainLabs=trainTestSetlabs(trainTestSplit==1, :); %get the labels for the training set
 
-
-
-
-all_clfsOut=cell(1,nEncoding);
-all_accuracy=cell(1,nEncoding);
-
-cRange = 100;
-nReps = 1;
-nFolds = 3;
-
-parpool(nEncoding);
-parfor k=1:nEncoding
-    k
-    trainI=trainTestSplit==1;
-    testI=~trainI;
+trainClass=cell(1,DATAopts.nclasses); %for saving the feature paths for training set for each class
+for i=1:DATAopts.nclasses
+    trainClass{i}=trainingSetPathFeatures()
     
-    trainDist = allDist{k}(trainI, trainI);
-    testDist = allDist{k}(testI, trainI);
-    trainLabs = trainTestSetlabs(trainI,:);
-    testLabs = trainTestSetlabs(testI, :);
     
-    [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-    accuracy = ClassificationAccuracy(clfsOut, testLabs);
-    fprintf('accuracy: %.3f\n', accuracy);
-    
-    all_clfsOut{k}=clfsOut;
-    all_accuracy{k}=accuracy;
 end
 
-delete(gcp('nocreate'))
-
+% 
+% all_clfsOut=cell(1,nEncoding);
+% all_accuracy=cell(1,nEncoding);
+% 
+% cRange = 100;
+% nReps = 1;
+% nFolds = 3;
+% 
+% parpool(nEncoding);
+% parfor k=1:nEncoding
+%     k
+%     trainI=trainTestSplit==1;
+%     testI=~trainI;
+%     
+%     trainDist = allDist{k}(trainI, trainI);
+%     testDist = allDist{k}(testI, trainI);
+%     trainLabs = trainTestSetlabs(trainI,:);
+%     testLabs = trainTestSetlabs(testI, :);
+%     
+%     [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+%     accuracy = ClassificationAccuracy(clfsOut, testLabs);
+%     fprintf('accuracy: %.3f\n', accuracy);
+%     
+%     all_clfsOut{k}=clfsOut;
+%     all_accuracy{k}=accuracy;
+% end
+% 
+% delete(gcp('nocreate'))
+% 
