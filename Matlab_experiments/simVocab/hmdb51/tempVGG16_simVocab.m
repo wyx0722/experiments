@@ -1,4 +1,4 @@
-lobal DATAopts;
+global DATAopts;
 DATAopts = HMDB51Init;
 
 
