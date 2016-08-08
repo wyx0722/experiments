@@ -47,7 +47,6 @@ for i=1:length(trainTestSetPathFeatures)
         fprintf('%d ', i)
     end
     
-    [desc, info, descParamUsed] = MediaName2Descriptor(trainTestSetPathFeatures{i}, descParam, pcaMap);
     
     load(trainTestSetPathFeatures{i});
     rep(i, :) = v;
