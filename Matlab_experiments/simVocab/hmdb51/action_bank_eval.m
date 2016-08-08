@@ -1,7 +1,7 @@
 global DATAopts;
 DATAopts = HMDB51Init;
 
-
+descParam.Split=1
 
 
 %the baze path for features
