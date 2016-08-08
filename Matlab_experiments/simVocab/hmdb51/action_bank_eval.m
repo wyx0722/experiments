@@ -37,7 +37,7 @@ trainLabs=trainTestSetlabs(trainTestSplit==1, :); %get the labels for the traini
 load(trainTestSetPathFeatures{1});
 tRep=v;
 
-rep=zeros(length(trainTestSetPathFeatures), length(tRep), 'like', tRep);     
+rep=zeros(length(trainTestSetPathFeatures), length(tRep));     
 
                                                      
 fprintf('Feature extraction  for %d vids: ', length(trainTestSetPathFeatures));
