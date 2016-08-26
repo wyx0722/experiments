@@ -1,9 +1,12 @@
-function  [all_accuracy, all_clfsOut]  = denseFramework(typeFeature, normStrategy, d, cl_VLAD, cl_FV, fsr)
+function  [all_accuracy, all_clfsOut]  = denseFramework(typeFeature, normStrategy, d, cl_VLAD, cl_FV, fsr, nPar)
 
 
 
 global DATAopts;
 DATAopts = UCFInit;
+
+
+addpath('./../');%!!!!!!!
 
 % Parameter settings for descriptor extraction
 clear descParam
@@ -156,7 +159,7 @@ fv_4=zeros(length(vids), length(t), 'like', t);
 
 
 
-parpool(5);
+parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(fullPathVids));
@@ -267,6 +270,8 @@ allDist{8}=temp * temp';
 temp=NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(fv, descParam.pcaDim), 0.5));
 allDist{9}=temp * temp';
 
+clear temp
+
 
 all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
@@ -303,12 +308,7 @@ end
 
 delete(gcp('nocreate'))
 
-
-
-
-acc=mean(mean(cat(2, all_accuracy{1}{:})))
-
-descType=func2str(descParam.Func);
+%descType=func2str(descParam.Func);
 
 hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
 if ~isempty(findstr(hostname, 'cocoa'))
@@ -354,4 +354,4 @@ save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
  saveName2 = [rezPath 'videoRep/' DescParam2Name(descParam) '.mat'];
  save(saveName2, '-v7.3', 'vlad256', 'vlad256f', 'vlad512', 'vlad512f', 'b_f', 'sd', 'sd_f', 'fv');
- 
+end

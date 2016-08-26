@@ -1,4 +1,4 @@
-function [desc, info, descParam] = FEVidHSMDense(video, descParam)
+function [desc, info, descParam] = FEVidHmgDense(video, descParam)
 % [desc, info, descParam] = FEVidHSMDense(video, descParam)
 %
 % Wrapper to densely sample HSM features from a video using the 
