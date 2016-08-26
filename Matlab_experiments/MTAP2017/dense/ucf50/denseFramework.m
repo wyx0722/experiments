@@ -64,11 +64,15 @@ allClusters{2}=descParam.numClusters_FV;
 vocabs=cell(1,2);
 pcaMaps=cell(1,2);
 
-parpool(2);
-parfor i=1:length(funcVocab)
-    [vocabs{i}, pcaMaps{i}]=funcVocab{i}(vocabularyImsPaths, descParam, allClusters{i}, descParam.pcaDim);
-end
-delete(gcp('nocreate'))
+% parpool(2);
+% parfor i=1:length(funcVocab)
+%     [vocabs{i}, pcaMaps{i}]=funcVocab{i}(vocabularyImsPaths, descParam, allClusters{i}, descParam.pcaDim);
+% end
+% delete(gcp('nocreate'))
+
+for i=1:length(funcVocab)
+     [vocabs{i}, pcaMaps{i}]=funcVocab{i}(vocabularyImsPaths, descParam, allClusters{i}, descParam.pcaDim);
+ end
 
 vocab_vlad256=vocabs{1}{1};
 vocab_vlad512=vocabs{1}{2};
