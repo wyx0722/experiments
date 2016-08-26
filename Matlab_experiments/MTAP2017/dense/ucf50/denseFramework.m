@@ -171,7 +171,7 @@ parfor i=1:length(fullPathVids)
     fprintf('%d \n', i)
     % Extract descriptors
     
-    [desc, info, descParamUsed] = MediaName2Descriptor(fullPathVids{i}, descParam, pcaMap);
+    [desc, info, descParamUsed] = MediaName2Descriptor(fullPathVids{i}, descParam, pcaMap_vlad);
     n_desc = NormalizeRowsUnit(desc);
     
         % Feature vector assignment with spatial pyramid
