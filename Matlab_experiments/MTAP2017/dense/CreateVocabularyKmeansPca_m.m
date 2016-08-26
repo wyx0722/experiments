@@ -19,8 +19,8 @@ function [vocabs, pcaMap] = CreateVocabularyKmeansPca_m(imNames, descParam, numC
 
 global DATAopts;
 
-vocabularySaveName = sprintf('%sKmeans%sPca%gClusters%g.mat', DATAopts.vocabularyPath, ...
-                       DescParam2Name(descParam), pcaDim, numClusters)
+vocabularySaveName = sprintf('%sKmeans%sPca%gClusters%g_%g.mat', DATAopts.vocabularyPath, ...
+                       DescParam2Name(descParam), pcaDim, numClusters(1), numClusters(2))
 
 
 % Test if Gaussian Mixture Model exists. If it does, return
