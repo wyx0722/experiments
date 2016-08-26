@@ -70,13 +70,11 @@ pcaMaps=cell(1,2);
 % end
 % delete(gcp('nocreate'))
 
-% for i=1:length(funcVocab)
-%      [vocabs{i}, pcaMaps{i}]=funcVocab{i}(vocabularyImsPaths, descParam, allClusters{i}, descParam.pcaDim);
-% end
+for i=1:length(funcVocab)
+     [vocabs{i}, pcaMaps{i}]=funcVocab{i}(vocabularyImsPaths, descParam, allClusters{i}, descParam.pcaDim);
+end
  
-[vocabs{2}, pcaMaps{2}]=CreateVocabularyGMMPca(vocabularyImsPaths, descParam, descParam.numClusters_FV, descParam.pcaDim);
-[vocabs{1}, pcaMaps{1}]=CreateVocabularyKmeansPca_m(vocabularyImsPaths, descParam, descParam.numClusters_VLAD, descParam.pcaDim);
-
+[vocabs{1}, pcaMaps{1}]=CreateVocabularyKmeansPca_m()
 
 vocab_vlad256=vocabs{1}{1};
 vocab_vlad512=vocabs{1}{2};
