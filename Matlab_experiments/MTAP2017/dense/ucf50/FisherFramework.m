@@ -173,7 +173,7 @@ try
     
     fileID=fopen(fileName, 'a');
     
-    fprintf(fileID, '%s PNL2 norm before classification (alpha=%.2f) \n  FisherVector: %.3f   FisherVector_intraL2: %.3f', ...
+    fprintf(fileID, '%s PNL2 norm before classification (alpha=%.2f) \n  FisherVector: %.3f   FisherVector_intraL2: %.3f \n\n', ...
             DescParam2Name(descParam), alpha, mean(mean(cat(2, all_accuracy{1}{:}))), mean(mean(cat(2, all_accuracy{2}{:}))) );
     
     fclose(fileID);
@@ -183,7 +183,7 @@ catch err
     fileName='resultsDenseFisherVector.txt';
     fileID=fopen(fileName, 'a');
     
-   fprintf(fileID, '%s PNL2 norm before classification (alpha=%.2f) \n  FisherVector: %.3f   FisherVector_intraL2: %.3f', ...
+   fprintf(fileID, '%s PNL2 norm before classification (alpha=%.2f) \n  FisherVector: %.3f   FisherVector_intraL2: %.3f \n\n', ...
             DescParam2Name(descParam), alpha, mean(mean(cat(2, all_accuracy{1}{:}))), mean(mean(cat(2, all_accuracy{2}{:}))) );
     
     fclose(fileID);
