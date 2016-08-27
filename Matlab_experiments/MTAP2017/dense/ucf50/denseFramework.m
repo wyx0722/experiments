@@ -53,13 +53,13 @@ for i=1:length(vocabularyImsPaths)
 end
 
 %%%%%%%%%%%%%%%%
-funcVocab=cell(1,2);
-funcVocab{1}=@CreateVocabularyKmeansPca_m;
-funcVocab{2}=@CreateVocabularyGMMPca;
-
-allClusters=cell(1,2);
-allClusters{1}=descParam.numClusters_VLAD;
-allClusters{2}=descParam.numClusters_FV;
+% funcVocab=cell(1,2);
+% funcVocab{1}=@CreateVocabularyKmeansPca_m;
+% funcVocab{2}=@CreateVocabularyGMMPca;
+% 
+% allClusters=cell(1,2);
+% allClusters{1}=descParam.numClusters_VLAD;
+% allClusters{2}=descParam.numClusters_FV;
 
 vocabs=cell(1,2);
 pcaMaps=cell(1,2);
@@ -73,9 +73,10 @@ pcaMaps=cell(1,2);
 % for i=1:length(funcVocab)
 %      [vocabs{i}, pcaMaps{i}]=funcVocab{i}(vocabularyImsPaths, descParam, allClusters{i}, descParam.pcaDim);
 % end
- 
-[vocabs{2}, pcaMaps{2}]=CreateVocabularyGMMPca(vocabularyImsPaths, descParam, descParam.numClusters_FV, descParam.pcaDim);
+
 [vocabs{1}, pcaMaps{1}]=CreateVocabularyKmeansPca_m(vocabularyImsPaths, descParam, descParam.numClusters_VLAD, descParam.pcaDim);
+[vocabs{2}, pcaMaps{2}]=CreateVocabularyGMMPca(vocabularyImsPaths, descParam, descParam.numClusters_FV, descParam.pcaDim);
+
 
 
 vocab_vlad256=vocabs{1}{1};

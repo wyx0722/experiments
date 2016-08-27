@@ -16,7 +16,7 @@ addpath([basedir 'SimilarityMeasures']);
 addpath([basedir 'Statistics']);
 addpath([basedir 'FeatureExtraction']);
 addpath([basedir 'Toolboxes']);
-addpath([basedir 'Toolboxes/prtools4.1.3']);
+addpath([basedir 'Toolboxes/prtools4.2.5/prtools']); %addpath([basedir 'Toolboxes/prtools4.1.3']);
 addpath([basedir 'FeatureExtraction/SourceRealtimeSiftSurfRelease']);
 addpath([basedir 'Datasets/Voc']);
 addpath([basedir 'Toolboxes/libsvm-mat-2.89-3']);

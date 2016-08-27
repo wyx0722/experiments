@@ -1,9 +1,9 @@
 
 
 typeFeature=cell(1,3);
-typeFeature{1}=@FEVidHogDense;
+typeFeature{3}=@FEVidHogDense;
 typeFeature{2}=@FEVidHofDense;
-typeFeature{3}=@FEVidHmgDense;
+typeFeature{1}=@FEVidHmgDense;
 
 all_accuracy=cell(1,3);
 all_clfsOut=cell(1,3);
