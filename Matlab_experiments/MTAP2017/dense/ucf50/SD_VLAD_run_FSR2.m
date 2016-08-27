@@ -14,7 +14,7 @@ all_clfsOut=cell(1,5);
 normStrategy='ROOTSIFT';
 d=72;
 cl=256;
-fsr=1;
+fsr=2;
 nPar=5;
 alpha=0.1;
 
