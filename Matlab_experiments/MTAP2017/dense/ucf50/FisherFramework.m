@@ -5,6 +5,10 @@ function  [all_accuracy, all_clfsOut]  = FisherFramework(typeFeature, normStrate
 global DATAopts;
 DATAopts = UCFInit;
 
+
+addpath('./../');%!!!!!!!
+
+
 % Parameter settings for descriptor extraction
 clear descParam
 descParam.Func = typeFeature;
