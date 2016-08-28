@@ -8,6 +8,7 @@ nEncoding=9;
 allDist=cell(1, nEncoding);
 
 for i=1:length(alpha)
+    i
     if intraL2==1
         temp=NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(SD_VLADAll, 72), alpha(i)));
     else
