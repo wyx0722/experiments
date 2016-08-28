@@ -2,7 +2,7 @@
 %load('/data/ionut/rezults/mtap2017/FEVidHogDenseBlockSize8_8_3_FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72.mat');
 %SD_VLADAll
 %% Do classification
-
+addpath('./../../');%!!!!!!!
 alpha=[0.1 0.2 0.3 0.4 0.6 0.7 0.8 0.9 1];
 nEncoding=9;
 allDist=cell(1, nEncoding);
