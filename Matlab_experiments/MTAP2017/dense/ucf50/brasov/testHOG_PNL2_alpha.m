@@ -2,40 +2,12 @@
 %load('/data/ionut/rezults/mtap2017/FEVidHogDenseBlockSize8_8_3_FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72.mat');
 %SD_VLADAll
 %% Do classification
-addpath('./../../');%!!!!!!!
-alpha=[0.1 0.2 0.3 0.4 0.6 0.7 0.8 0.9 1];
-nEncoding=9;
-allDist=cell(1, nEncoding);
 
-for i=1:length(alpha)
-    i
-    if intraL2==1
-        temp=NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(SD_VLADAll, 72), alpha(i)));
-    else
-       temp=NormalizeRowsUnit(PowerNormalization(SD_VLADAll, alpha(i)));
-    end
-    
-    allDist{i}=temp * temp';
-        
-end
+global DATAopts;
+DATAopts = UCFInit;
 
+[vids, labs, groups] = GetVideosPlusLabels('Full');
 
-all_clfsOut=cell(1,nEncoding);
-all_accuracy=cell(1,nEncoding);
-
-cRange = 100;
-nReps = 1;
-nFolds = 3;
-
-
-rezPath='/data/ionut/rezults/mtap2017/'
-fileName=[rezPath  'resultsHOG_PNL2_SD_VLADAll_intraPNL2_'];
-
-fileName=sprintf('%s%g.txt', fileName, intraL2)
-
-fileID=fopen(fileName, 'a');
-fprintf(fileID, 'FEVidHogDenseBlockSize8_8_3_FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72  \n\n' );
-fclose(fileID);
 
 
 parpool(5);
