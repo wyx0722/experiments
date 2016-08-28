@@ -1,0 +1,32 @@
+
+
+hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
+if ~isempty(findstr(hostname, 'cocoa'))
+    rezPath='/home/ionut/asustor_ionut/Data/results/mtap2017/'
+else if ~isempty(findstr(hostname, 'Halley'))
+      rezPath='/home/ionut/asustor_ionut_2/Data/results/mtap2017/'
+    end
+end
+
+
+
+load([rezPath 'videoRep/FEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72.mat']);
+
+'vlad256', 'vlad256f', 'vlad512', 'vlad512f', 'b_f', 'sd', 'sd_f', 'fv'
+
+hmg_vlad256=vlad256;
+hmg_vlad256f=vlad256f;
+hmg_vlad512=vlad512;
+hmg_vlad512f=vlad512f;
+hmg_b_f=b_f;
+hmg_
+
+
+FEVidHofDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72.mat
+
+FEVidHogDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72.mat
+
+
+FEVidMBHxDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72.mat
+
+FEVidMBHyDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72.mat
