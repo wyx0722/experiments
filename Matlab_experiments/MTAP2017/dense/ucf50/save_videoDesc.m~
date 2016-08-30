@@ -65,7 +65,26 @@ clear vlad256 vlad256f vlad512 vlad512f b_f sd sd_f fv
 alpha=0.1
 
 descName={'hog', 'hof', 'mbhx', 'mbhy', 'hmg'}
-encName={'_vlad256', '_vlad256f', '_vlad512', '_vlad512f', '_b_f', '_sd', '_sd_f'};
+encName={'_sd', '_sd_f', '_vlad256', '_vlad256f', '_vlad512', '_vlad512f', '_b_f'};
+
+
+nameBase=[rezPath 'videoRep/VLADbased/encVideoReps/']
+
+for dd=1:length(descName)
+    for ee=1:length(encName)
+        
+        if isempty(strfind(encName{ee}, '2'))
+            sameName=[nameBase 'FEVid' descName{dd}  'DenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8pcaDim72numClusters_256_' ]
+        else
+            
+        end
+    end
+        
+end
+
+
+
+
 
 global DATAopts;
 DATAopts = UCFInit;
