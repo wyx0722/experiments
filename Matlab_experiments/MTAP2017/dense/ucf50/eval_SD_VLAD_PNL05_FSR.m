@@ -43,7 +43,8 @@ for dd=1:length(descName)
     for f=1:length(fsr)
         
         
-        nameLoad=[rezPath 'videoRep/VLADbased/' 'FEVid' descName{dd} 'DenseBlockSize8_8_' 6/fsr(f) '_FrameSampleRate' fsr(f) 'MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72_SD_VLAD__SD_VLADAll.mat']
+        %nameLoad=[rezPath 'videoRep/VLADbased/' 'FEVid' descName{dd} 'DenseBlockSize8_8_' 6/fsr(f) '_FrameSampleRate' fsr(f) 'MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72_SD_VLAD__SD_VLADAll.mat']
+        nameLoad=sprintf('%svideoRep/VLADbased/FEVid%sDenseBlockSize8_8_%g_FrameSampleRate%gMediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72_SD_VLAD__SD_VLADAll.mat',rezPath,descName{dd}, 6/fsr(f),fsr(f))
         load(nameLoad);
         
         temp=NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(SD_VLADAll, 72), alpha));
