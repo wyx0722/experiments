@@ -113,10 +113,10 @@ tDesc=NormalizeRowsUnit(tDesc);
 t=SD_VLAD_fast(tDesc, nV_vocab.vocabulary, nV_vocab.st_d);
     
     
-sd_vlad1=zeros(length(vids), length(t), 'like', t);
-sd_vlad2=zeros(length(vids), length(t), 'like', t);
-sd_vlad3=zeros(length(vids), length(t), 'like', t);
-sd_vlad4=zeros(length(vids), length(t), 'like', t);
+sd_vlad1=zeros(length(allPathFeatures), length(t), 'like', t);
+sd_vlad2=zeros(length(allPathFeatures), length(t), 'like', t);
+sd_vlad3=zeros(length(allPathFeatures), length(t), 'like', t);
+sd_vlad4=zeros(length(allPathFeatures), length(t), 'like', t);
 
 parpool(nPar);
 
