@@ -35,7 +35,7 @@ for dd=1:length(descName)
     
     
     %%%%%%%%%%%
-    fileName_sd_f=['FEVid' descName{dd} 'DenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8pcaDim72numClusters_256' '_sd_f.mat']
+    fileName_sd_f=[rezPath 'ucf50/videoRep/VLADbased/' 'FEVid' descName{dd} 'DenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8pcaDim72numClusters_256' '_sd_f.mat']
     load(fileName_sd_f);
     
     sizePart=size(encVideoRep,2)/4;
@@ -58,7 +58,7 @@ for dd=1:length(descName)
     %%%%%%%%%%%%%%
     
     %%%%%%%%%%%
-    fileName_b_f=['FEVid' descName{dd} 'DenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8pcaDim72numClusters_256' '_b_f.mat']
+    fileName_b_f=[rezPath 'ucf50/videoRep/VLADbased/' 'FEVid' descName{dd} 'DenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8pcaDim72numClusters_256' '_b_f.mat']
     load(fileName_b_f);
     
     sizePart=size(encVideoRep,2)/4;
