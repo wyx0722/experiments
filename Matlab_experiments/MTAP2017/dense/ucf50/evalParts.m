@@ -42,7 +42,7 @@ for dd=1:length(descName)
     sp1=encVideoRep(:,1:sizePart);
     sp2=encVideoRep(:,sizePart+1:2*sizePart);
     sp3=encVideoRep(:,2*sizePart+1:3*sizePart);
-    sp4=encVideoRep(:,3*sizePart+end);
+    sp4=encVideoRep(:,3*sizePart:end);
     
     size(sp1)
     isequal(size(sp1),size(sp2), size(sp3), size(sp4))
@@ -65,7 +65,7 @@ for dd=1:length(descName)
     sp1=encVideoRep(:,1:sizePart);
     sp2=encVideoRep(:,sizePart+1:2*sizePart);
     sp3=encVideoRep(:,2*sizePart+1:3*sizePart);
-    sp4=encVideoRep(:,3*sizePart+end);
+    sp4=encVideoRep(:,3*sizePart:end);
     
     size(sp1)
     isequal(size(sp1),size(sp2), size(sp3), size(sp4))
