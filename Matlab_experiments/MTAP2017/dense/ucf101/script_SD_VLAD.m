@@ -23,12 +23,12 @@ all_clfsOut=cell(length(typeFeature),length(fsr));
 mType='Vid';
 
 normStrategy='ROOTSIFT';
-datasetName='HMDB51';
+datasetName='UCF101';%!!!!!!!change
 cl=256;
 nPar=5;
 alpha=0.5;%!!!!!!!change
 d=72;
-savePath=[basePath 'Data/results/mtap2017/ucf101/'];
+savePath=[basePath 'Data/results/mtap2017/ucf101/']%!!!!!!!change
 %fsr=?;
 
 
