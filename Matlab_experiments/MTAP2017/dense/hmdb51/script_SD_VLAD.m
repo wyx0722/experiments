@@ -2,8 +2,7 @@ hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
 if ~isempty(findstr(hostname, 'cocoa'))
     basePath='/home/ionut/asustor_ionut/'
 elseif ~isempty(findstr(hostname, 'Halley'))
-      basePath='/home/ionut/asustor_ionut_2/'
-    
+      basePath='/home/ionut/asustor_ionut_2/'    
 end
 
 
@@ -29,7 +28,7 @@ cl=256;
 nPar=5;
 alpha=0.5;%!!!!!!!change
 d=72;
-savePath=[basePath 'Data/results/mtap2017/hmdb51/';
+savePath=[basePath 'Data/results/mtap2017/hmdb51/'];
 %fsr=?;
 
 
