@@ -88,7 +88,7 @@ for i=1:size(allVids, 1)
     elseif ~isempty(strfind(descParam.MediaType, 'IDT'))
         allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
     elseif ~isempty(strfind(descParam.MediaType, 'Vid'))
-        allPathFeatures{i}=sprintf(DATAopts.videoPath, allVids{i});
+        allPathFeatures{i}=[DATAopts.videoPath, allVids{i}];
     end
 end
 
