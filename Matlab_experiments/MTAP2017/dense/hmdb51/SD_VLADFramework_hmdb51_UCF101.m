@@ -71,10 +71,10 @@ descParam
 
 
 
-if ~isempty(strfind(descParam.Dataset), 'HMDB51')
+if ~isempty(strfind(descParam.Dataset, 'HMDB51'))
     DATAopts = HMDB51Init;
     [allVids, labs, splits] = GetVideosPlusLabels();
-elseif ~isempty(strfind(descParam.Dataset), 'UCF101')
+elseif ~isempty(strfind(descParam.Dataset, 'UCF101'))
     DATAopts = UCF101Init;
     [allVids, labs, splits] = GetVideosPlusLabels('Challenge');
 end
