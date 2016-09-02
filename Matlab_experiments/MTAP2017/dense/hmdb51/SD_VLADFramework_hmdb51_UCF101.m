@@ -165,7 +165,7 @@ all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
 clfsOut=cell(1,nEncoding);
 accuracy=cell(1,nEncoding);
-mean_all_clfsOut=cell(nEncoding,1);
+%mean_all_clfsOut=cell(nEncoding,1);
 mean_all_accuracy=cell(nEncoding,1);
 
 cRange = 100;
@@ -208,7 +208,7 @@ delete(gcp('nocreate'))
 
 finalAcc=zeros(1,nEncoding);
 for j=1:nEncoding
-    mean_all_clfsOut{j}=(all_clfsOut{j}{1} + all_clfsOut{j}{2} + all_clfsOut{j}{3})./3;
+    %mean_all_clfsOut{j}=(all_clfsOut{j}{1} + all_clfsOut{j}{2} + all_clfsOut{j}{3})./3;
     mean_all_accuracy{j}=(all_accuracy{j}{1} + all_accuracy{j}{2} + all_accuracy{j}{3})./3;
     
     finalAcc(j)=mean(mean_all_accuracy{j});
@@ -244,7 +244,7 @@ end
 
   
 saveName = [savePath 'clfsOut/dense/'  DescParam2Name(descParam) 'SD_VLAD.mat'];
-save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_clfsOut', 'mean_all_accuracy');
+save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_accuracy');
 
 saveName2 = [savePath 'videoRep/dense/' DescParam2Name(descParam) 'SD_VLAD.mat'];
 save(saveName2, '-v7.3', 'descParam', 'SD_VLADAll');
