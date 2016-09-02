@@ -100,7 +100,7 @@ end
 vocabularyPathFeatures=allPathFeatures(1:4:end);%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-[gmmModelName, pcaMap] = CreateVocabularyKmeansPca_mSingle(vocabularyPathFeatures, descParam, ...
+[gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyPathFeatures, descParam, ...
                                                 descParam.numClusters, descParam.pcaDim); 
                                                                                        
 
