@@ -25,16 +25,6 @@ nV_vocab_vlad512.vocabulary=NormalizeRowsUnit(nV_vocab_vlad512.vocabulary);
 
 
 
-
-
-
-load('/home/ionut/Data/UCF50/VisualVocabulary/KmeansHierarchicalFEVidHogDenseBlockSize8_8_6_MediaTypeVidNumBlocks3_3_2_NumOr8Pca72ClustersK4096D1.mat');
-kmeansTree_D1=kmeansTree;
-minDesc_D1=minDesc;
-rangeDesc_D1=rangeDesc;
-
-
-
 videosList = textread('video-list.txt', '%s', 'delimiter', '\n');
 
 for i=1:length(videosList)
@@ -42,7 +32,7 @@ for i=1:length(videosList)
 end
 
 
-descParam.Func = @FEVidHSMDense;
+descParam.Func = @FEVidHmgDense;
 descParam.BlockSize = [8 8 6];
 descParam.NumBlocks = [3 3 2];
 descParam.MediaType = 'Vid';
