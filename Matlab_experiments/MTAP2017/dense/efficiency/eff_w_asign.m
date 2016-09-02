@@ -24,7 +24,7 @@ nV_vocab_vlad512=vocab_vlad512;
 nV_vocab_vlad512.vocabulary=NormalizeRowsUnit(nV_vocab_vlad512.vocabulary);
 
 
-pcaMap
+
 
 
 
@@ -100,15 +100,8 @@ for i=1:length(videosList)
         
         %get the Spatial Pyramid
         featSpIdx = SpatialPyramidSeparationIdx(hsm_info, sRow, sCol);
-    
-        
-        
-        
-        
-        
-        
-        
-        
+       
+            
         tStart_VLAD256=tic;
         vlad256_1 =VLAD_1_mean(desc(featSpIdx(1,:), :), vocab_vlad256.vocabulary);
         vlad256_2 =VLAD_1_mean(desc(featSpIdx(2,:), :), vocab_vlad256.vocabulary);
@@ -122,150 +115,43 @@ for i=1:length(videosList)
         vlad256f_3 =VLAD_1_mean_fast(n_desc(featSpIdx(3,:), :), nV_vocab_vlad256.vocabulary);
         vlad256f_4 =VLAD_1_mean_fast(n_desc(featSpIdx(4,:), :), nV_vocab_vlad256.vocabulary);
         tElapsed_VLAD256_f(i)=toc(tStart_VLAD256_f);
-
+        
+        tStart_VLAD512=tic;
         vlad512_1 =VLAD_1_mean(desc(featSpIdx(1,:), :), vocab_vlad512.vocabulary);
         vlad512_2 =VLAD_1_mean(desc(featSpIdx(2,:), :), vocab_vlad512.vocabulary);
         vlad512_3 =VLAD_1_mean(desc(featSpIdx(3,:), :), vocab_vlad512.vocabulary);
         vlad512_4 =VLAD_1_mean(desc(featSpIdx(4,:), :), vocab_vlad512.vocabulary);
-
+        tElapsed_VLAD512(i)=toc(tStart_VLAD512);
+        
+        tStart_VLAD512_f=tic;
         vlad512f_1 =VLAD_1_mean_fast(n_desc(featSpIdx(1,:), :), nV_vocab_vlad512.vocabulary);
         vlad512f_2 =VLAD_1_mean_fast(n_desc(featSpIdx(2,:), :), nV_vocab_vlad512.vocabulary);
         vlad512f_3 =VLAD_1_mean_fast(n_desc(featSpIdx(3,:), :), nV_vocab_vlad512.vocabulary);
         vlad512f_4 =VLAD_1_mean_fast(n_desc(featSpIdx(4,:), :), nV_vocab_vlad512.vocabulary);
-
+        tElapsed_VLAD512_f(i)=toc(tStart_VLAD512_f);
+        
+        tStart_b=tic;
         b_f_1  = BoostingVLAD_paper_fast(n_desc(featSpIdx(1,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d, nV_vocab_vlad256.skew);
         b_f_2  = BoostingVLAD_paper_fast(n_desc(featSpIdx(2,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d, nV_vocab_vlad256.skew);
         b_f_3  = BoostingVLAD_paper_fast(n_desc(featSpIdx(3,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d, nV_vocab_vlad256.skew);
         b_f_4  = BoostingVLAD_paper_fast(n_desc(featSpIdx(4,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d, nV_vocab_vlad256.skew);
-
+        tElapsed_b(i)=toc(tStart_b);
+        
+        tStart_sd_vlad=tic;
         sd_1  = SD_VLAD(desc(featSpIdx(1,:), :), vocab_vlad256.vocabulary, vocab_vlad256.st_d);
         sd_2  = SD_VLAD(desc(featSpIdx(2,:), :), vocab_vlad256.vocabulary, vocab_vlad256.st_d);
         sd_3  = SD_VLAD(desc(featSpIdx(3,:), :), vocab_vlad256.vocabulary, vocab_vlad256.st_d);
         sd_4  = SD_VLAD(desc(featSpIdx(4,:), :), vocab_vlad256.vocabulary, vocab_vlad256.st_d);
-
+        tElapsed_sd_vlad(i)=toc(tStart_sd_vlad);
+        
+        tStart_sd_vlad_f=tic;
         sd_f_1  = SD_VLAD_fast(n_desc(featSpIdx(1,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d);
         sd_f_2  = SD_VLAD_fast(n_desc(featSpIdx(2,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d);
         sd_f_3  = SD_VLAD_fast(n_desc(featSpIdx(3,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d);
         sd_f_4  = SD_VLAD_fast(n_desc(featSpIdx(4,:), :), nV_vocab_vlad256.vocabulary, nV_vocab_vlad256.st_d);
-
+        tElapsed_sd_vlad_f(i)=toc(tStart_sd_vlad_f);
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        %OptKmeans
-        %vSize_k4096 =size(vocab_optKmeans4096, 1);
-        
-        tStart_optKmeans=tic;
-        cbEntry = cell(1,size(featSpIdx,2));
-        for spIdx = 1:size(featSpIdx,2)   
-            theSim = vocab_optKmeans4096 * n_desc(featSpIdx(:,spIdx),:)';
-            [~, assignment] = max(theSim);
-            vSize_k4096 =size(vocab_optKmeans4096, 1);
-            cbEntry{spIdx} = mexCountWords(assignment, vSize_k4096);
-        end
-        tElapsed_OptKmenas(i)=toc(tStart_optKmeans);
-        
-        %hkmeansFlat
-        tStart_hkmeansFlat=tic;
-        for spIdx = 1:size(featSpIdx,2)
-            rez_hkmeansFlat = KmeansHierarchicalAssignment(desc(featSpIdx(:,spIdx),:), kmeansTree_D1, minDesc_D1, rangeDesc_D1);
-        end
-        tElapsed_hkmenasFlat(i)=toc(tStart_hkmeansFlat);
-
-        
-        
-%         %hkmeans
-%         tStart_hkmeans=tic;
-%         for spIdx = 1:size(featSpIdx,2)
-%             rez_hkmeans = KmeansHierarchicalAssignment(hsm_desc(featSpIdx(:,spIdx),:), kmeansTree, minDesc, rangeDesc);
-%         end
-%         tElapsed_hkmenas(i)=toc(tStart_hkmeans);
-        
-%         
-%         %Random Forest
-%         t_hsm_desc = hsm_desc'; % We need transposed descriptors
-%         tStart_RF=tic;
-%         for spI=1:size(featSpIdx,2)
-%             for j=1:nTrees
-%                 rez_RF = mexTreeAssign(t_hsm_desc(:,featSpIdx(:,spI)), maps{j}, boundaries{j});
-%             end
-%         end
-%         tElapsed_RF(i)=toc(tStart_RF);
-        
-        
-        t_featSpIdx=featSpIdx';
-        t_hsm_desc = desc'; % We need transposed descriptors
-        %fast Random Forest
-        tStart_fastRF=tic;
-        for j=1:nTrees
-		rez_fastRF = mexTreeAssignSp(t_hsm_desc, t_featSpIdx, maps{j}, boundaries{j});
-        end
-        tElapsed_fastRF(i)=toc(tStart_fastRF);
-        
-        
-%        %Fisher Vector
-%        t_featSpIdx=featSpIdx';
-%        
-%        tStart_FV=tic;
-%        fisher1=mexFisherAssign(t_hsm_desc(:,t_featSpIdx(1,:)), gmmModelName)';
-%        fisher2=mexFisherAssign(t_hsm_desc(:,t_featSpIdx(2,:)), gmmModelName)';
-%        fisher3=mexFisherAssign(t_hsm_desc(:,t_featSpIdx(3,:)), gmmModelName)';
-%        fisher4=mexFisherAssign(t_hsm_desc(:,t_featSpIdx(4,:)), gmmModelName)';
-%        tElapsed_FV(i)=toc(tStart_FV);
-%        
-%        
-%        %VLAD256 slow
-%        tStart_VLAD256=tic;
-%         vlad256_1=VLAD_1_slow(hsm_desc(t_featSpIdx(1,:), :), vocab256);
-%         vlad256_2=VLAD_1_slow(hsm_desc(t_featSpIdx(2,:), :), vocab256);
-%         vlad256_3=VLAD_1_slow(hsm_desc(t_featSpIdx(3,:), :), vocab256);
-%         vlad256_4=VLAD_1_slow(hsm_desc(t_featSpIdx(4,:), :), vocab256);
-%         tElapsed_VLAD256(i)=toc(tStart_VLAD256);
-%         
-%         
-%         %VLAD512 slow
-%        tStart_VLAD512_s=tic;
-%         vlad512_s_1=VLAD_1_slow(hsm_desc(t_featSpIdx(1,:), :), vocab512);
-%         vlad512_s_2=VLAD_1_slow(hsm_desc(t_featSpIdx(2,:), :), vocab512);
-%         vlad512_s_3=VLAD_1_slow(hsm_desc(t_featSpIdx(3,:), :), vocab512);
-%         vlad512_s_4=VLAD_1_slow(hsm_desc(t_featSpIdx(4,:), :), vocab512);
-%         tElapsed_VLAD512_s(i)=toc(tStart_VLAD512_s);
-%         
-%         
-%         %VLAD512 mean slow
-%          tStart_VLAD512_ms=tic;
-%         vlad512_ms_1=VLAD_1_mean_slow(hsm_desc(t_featSpIdx(1,:), :), vocab512);
-%         vlad512_ms_2=VLAD_1_mean_slow(hsm_desc(t_featSpIdx(2,:), :), vocab512);
-%         vlad512_ms_3=VLAD_1_mean_slow(hsm_desc(t_featSpIdx(3,:), :), vocab512);
-%         vlad512_ms_4=VLAD_1_mean_slow(hsm_desc(t_featSpIdx(4,:), :), vocab512);
-%         tElapsed_VLAD512_ms(i)=toc(tStart_VLAD512_ms);
-%         
-%         
-%         %VLAD512 mean fast
-%         vocab512_ul = NormalizeRowsUnit(vocab512);
-%          tStart_VLAD512_mf=tic;
-%         vlad512_mf_1=VLAD_1_mean_fast(unitLength_hsm_desc(t_featSpIdx(1,:), :), vocab512_ul);
-%         vlad512_mf_2=VLAD_1_mean_fast(unitLength_hsm_desc(t_featSpIdx(2,:), :), vocab512_ul);
-%         vlad512_mf_3=VLAD_1_mean_fast(unitLength_hsm_desc(t_featSpIdx(3,:), :), vocab512_ul);
-%         vlad512_mf_4=VLAD_1_mean_fast(unitLength_hsm_desc(t_featSpIdx(4,:), :), vocab512_ul);
-%         tElapsed_VLAD512_mf(i)=toc(tStart_VLAD512_mf);
-%         
-%         
-%         %VLAD512 using distmj
-%         tStart_VLAD512_dj=tic;
-%         vlad512_dj_1=VLAD_1_mean(hsm_desc(t_featSpIdx(1,:), :), vocab512);
-%         vlad512_dj_2=VLAD_1_mean(hsm_desc(t_featSpIdx(2,:), :), vocab512);
-%         vlad512_dj_3=VLAD_1_mean(hsm_desc(t_featSpIdx(3,:), :), vocab512);
-%         vlad512_dj_4=VLAD_1_mean(hsm_desc(t_featSpIdx(4,:), :), vocab512);
-%         tElapsed_VLAD512_dj(i)=toc(tStart_VLAD512_dj);
-%         
-        
+         
         
 end

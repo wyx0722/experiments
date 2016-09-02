@@ -100,15 +100,8 @@ for i=1:length(videosList)
         
         %get the Spatial Pyramid
         featSpIdx = SpatialPyramidSeparationIdx(hsm_info, sRow, sCol);
-    
-        
-        
-        
-        
-        
-        
-        
-        
+       
+            
         tStart_VLAD256=tic;
         vlad256_1 =VLAD_1_mean(desc(featSpIdx(1,:), :), vocab_vlad256.vocabulary);
         vlad256_2 =VLAD_1_mean(desc(featSpIdx(2,:), :), vocab_vlad256.vocabulary);
@@ -127,7 +120,8 @@ for i=1:length(videosList)
         vlad512_2 =VLAD_1_mean(desc(featSpIdx(2,:), :), vocab_vlad512.vocabulary);
         vlad512_3 =VLAD_1_mean(desc(featSpIdx(3,:), :), vocab_vlad512.vocabulary);
         vlad512_4 =VLAD_1_mean(desc(featSpIdx(4,:), :), vocab_vlad512.vocabulary);
-
+        tElapsed_VLAD512(i)=toc(tStart_VLAD256_f);
+        
         vlad512f_1 =VLAD_1_mean_fast(n_desc(featSpIdx(1,:), :), nV_vocab_vlad512.vocabulary);
         vlad512f_2 =VLAD_1_mean_fast(n_desc(featSpIdx(2,:), :), nV_vocab_vlad512.vocabulary);
         vlad512f_3 =VLAD_1_mean_fast(n_desc(featSpIdx(3,:), :), nV_vocab_vlad512.vocabulary);
