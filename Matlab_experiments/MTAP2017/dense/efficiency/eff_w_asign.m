@@ -92,7 +92,7 @@ for i=1:length(videosList)
         tElapsed_unitL(i)=toc(tStart_unitL);
         
         %get the Spatial Pyramid
-        featSpIdx = SpatialPyramidSeparationIdx(hsm_info, sRow, sCol);
+        featSpIdx = SpatialPyramidSeparationIdx(hsm_info, sRow, sCol)';
        
             
         tStart_VLAD256=tic;
@@ -146,14 +146,14 @@ for i=1:length(videosList)
         
         
         %Fisher Vector
-       t_featSpIdx=featSpIdx';
+       %t_featSpIdx=featSpIdx';
        t_desc=desc';
        
        tStart_fv=tic;
-       fisher1=mexFisherAssign(t_desc(:,t_featSpIdx(1,:)), gmmModelName)';
-       fisher2=mexFisherAssign(t_desc(:,t_featSpIdx(2,:)), gmmModelName)';
-       fisher3=mexFisherAssign(t_desc(:,t_featSpIdx(3,:)), gmmModelName)';
-       fisher4=mexFisherAssign(t_desc(:,t_featSpIdx(4,:)), gmmModelName)';
+       fisher1=mexFisherAssign(t_desc(:,featSpIdx(1,:)), gmmModelName)';
+       fisher2=mexFisherAssign(t_desc(:,featSpIdx(2,:)), gmmModelName)';
+       fisher3=mexFisherAssign(t_desc(:,featSpIdx(3,:)), gmmModelName)';
+       fisher4=mexFisherAssign(t_desc(:,featSpIdx(4,:)), gmmModelName)';
        tElapsed_fv(i)=toc(tStart_fv);
          
         
