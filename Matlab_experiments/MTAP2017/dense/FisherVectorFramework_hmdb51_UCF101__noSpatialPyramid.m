@@ -86,7 +86,11 @@ for i=1:size(allVids, 1)
     if ~isempty(strfind(descParam.MediaType, 'DeepF'))
         allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer '.txt'];
     elseif ~isempty(strfind(descParam.MediaType, 'IDT'))
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
+        if ~isempty(strfind(descParam.Dataset, 'UCF101'))
+            allPathFeatures{i}=[bazePathFeatures allVids{i}];
+        else
+            allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
+        end
     elseif ~isempty(strfind(descParam.MediaType, 'Vid'))
         
         if ~isempty(strfind(descParam.Dataset, 'HMDB51'))
