@@ -33,7 +33,7 @@ fu= @FEVid_IDT;
 
 %!!!!!!!change both!!!!!!!!!!!!!!!!!!!!!
 savePath=[basePath 'Data/results/mtap2017/hmdb51/%s/iDT/'];
-bazePathFeatures='/home/ionut/asustor_ionut_2/Data/iDT_Features_HMDB51/Videos/'
+bazePathFeatures=[basePath 'Data/iDT_Features_HMDB51/Videos/']
 
 
 
