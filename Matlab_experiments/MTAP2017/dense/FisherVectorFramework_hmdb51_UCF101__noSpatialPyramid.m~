@@ -234,13 +234,21 @@ end
 
 
 
+  
+saveName = [savePath 'clfsOut/dense/'  DescParam2Name(descParam) 'fisherVector.mat'];
+save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_accuracy');
+
+
 saveName=sprintf(savePath, 'clfsOut');
 saveName=sprintf('%s%sfisherVector.mat', saveName, DescParam2Name(descParam))
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_accuracy');
 
 
-saveName2=sprintf(savePath, 'videoRep');
-saveName2=sprintf('%s%sfisherVector.mat', saveName2, DescParam2Name(descParam))
+saveName2 = [savePath 'videoRep/dense/' DescParam2Name(descParam) 'fisherVector.mat'];
+
+
+saveName=sprintf(savePath, 'clfsOut');
+saveName=sprintf('%s%sfisherVector.mat', saveName, DescParam2Name(descParam))
 save(saveName2, '-v7.3', 'descParam', 'fisherVector');
  
 end
