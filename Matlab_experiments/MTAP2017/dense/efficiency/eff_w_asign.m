@@ -15,7 +15,7 @@ end
 
 load([rezPath 'Data/UCF50/VisualVocabulary/KmeansFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72Pca72Clusters256_512.mat']);
 
-load('/home/ionut/Data/UCF50/VisualVocabulary/gmmFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72Pca72Clusters256.gmm');
+gmmModelName='/home/ionut/Data/UCF50/VisualVocabulary/gmmFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72Pca72Clusters256.gmm';
 
 vocab_vlad256=vocabs{1};
 vocab_vlad512=vocabs{2};
