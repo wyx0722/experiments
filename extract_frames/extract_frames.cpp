@@ -112,10 +112,10 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	char nameFrame[10];
 	
 	sprintf(nameFrame, "%06d.jpg", int(frame_num));
-	cout<<nameFrame<<endl;
+	//cout<<nameFrame<<endl;
 	
-	
-	//imwrite()
+	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
+	imwrite(final_save_f, frame);
 	
 	frame_num++;	
         }
