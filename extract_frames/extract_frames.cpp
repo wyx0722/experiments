@@ -20,7 +20,8 @@ int main(int argc, char** argv){
  
   cout<<"OK"<<endl;
   string pathVideos=argv[1];
-  ifstream pathListVideos (argv[2]);
+  string s_argv2 = argv[2];
+  ifstream pathListVideos (s_argv2);
   string pathSaveFrames=argv[3];
   
   cout<<"OK"<<endl;
