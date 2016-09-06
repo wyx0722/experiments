@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( extract_frames )
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( extract_frames extract_frames.cpp )
+target_link_libraries( extract_frames ${OpenCV_LIBS} )

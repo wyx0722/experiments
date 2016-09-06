@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ionut/extract_frames/extract_frames.cpp
+opencv2/video/tracking.hpp
+/home/ionut/extract_frames/opencv2/video/tracking.hpp
+opencv2/imgproc/imgproc.hpp
+/home/ionut/extract_frames/opencv2/imgproc/imgproc.hpp
+opencv2/highgui/highgui.hpp
+/home/ionut/extract_frames/opencv2/highgui/highgui.hpp
+ctime
+-
+stdio.h
+-
+iostream
+-
+string
+-
+fstream
+-
+dirent.h
+-
+vector
+-
+stdio.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+unistd.h
+-
+
