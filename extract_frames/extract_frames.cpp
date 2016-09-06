@@ -69,6 +69,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   string::size_type first=0;
   string classVideo, nameVideo, tmp;
   
+  Mat frame;
   
   cout<<"Frame extraction for "<<fullPath_listVideos.size()+1<<" videos!\n\n";
   for (int i=0; i<fullPath_listVideos.size(); i++)
@@ -94,9 +95,9 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	        mkdir(c, 0777);
 	}
 	
-	tmp=pathSaveFrames+classVideo + "/" + nameVideo
+	tmp=pathSaveFrames+classVideo + "/" + nameVideo;
 	c=tmp.c_str();
-        dir=opendir(c)
+        dir=opendir(c);
         if (!dir){
                 cout<<dir<<endl;
                 mkdir(c, 0777);
