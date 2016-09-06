@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, char** argv){
 
   string pathVideos=argv[1];
-  std::string pathListVideos=argv[2];
+  ifstream pathListVideos=argv[2];
   string pathSaveFrames=argv[3];
   cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<pathListVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
   
@@ -60,7 +60,7 @@ int main(int argc, char** argv){
   //string s_avi=".avi";
   
   
-  cout<<pathListVideos.length()<<endl<<str<<endl;
+  //cout<<pathListVideos.length()<<endl<<str<<endl;
   
   cout<<"OK!!"<<endl;
 
