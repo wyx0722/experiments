@@ -26,7 +26,7 @@ int main(int argc, char** argv){
   string pathSaveFrames=argv[3];
   
   
-cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<s_argv2<<"  pathSaveFrames "<<pathSaveFrames<<endl;
+cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFrames "<<pathSaveFrames<<endl;
   
   string line, str;
   vector<string> listVideos;
