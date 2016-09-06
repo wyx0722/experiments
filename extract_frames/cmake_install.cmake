@@ -1,4 +1,4 @@
-# Install script for directory: /home/ionut/extract_frames
+# Install script for directory: /home/ionut/experiments/extract_frames
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ionut/extract_frames/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ionut/experiments/extract_frames/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

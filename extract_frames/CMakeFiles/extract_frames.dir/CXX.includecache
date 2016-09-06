@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/ionut/extract_frames/extract_frames.cpp
+/home/ionut/experiments/extract_frames/extract_frames.cpp
 opencv2/video/tracking.hpp
-/home/ionut/extract_frames/opencv2/video/tracking.hpp
+/home/ionut/experiments/extract_frames/opencv2/video/tracking.hpp
 opencv2/imgproc/imgproc.hpp
-/home/ionut/extract_frames/opencv2/imgproc/imgproc.hpp
+/home/ionut/experiments/extract_frames/opencv2/imgproc/imgproc.hpp
 opencv2/highgui/highgui.hpp
-/home/ionut/extract_frames/opencv2/highgui/highgui.hpp
+/home/ionut/experiments/extract_frames/opencv2/highgui/highgui.hpp
 ctime
 -
 stdio.h
