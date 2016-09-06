@@ -17,11 +17,12 @@ using namespace cv;
 using namespace std;
 
 int main(int argc, char** argv){
-
+ 
+  cout<<"OK"<<endl;
   string pathVideos=argv[1];
   ifstream pathListVideos (argv[2]);
   string pathSaveFrames=argv[3];
-  cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<pathListVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
+  //cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<pathListVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
   
   string line, str;
   vector<string> listVideos;
