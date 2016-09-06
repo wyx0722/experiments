@@ -53,10 +53,8 @@ int main(int argc, char** argv){
         //cout<<"ends with .avi"<<endl;
         fullPath_listVideos.push_back(pathVideos + line);
       }
-      
-      
-      pathListVideos.close();
     }
+    pathListVideos.close();
   }
   else cout<<endl<<"Unable to open the file! \n";
   
