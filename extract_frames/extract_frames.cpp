@@ -25,7 +25,7 @@ int main(int argc, char** argv){
   //ifstream pathListVideos ("/home/ionut/experiments/extract_frames/tmp/list_v.txt");
   string pathSaveFrames=argv[3];
   
-  cout<<"OK"<<endl;
+  
   
   //cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<pathListVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
   
@@ -33,13 +33,15 @@ int main(int argc, char** argv){
   vector<string> listVideos;
   vector<string> fullPath_listVideos;
   
-   cout<<"OK"<<endl;
+  
   
   
   if (pathListVideos.is_open())
   { cout<<"OK"<<endl;
     while(getline(pathListVideos, line)){
+     cout<<"Line: "<<line<<endl;
       listVideos.push_back(line);
+      cout<<"OK"<<endl;
       
       str=line.substr(line.length()-4, line.length()-1);
       if (str.compare(".avi")!=0)
