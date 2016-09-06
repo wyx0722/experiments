@@ -37,7 +37,7 @@ int main(int argc, char** argv){
   
   
   if (pathListVideos.is_open())
-  { cout<<"OK"<<endl;
+  {
     while(getline(pathListVideos, line)){
      cout<<"Line: "<<line<<endl;
       listVideos.push_back(line);
@@ -54,12 +54,15 @@ int main(int argc, char** argv){
         fullPath_listVideos.push_back(pathVideos + line);
       }
       
+      
+      pathListVideos.close();
     }
   }
   else cout<<endl<<"Unable to open the file! \n";
   
-  for (int i=0; i<fullPath_listVideos.size(); i++)
-    cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
+  //cout<<"OK"<<endl;
+  //for (int i=0; i<fullPath_listVideos.size(); i++)
+    //cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
   
   
   //for (int i=0; i  )
@@ -70,6 +73,6 @@ int main(int argc, char** argv){
   
   //cout<<pathListVideos.length()<<endl<<str<<endl;
   
-  cout<<"OK!!"<<endl;
+  cout<<"OK final!!"<<endl;
 
 }
