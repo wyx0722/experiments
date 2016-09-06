@@ -27,7 +27,7 @@ int main(int argc, char** argv){
   
   string str=listVideos.substr(listVideos.length()-4, listVideos.length()-1);
   
-  if (strcmp(str, '.avi')!=0)
+  if (strcmp(str, ".avi")!=0)
   {
     cout<<"Does not ends with .avi"<<endl;
   }
