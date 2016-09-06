@@ -20,9 +20,9 @@ int main(int argc, char** argv){
  
   cout<<"OK"<<endl;
   string pathVideos=argv[1];
-  char* s_argv2 = argv[2];
-  //ifstream pathListVideos (s_argv2);
-  ifstream pathListVideos ("/home/ionut/experiments/extract_frames/tmp/list_v.txt");
+  //char* s_argv2 = argv[2];
+  ifstream pathListVideos (argv[2]);
+  //ifstream pathListVideos ("/home/ionut/experiments/extract_frames/tmp/list_v.txt");
   string pathSaveFrames=argv[3];
   
   cout<<"OK"<<endl;
@@ -33,11 +33,11 @@ int main(int argc, char** argv){
   vector<string> listVideos;
   vector<string> fullPath_listVideos;
   
-  
+   cout<<"OK"<<endl;
   
   
   if (pathListVideos.is_open())
-  {
+  { cout<<"OK"<<endl;
     while(getline(pathListVideos, line)){
       listVideos.push_back(line);
       
