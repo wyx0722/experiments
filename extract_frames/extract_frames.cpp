@@ -21,7 +21,8 @@ int main(int argc, char** argv){
   cout<<"OK"<<endl;
   string pathVideos=argv[1];
   char* s_argv2 = argv[2];
-  ifstream pathListVideos (s_argv2);
+  //ifstream pathListVideos (s_argv2);
+  ifstream pathListVideos ("/home/ionut/experiments/extract_frames/tmp/list_v.txt");
   string pathSaveFrames=argv[3];
   
   cout<<"OK"<<endl;
