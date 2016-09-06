@@ -83,7 +83,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
         first=listVideos.at(i).find("/");
         classVideo=listVideos.at(i).substr(0, first);
         nameVideo=listVideos.at(i).substr(first+1);
-        cout<<classVideo<<" "<<classVideo<<endl;
+        cout<<classVideo<<" "<<nameVideo<<endl;
   	
   }
   //string str=pathListVideos.substr(pathListVideos.length()-4, listVideos.length()-1);
