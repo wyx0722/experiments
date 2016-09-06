@@ -84,7 +84,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
         first=listVideos.at(i).find("/");
         classVideo=listVideos.at(i).substr(0, first);
         nameVideo=listVideos.at(i).substr(first+1);
-        cout<<classVideo<<" "<<nameVideo<<endl;
+        //cout<<classVideo<<" "<<nameVideo<<endl;
         
         tmp=pathSaveFrames+classVideo;
         c=tmp.c_str();
