@@ -26,7 +26,7 @@ int main(int argc, char** argv){
   string pathSaveFrames=argv[3];
   
   
-cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFrames "<<pathSaveFrames<<endl;
+cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFrames "<<pathSaveFrames<<endl<<endl;
   
   string line, str;
   vector<string> listVideos;
@@ -63,8 +63,18 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   for (int i=0; i<fullPath_listVideos.size(); i++)
     cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
   
-  
-  //for (int i=0; i  )
+  cout<<"Frame extraction for "<<fullPath_listVideos.size()+1<<" videos!\n\n";
+  for (int i=0; i<fullPath_listVideos.size(); i++)
+  {
+  	cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
+  	
+  	VideoCapture capture(fullPath_listVideos.at(i));
+  	if(!capture.isOpened()) {
+                printf("Could not initialize capturing..\n");
+                return -1;
+        }
+  	
+  }
   //string str=pathListVideos.substr(pathListVideos.length()-4, listVideos.length()-1);
   
   //string s_avi=".avi";
