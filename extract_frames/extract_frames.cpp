@@ -39,22 +39,25 @@ int main(int argc, char** argv){
   if (pathListVideos.is_open())
   {
     while(getline(pathListVideos, line)){
-     cout<<"Line: "<<line<<endl;
-      listVideos.push_back(line);
-      cout<<"OK"<<endl;
-      
-      str=line.substr(line.length()-4, line.length()-1);
-      if (str.compare(".avi")!=0)
-      {
-        fullPath_listVideos.push_back(pathVideos + line + ".avi");
-        //cout<<"Does not ends with .avi"<<endl;
-      }
-      else{
-        //cout<<"ends with .avi"<<endl;
-        fullPath_listVideos.push_back(pathVideos + line);
-      }
+     if (!line.empty()){
+	       cout<<"Line: "<<line<<endl;
+	       listVideos.push_back(line);
+	       cout<<"OK"<<endl;
+	       
+	       str=line.substr(line.length()-4, line.length()-1);
+	       if (str.compare(".avi")!=0)
+	       {
+	         fullPath_listVideos.push_back(pathVideos + line + ".avi");
+	         //cout<<"Does not ends with .avi"<<endl;
+	       }
+	       else{
+	         //cout<<"ends with .avi"<<endl;
+	         fullPath_listVideos.push_back(pathVideos + line);
+	       }
+	     }
+	     else cout<<"Line empty: "<<line<<endl;
     }
-    pathListVideos.close();
+     pathListVideos.close();
   }
   else cout<<endl<<"Unable to open the file! \n";
   
