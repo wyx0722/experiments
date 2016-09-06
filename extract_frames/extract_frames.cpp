@@ -20,14 +20,13 @@ int main(int argc, char** argv){
  
   cout<<"OK"<<endl;
   string pathVideos=argv[1];
-  //char* s_argv2 = argv[2];
+  char* s_argv2 = argv[2];
   ifstream pathListVideos (argv[2]);
   //ifstream pathListVideos ("/home/ionut/experiments/extract_frames/tmp/list_v.txt");
   string pathSaveFrames=argv[3];
   
   
-  
-  //cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<pathListVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
+cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<s_argv2<<"  pathSaveFrames "<<pathSaveFrames<<endl;
   
   string line, str;
   vector<string> listVideos;
@@ -42,8 +41,7 @@ int main(int argc, char** argv){
      if (!line.empty()){
 	       cout<<"Line: "<<line<<endl;
 	       listVideos.push_back(line);
-	       cout<<"OK"<<endl;
-	       
+	 
 	       str=line.substr(line.length()-4, line.length()-1);
 	       if (str.compare(".avi")!=0)
 	       {
@@ -62,8 +60,8 @@ int main(int argc, char** argv){
   else cout<<endl<<"Unable to open the file! \n";
   
   //cout<<"OK"<<endl;
-  //for (int i=0; i<fullPath_listVideos.size(); i++)
-    //cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
+  for (int i=0; i<fullPath_listVideos.size(); i++)
+    cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
   
   
   //for (int i=0; i  )
