@@ -65,8 +65,9 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   
   DIR* dir;
+  const char* c;
   string::size_type first=0;
-  string classVideo, nameVideo;
+  string classVideo, nameVideo, tmp;
   
   
   cout<<"Frame extraction for "<<fullPath_listVideos.size()+1<<" videos!\n\n";
@@ -84,6 +85,41 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
         classVideo=listVideos.at(i).substr(0, first);
         nameVideo=listVideos.at(i).substr(first+1);
         cout<<classVideo<<" "<<nameVideo<<endl;
+        
+        tmp=pathSaveFrames+classVideo;
+        c=tmp.c_str();
+        dir=opendir(c);
+	if (!dir){
+	        cout<<dir<<endl;;
+	        mkdir(c, 0777);
+	}
+	
+	tmp=pathSaveFrames+classVideo + "/" + nameVideo
+	c=tmp.c_str();
+        dir=opendir(c)
+        if (!dir){
+                cout<<dir<<endl;
+                mkdir(c, 0777);
+        }
+        
+        int frame_num=1;
+        while(true) {
+		capture >> frame;
+		if(frame.empty())
+			break;
+	
+	char nameFrame[10];
+	
+	sprintf(nameFrame, "%06d.jpg", int(frame_num));
+	cout<<nameFrame<<endl;
+	
+	
+	//imwrite()
+	
+	frame_num++;	
+        }
+        
+        
   	
   }
   //string str=pathListVideos.substr(pathListVideos.length()-4, listVideos.length()-1);
