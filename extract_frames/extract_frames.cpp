@@ -18,19 +18,25 @@ using namespace std;
 
 int main(int argc, char** argv){
 
-string pathVideos=argv[1];
-std::string listVideos=argv[2];
-string pathSaveFrames=argv[3];
-
-
-cout<<"pathVideos: "<<pathVideos<<"  listVideos: "<<listVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
-
-string str=listVideos.substr(listVideos.length()-4, listVideos.length()-1);
-
-if (strcmp(str, ".avi")!=0)
-
-cout<<listVideos.length()<<endl<<str<<endl;
-
-cout<<"OK!!"<<endl;
+  string pathVideos=argv[1];
+  std::string listVideos=argv[2];
+  string pathSaveFrames=argv[3];
+  
+  
+  cout<<"pathVideos: "<<pathVideos<<"  listVideos: "<<listVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
+  
+  string str=listVideos.substr(listVideos.length()-4, listVideos.length()-1);
+  
+  if (strcmp(str, ".avi")!=0)
+  {
+    cout<<"Does not ends with .avi"<<endl;
+  }
+  else{
+    cout<<"ends with .avi"<<endl;
+  }
+  
+  cout<<listVideos.length()<<endl<<str<<endl;
+  
+  cout<<"OK!!"<<endl;
 
 }
