@@ -60,8 +60,14 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   else cout<<endl<<"Unable to open the file! \n";
   
   //cout<<"OK"<<endl;
-  for (int i=0; i<fullPath_listVideos.size(); i++)
-    cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
+  //for (int i=0; i<fullPath_listVideos.size(); i++)
+    //cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
+  
+  
+  DIR* dir;
+  string::size_type first=0;
+  string classVideo, nameVideo;
+  
   
   cout<<"Frame extraction for "<<fullPath_listVideos.size()+1<<" videos!\n\n";
   for (int i=0; i<fullPath_listVideos.size(); i++)
@@ -73,6 +79,11 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
                 printf("Could not initialize capturing..\n");
                 return -1;
         }
+        
+        first=listVideos.at(i).find("/");
+        classVideo=listVideos.at(i).substr(0, first);
+        nameVideo=listVideos.at(i).substr(first+1);
+        cout<<classVideo<<" "<<classVideo<<endl;
   	
   }
   //string str=pathListVideos.substr(pathListVideos.length()-4, listVideos.length()-1);
