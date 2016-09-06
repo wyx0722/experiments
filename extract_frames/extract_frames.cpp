@@ -17,8 +17,7 @@ using namespace cv;
 using namespace std;
 
 int main(int argc, char** argv){
- 
-  cout<<"OK"<<endl;
+
   string pathVideos=argv[1];
   char* s_argv2 = argv[2];
   ifstream pathListVideos (argv[2]);
@@ -39,7 +38,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   {
     while(getline(pathListVideos, line)){
      if (!line.empty()){
-	       cout<<"Line: "<<line<<endl;
+	       //cout<<"Line: "<<line<<endl;
 	       listVideos.push_back(line);
 	 
 	       str=line.substr(line.length()-4, line.length()-1);
@@ -71,7 +70,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   Mat frame;
   
-  cout<<"Frame extraction for "<<fullPath_listVideos.size()+1<<" videos!\n\n";
+  cout<<"Frame extraction for "<<fullPath_listVideos.size()<<" videos!\n\n";
   for (int i=0; i<fullPath_listVideos.size(); i++)
   {
   	cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
@@ -112,7 +111,6 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	char nameFrame[10];
 	
 	sprintf(nameFrame, "%06d.jpg", int(frame_num));
-	//cout<<nameFrame<<endl;
 	
 	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
 	imwrite(final_save_f, frame);
@@ -123,13 +121,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
         
   	
   }
-  //string str=pathListVideos.substr(pathListVideos.length()-4, listVideos.length()-1);
   
-  //string s_avi=".avi";
-  
-  
-  //cout<<pathListVideos.length()<<endl<<str<<endl;
-  
-  cout<<"OK final!!"<<endl;
+  cout<<"Done!!"<<endl;
 
 }
