@@ -22,6 +22,9 @@ int main(int argc, char** argv){
   string pathVideos=argv[1];
   ifstream pathListVideos (argv[2]);
   string pathSaveFrames=argv[3];
+  
+  cout<<"OK"<<endl;
+  
   //cout<<"pathVideos: "<<pathVideos<<"  pathListVideos: "<<pathListVideos<<"  pathSaveFrames "<<pathSaveFrames<<endl;
   
   string line, str;
