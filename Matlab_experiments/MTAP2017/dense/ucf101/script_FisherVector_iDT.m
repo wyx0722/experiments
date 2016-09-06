@@ -41,7 +41,7 @@ bazePathFeatures=[basePath 'Data/iDT_Features_UCF101/Videos/']
 
 
 
-for i=1:length(typeFeature)
+for i=2:length(typeFeature)%!!!!!!!!!!!!!!
     i
     
     if ~isempty(strfind(typeFeature{i},'HOF'))

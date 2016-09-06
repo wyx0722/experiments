@@ -15,7 +15,7 @@ end
 
 load([rezPath 'Data/UCF50/VisualVocabulary/KmeansFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72Pca72Clusters256_512.mat']);
 
-gmmModelName='/home/ionut/Data/UCF50/VisualVocabulary/gmmFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72Pca72Clusters256.gmm';
+%gmmModelName='/home/ionut/Data/UCF50/VisualVocabulary/gmmFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72Pca72Clusters256.gmm';
 
 vocab_vlad256=vocabs{1};
 vocab_vlad512=vocabs{2};
@@ -145,16 +145,16 @@ for i=1:length(videosList)
         tElapsed_sd_vlad_f(i)=toc(tStart_sd_vlad_f);
         
         
-        %Fisher Vector
-       %t_featSpIdx=featSpIdx';
-       t_desc=desc';
-       
-       tStart_fv=tic;
-       fisher1=mexFisherAssign(t_desc(:,featSpIdx(1,:)), gmmModelName)';
-       fisher2=mexFisherAssign(t_desc(:,featSpIdx(2,:)), gmmModelName)';
-       fisher3=mexFisherAssign(t_desc(:,featSpIdx(3,:)), gmmModelName)';
-       fisher4=mexFisherAssign(t_desc(:,featSpIdx(4,:)), gmmModelName)';
-       tElapsed_fv(i)=toc(tStart_fv);
+%         %Fisher Vector
+%        %t_featSpIdx=featSpIdx';
+%        t_desc=desc';
+%        
+%        tStart_fv=tic;
+%        fisher1=mexFisherAssign(t_desc(:,featSpIdx(1,:)), gmmModelName)';
+%        fisher2=mexFisherAssign(t_desc(:,featSpIdx(2,:)), gmmModelName)';
+%        fisher3=mexFisherAssign(t_desc(:,featSpIdx(3,:)), gmmModelName)';
+%        fisher4=mexFisherAssign(t_desc(:,featSpIdx(4,:)), gmmModelName)';
+%        tElapsed_fv(i)=toc(tStart_fv);
          
         
 end
