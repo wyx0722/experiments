@@ -1,0 +1,27 @@
+function [  ] = create_in_out_C3D( videoList, pathFrames, pathSaveFeatures, inputFile, outputFile)
+
+
+fileID=fopen(videoList);
+listV=textscan(fileID, '%s');
+fclose(fileID);
+
+fileID_in=fopen(inputFile, 'w');
+fileID_out=fopen(outputFile, 'w');
+
+for i=1:length(listV{1})
+    
+    dirFrames=sprintf('pathFrames%s/*.jpg',listV{1}{i})
+    list_frames=dir(dirFrames);
+    for j=1:(length(list_frames) - 15) %!!!!       
+    fprintf(fileID_in, '%s%s/ %d 0',pathFrames, listV{1}{i}, j);
+    fprintf(fileID_out, '%s%s/%s',pathSaveFeatures,listV{1}{i}, fileList(1).name(1:end-4));
+    end
+    
+end
+
+fclose(fileID_in);
+fclose(fileID_out);
+
+
+end
+
