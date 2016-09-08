@@ -5,7 +5,7 @@ layers {
   top: "data"
   top: "label"
   image_data_param {
-    source: "/home/ionut/C3D/examples/myExample/input_list_frm_i.txt"
+    source: "/home/ionut/experiments/deep_features_extraction/c3d/hmdb51_feature_extraction/input_list_frm_i.txt"
     use_image: true
     mean_file: "/home/ionut/C3D/examples/c3d_feature_extraction/sport1m_train16_128_mean.binaryproto"
     batch_size: 50
