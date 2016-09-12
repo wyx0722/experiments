@@ -118,7 +118,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	frame_num++;	
         }
         
-        cout<<frame_num<<" ";
+        fprintf("%d ", frame_num);
         
   	
   }
