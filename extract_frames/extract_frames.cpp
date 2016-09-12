@@ -124,7 +124,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 		cout<<final_save_f<<endl;
 		out_file<<final_save_f<<"\n"; //
 	}
-	}
+	
 	frame_num++;	
         }
         
