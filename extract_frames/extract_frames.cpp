@@ -129,7 +129,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
         }
         
         printf("numberFrames: %d\n\n", frame_num);
-        out_file<<"numberFrames: "<<frame_num<<"\n\n"; \\
+        out_file<<"numberFrames: "<<frame_num<<"\n\n"; //
   	
   }
   
@@ -137,5 +137,5 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   cout<<"\nDone!!"<<endl;
 
-return 0;
+//return 0;
 }
