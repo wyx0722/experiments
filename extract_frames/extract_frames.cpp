@@ -77,7 +77,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   for (int i=0; i<fullPath_listVideos.size(); i++)
   {
   	cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
-  	out_file<<i+1<<" "<<fullPath_listVideos.at(i)<<"\n"; \\
+  	out_file<<i+1<<" "<<fullPath_listVideos.at(i)<<"\n"; //
   	//cout<<i+1<<":";
   	VideoCapture capture(fullPath_listVideos.at(i));
   	if(!capture.isOpened()) {
@@ -119,10 +119,10 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
 	imwrite(final_save_f, frame);
 	
-	if frame_num==1
+	if (frame_num==1)
 	{
 		cout<<final_save_f<<endl;
-		out_file<<final_save_f<<"\n"; \\
+		out_file<<final_save_f<<"\n"; //
 	}
 	}
 	frame_num++;	
@@ -133,7 +133,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   	
   }
   
-  out_file.close();
+  out_file.close(); //
   
   cout<<"\nDone!!"<<endl;
 
