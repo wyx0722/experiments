@@ -118,8 +118,20 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	
 	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
 	
-	//try{
+	try{
 	isSaved=imwrite(final_save_f, frame);
+	}
+	catch (runtime_error& ex) {
+        printf("Exception saving image: %s\n", ex.what());
+        printf("%s\n", final_save_f );
+        return 1;
+    	}
+	
+	if (isSaved!=true)
+	{	printf("The image was not saved:\n%s\n", final_save_f );
+		waitKey();
+	
+	}
 	
 	if (frame_num==1)
 	{
