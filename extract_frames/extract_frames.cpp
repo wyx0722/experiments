@@ -70,11 +70,15 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   Mat frame;
   
-  cout<<"Frame extraction for "<<fullPath_listVideos.size()<<" videos!\n\n";
+  ofstream out_file; //
+  out_file.open("/home/ionut/tmp/out_file.txt"); //
+  
+  cout<<"Frame extraction for "<<fullPath_listVideos.size()<<" videos! \n\n";
   for (int i=0; i<fullPath_listVideos.size(); i++)
   {
   	cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
-  	
+  	out_file<<i+1<<" "<<fullPath_listVideos.at(i)<<"\n"; //
+  	//cout<<i+1<<":";
   	VideoCapture capture(fullPath_listVideos.at(i));
   	if(!capture.isOpened()) {
                 printf("Could not initialize capturing..\n");
@@ -90,7 +94,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
         c=tmp.c_str();
         dir=opendir(c);
 	if (!dir){
-	        cout<<dir<<endl;;
+	        //cout<<dir<<endl;;
 	        mkdir(c, 0777);
 	}
 	
@@ -98,7 +102,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	c=tmp.c_str();
         dir=opendir(c);
         if (!dir){
-                cout<<dir<<endl;
+                //cout<<dir<<endl;
                 mkdir(c, 0777);
         }
         
@@ -115,13 +119,23 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
 	imwrite(final_save_f, frame);
 	
+	if (frame_num==1)
+	{
+		cout<<final_save_f<<endl;
+		out_file<<final_save_f<<"\n"; //
+	}
+	
 	frame_num++;	
         }
         
-        
+        printf("numberFrames: %d\n\n", frame_num);
+        out_file<<"numberFrames: "<<frame_num<<"\n\n"; //
   	
   }
   
-  cout<<"Done!!"<<endl;
+  out_file.close(); //
+  
+  cout<<"\nDone!!"<<endl;
 
+//return 0;
 }
