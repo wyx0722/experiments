@@ -113,7 +113,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 		if(frame.empty())
 			break;
 	
-	char nameFrame[10];
+	char nameFrame*;
 	
 	sprintf(nameFrame, "%06d.jpg", int(frame_num));
 	
