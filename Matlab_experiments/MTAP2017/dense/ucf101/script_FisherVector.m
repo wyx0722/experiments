@@ -1,18 +1,14 @@
-hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
-if ~isempty(findstr(hostname, 'cocoa'))
-    basePath='/home/ionut/asustor_ionut/'
-elseif ~isempty(findstr(hostname, 'Halley'))
-      basePath='/home/ionut/asustor_ionut_2/'    
-end
 
+
+basePath='/home/ionut/asustor_ionut/'
 addpath('./../');%!!!!!!!
 
-typeFeature=cell(1,5);
-typeFeature{1}=@FEVidHmgDense
-typeFeature{2}=@FEVidHofDense
-typeFeature{3}=@FEVidHogDense
-typeFeature{4}=@FEVidMBHxDense
-typeFeature{5}=@FEVidMBHyDense
+typeFeature=cell(1,1);
+% typeFeature{1}=@FEVidHmgDense
+% typeFeature{2}=@FEVidHofDense
+% typeFeature{3}=@FEVidHogDense
+% typeFeature{4}=@FEVidMBHxDense
+typeFeature{1}=@FEVidMBHyDense
 
 
 fsr=[1 2 3 6];
