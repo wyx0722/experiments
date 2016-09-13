@@ -65,6 +65,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   DIR* dir;
   const char* c;
+  const char* final_save_f;
   string::size_type first=0;
   string classVideo, nameVideo, tmp;
   bool isSaved;
@@ -116,8 +117,8 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	
 	sprintf(nameFrame, "%06d.jpg", int(frame_num));
 	
-	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
-	
+	string st_temp=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
+	final_save_f=st_temp.c_str();
 	try{
 	isSaved=imwrite(final_save_f, frame);
 	}
