@@ -69,7 +69,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   string::size_type first=0;
   string classVideo, nameVideo, tmp;
   bool isSaved;
-  Mat frame;
+  
   
   ofstream out_file; //
   out_file.open("/home/ionut/tmp/out_file.txt"); //
@@ -107,6 +107,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
                 mkdir(c, 0777);
         }
         
+        Mat frame;
         int frame_num=1;
         while(true) {
 		capture >> frame;
