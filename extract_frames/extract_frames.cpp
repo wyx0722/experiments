@@ -129,7 +129,8 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
     	}
 	
 	if (isSaved!=true)
-	{	printf("The image was not saved:\n%s\n", final_save_f );
+	{	cout<<final_save_f<<"   "<<st_temp<<endl;
+		printf("The image was not saved:\n%s\n", final_save_f );
 		waitKey();
 	
 	}
