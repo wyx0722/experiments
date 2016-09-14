@@ -34,7 +34,7 @@ savePath=[basePath 'Data/results/mtap2017/ucf101/']%!!!!!!!change
 
 for i=1:length(typeFeature)
     i
-    for j=1:length(fsr)
+    for j=2:length(fsr)%!!!!!!
         j
          [all_accuracy{i}{j}, all_clfsOut{i}{j}] = FisherVectorFramework_hmdb51_UCF101(typeFeature{i},mType, normStrategy,datasetName,cl, nPar, alpha, savePath, fsr(j));
     end
