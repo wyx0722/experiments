@@ -4,7 +4,7 @@ basePath='/home/ionut/asustor_ionut/'
 
 %!!!!!!!change both!!!!!!!!!!!!!!!!!!!!!
 savePath=[basePath 'Data/results/mtap2017/ucf101/%s/iDT/'];
-bazePathFeatures=[basePath 'Data/iDT_Features_UCF101/Videos/']
+pathFeatures=[basePath 'Data/iDT_Features_UCF101/Videos/']
 
 
 
