@@ -1,9 +1,6 @@
-hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
-if ~isempty(findstr(hostname, 'cocoa'))
-    basePath='/home/ionut/asustor_ionut/'
-elseif ~isempty(findstr(hostname, 'Halley'))
-      basePath='/home/ionut/asustor_ionut_2/'    
-end
+
+basePath='/home/ionut/asustor_ionut/'
+
 addpath('./../');%!!!!!!!
 
 
@@ -41,7 +38,7 @@ bazePathFeatures=[basePath 'Data/iDT_Features_UCF101/Videos/']
 
 
 
-for i=2:length(typeFeature)%!!!!!!!!!!!!!!
+for i=1:length(typeFeature)%!!!!!!!!!!!!!!
     i
     
     if ~isempty(strfind(typeFeature{i},'HOF'))
