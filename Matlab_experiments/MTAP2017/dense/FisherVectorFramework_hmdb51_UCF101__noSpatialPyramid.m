@@ -105,7 +105,7 @@ vocabularyPathFeatures=allPathFeatures(1:4:end);%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 [gmmModelName, pcaMap] = CreateVocabularyGMMPca(vocabularyPathFeatures, descParam, ...
-                                                descParam.numClusters, descParam.pcaDim); 
+                                                descParam.numClusters, descParam.pcaDim, 1000000, 1); 
                                                                                        
 
 [tDesc] = MediaName2Descriptor(allPathFeatures{1}, descParam, pcaMap);
