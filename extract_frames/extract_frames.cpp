@@ -65,10 +65,11 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   DIR* dir;
   const char* c;
+  const char* final_save_f;
   string::size_type first=0;
   string classVideo, nameVideo, tmp;
+  bool isSaved;
   
-  Mat frame;
   
   ofstream out_file; //
   out_file.open("/home/ionut/tmp/out_file.txt"); //
@@ -106,18 +107,34 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
                 mkdir(c, 0777);
         }
         
+        Mat frame;
         int frame_num=1;
         while(true) {
 		capture >> frame;
 		if(frame.empty())
 			break;
 	
-	char nameFrame[10];
+	char nameFrame[20];
 	
 	sprintf(nameFrame, "%06d.jpg", int(frame_num));
 	
-	string final_save_f=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
-	imwrite(final_save_f, frame);
+	string st_temp=pathSaveFrames+classVideo + "/" + nameVideo+"/"+nameFrame;
+	final_save_f=st_temp.c_str();
+	try{
+	isSaved=imwrite(final_save_f, frame);
+	}
+	catch (runtime_error& ex) {
+        printf("Exception saving image: %s\n", ex.what());
+        printf("%s\n", final_save_f );
+        return 1;
+    	}
+	
+	if (isSaved!=true)
+	{	cout<<final_save_f<<"   "<<st_temp<<endl;
+		printf("The image was not saved:\n%s\n", final_save_f );
+		waitKey();
+	
+	}
 	
 	if (frame_num==1)
 	{
@@ -137,5 +154,5 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   
   cout<<"\nDone!!"<<endl;
 
-//return 0;
+return 0;
 }
