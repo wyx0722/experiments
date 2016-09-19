@@ -15,30 +15,10 @@ end
 
 
 
-load_name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidHogDenseBlockSize8_8_1_DatasetUCF101FrameSampleRate6MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SD_VLAD.mat'
-load(load_name);
-hog_sd_vlad_6=SD_VLADAll;
-clear SD_VLADAll
 
-load_name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidHmgDenseBlockSize8_8_1_DatasetUCF101FrameSampleRate6MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SD_VLAD.mat'
+load_name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidHmgDenseBlockSize8_8_3_DatasetHMDB51FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SD_VLAD.mat'
 load(load_name);
-hmg_sd_vlad_6=SD_VLADAll;
-clear SD_VLADAll
-
-
-load_name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidHofDenseBlockSize8_8_3_DatasetUCF101FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SD_VLAD.mat'
-load(load_name);
-hof_sd_vlad_2=SD_VLADAll;
-clear SD_VLADAll
-
-load_name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidMBHxDenseBlockSize8_8_3_DatasetUCF101FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SD_VLAD.mat'
-load(load_name);
-mbhx_sd_vlad_2=SD_VLADAll;
-clear SD_VLADAll
-
-load_name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidMBHyDenseBlockSize8_8_3_DatasetUCF101FrameSampleRate2MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SD_VLAD.mat'
-load(load_name);
-mbhy_sd_vlad_2=SD_VLADAll;
+hmg_sd_vlad_2=SD_VLADAll;
 clear SD_VLADAll
 
 
@@ -46,16 +26,25 @@ clear SD_VLADAll
 
 %% Do classification
 
-nEncoding=1;
+nEncoding=2;
 allDist=cell(1, nEncoding);
 
 temp=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hog_sd_vlad_6, 72), 0.5)), ...
-       NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hmg_sd_vlad_6, 72), 0.5)), ...
+       NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hmg_sd_vlad_2, 72), 0.5)), ...
        NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hof_sd_vlad_2, 72), 0.5)), ...
        NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(mbhx_sd_vlad_2, 72), 0.5)), ...
        NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(mbhy_sd_vlad_2, 72), 0.5)) ...
        ));
 allDist{1}=temp * temp';
+
+
+temp=NormalizeRowsUnit(cat(2, NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hog_sd_vlad_6, 72), 0.5)), ...
+       NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hmg_sd_vlad_2, 72), 0.5)), ...
+       NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(hof_sd_vlad_3, 72), 0.5)), ...
+       NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(mbhx_sd_vlad_3, 72), 0.5)), ...
+       NormalizeRowsUnit(PowerNormalization(intranormalizationFeatures(mbhy_sd_vlad_3, 72), 0.5)) ...
+       ));
+allDist{2}=temp * temp';
 
 
 
