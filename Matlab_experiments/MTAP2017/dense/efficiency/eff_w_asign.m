@@ -4,14 +4,15 @@ DATAopts = UCFInit;
 
 
 
-hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
-if ~isempty(findstr(hostname, 'cocoa'))
-    rezPath='/home/ionut/asustor_ionut/'
-else if ~isempty(findstr(hostname, 'Halley'))
-      rezPath='/home/ionut/asustor_ionut_2/'
-    end
-end
+% hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
+% if ~isempty(findstr(hostname, 'cocoa'))
+%     rezPath='/home/ionut/asustor_ionut/'
+% else if ~isempty(findstr(hostname, 'Halley'))
+%       rezPath='/home/ionut/asustor_ionut_2/'
+%     end
+% end
 
+rezPath='/home/ionut/asustor_ionut/'
 
 load([rezPath 'Data/UCF50/VisualVocabulary/KmeansFEVidHmgDenseBlockSize8_8_6_FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters_FV256numClusters_VLAD256_512_pcaDim72Pca72Clusters256_512.mat']);
 
