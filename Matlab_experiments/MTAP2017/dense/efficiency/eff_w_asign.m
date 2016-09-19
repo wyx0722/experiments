@@ -2,6 +2,7 @@
 global DATAopts;
 DATAopts = UCFInit;
 
+addpath('./../');%!!!!!!!
 
 
 % hostname = char( getHostName( java.net.InetAddress.getLocalHost ) );
