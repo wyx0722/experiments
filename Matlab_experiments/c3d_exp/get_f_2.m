@@ -1,7 +1,7 @@
 function [ allFeatures ] = get_f_2( pathFeatures, layer )
 
 
-if ~isempty(strfind(layer, 'pool4'))
+if ~isempty(strfind(layer, 'pool5'))
     rows=4;
     cols=4;  
     channels=512;
