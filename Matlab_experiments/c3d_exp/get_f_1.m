@@ -17,7 +17,7 @@ p=1;
 
 for i=1:length(list_frames_feature)
     
-    filename=[path_features list_frames_feature(i).name];
+    filename=[pathFeatures list_frames_feature(i).name];
     [s, blob, read_status] = read_binary_blob_preserve_shape(filename);
     
     if read_status~=1
