@@ -19,8 +19,8 @@ p=1;
 for i=1:length(allFeatures)
     
     
-    for m=1:size(blob, 4)
-        for n=size(blob, 5)
+    for m=1:size(allFeatures{i}, 4)
+        for n=size(allFeatures{i}, 5)
            allFeatures(p, :)=allFeatures{i}(1, :, 1, m, n);
            p=p+1;
         end
