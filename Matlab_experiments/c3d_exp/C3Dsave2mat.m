@@ -11,7 +11,7 @@ allFeatures=cell(1, length(list_frames_feature));
 
 for i=1:length(list_frames_feature)
     
-    filename=[path_features list_frames_feature{1}.name];
+    filename=[path_features list_frames_feature(1).name];
     [s, blob, read_status] = read_binary_blob_preserve_shape(filename);
     
     if read_status~=1
