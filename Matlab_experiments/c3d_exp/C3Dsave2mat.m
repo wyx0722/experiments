@@ -24,6 +24,6 @@ end
 
 
 fileNameSave=sprintf('%s%s.mat',savePath, layer);
-save(fileNameSave, '-v7.3', allFeatures);
+save(fileNameSave, '-v7.3', 'allFeatures');
 end
 
