@@ -9,5 +9,5 @@ layer{6}='prob';
 allFeatures=cell(1, length(layer));
 
 for i=1:length(layer)
-     [ allFeatures{i} ] = C3Dsave2mat( path_features, layer(i), savePath);
+     [ allFeatures{i} ] = C3Dsave2mat( path_features, layer{i}, savePath);
 end
