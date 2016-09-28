@@ -7,18 +7,17 @@ mType='DeepF';
 typeFeature=@FEVid_deepFeatures;
 normStrategy='None';
 layer='pool5'
-Net='C3D';
+Net='TempSplit1VGG16';
 
 alpha=0.5;
 nPar=5;
-pathFeatures=!!!!!!!!!!!!!
+pathFeatures='/home/ionut/asustor_ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'%%%%%channge~~~~~~~~~~~~
 
 
 descParam.Dataset=datasetName;
 descParam.MediaType=mType;
 descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
-descParam.numClusters = cl;
 
 descParam.Clusters=[256 319 512];
 descParam.spClusters=[32];
