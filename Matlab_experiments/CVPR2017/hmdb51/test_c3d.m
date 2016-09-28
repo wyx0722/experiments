@@ -149,28 +149,28 @@ st_vlmpf32=zeros(length(allPathFeatures), length(t), 'like', t);
 
 nDesc=zeros(1, length(allPathFeatures));
 
-%parpool(nPar);
+parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(allPathFeatures));
-for i=1:length(allPathFeatures)
+parfor i=1:length(allPathFeatures)
     fprintf('%d \n', i)
     % Extract descriptors
     
     [desc, info, descParamUsed] = MediaName2Descriptor(allPathFeatures{i}, descParam, pcaMap);
     nDesc(i)=size(desc,1);
     
-    v256 (i, :) = VLAD_1(tDesc, cell_Clusters{1}.vocabulary);
-    v319 (i, :) = VLAD_1(tDesc, cell_Clusters{2}.vocabulary);
-    v512 (i, :) = VLAD_1(tDesc, cell_Clusters{3}.vocabulary);
+    v256 (i, :) = VLAD_1(desc, cell_Clusters{1}.vocabulary);
+    v319 (i, :) = VLAD_1(desc, cell_Clusters{2}.vocabulary);
+    v512 (i, :) = VLAD_1(desc, cell_Clusters{3}.vocabulary);
     
-    m256 (i, :) = max_pooling(tDesc, cell_Clusters{1}.vocabulary);
-    m319  (i, :) = max_pooling(tDesc, cell_Clusters{2}.vocabulary);
-    m512 (i, :) = max_pooling(tDesc, cell_Clusters{3}.vocabulary);
+    m256 (i, :) = max_pooling(desc, cell_Clusters{1}.vocabulary);
+    m319  (i, :) = max_pooling(desc, cell_Clusters{2}.vocabulary);
+    m512 (i, :) = max_pooling(desc, cell_Clusters{3}.vocabulary);
     
-    spV32_m (i, :) = VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    spV32 (i, :) = VLAD_1_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    st_vlmpf32 (i, :) = ST_VLMPF(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    spV32_m (i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    spV32 (i, :) = VLAD_1_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    st_vlmpf32 (i, :) = ST_VLMPF(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     
          if i == 1
              descParamUsed
@@ -254,7 +254,7 @@ for k=1:nEncoding
      all_accuracy{k}=accuracy;
 end
 
-%delete(gcp('nocreate'))
+delete(gcp('nocreate'))
 %%%%
 
 finalAcc=zeros(1,nEncoding);
