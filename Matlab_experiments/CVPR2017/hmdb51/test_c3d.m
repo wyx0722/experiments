@@ -18,7 +18,6 @@ descParam.Dataset=datasetName;
 descParam.MediaType=mType;
 descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
-descParam.numClusters = cl;
 
 descParam.Clusters=[256 319 512];
 descParam.spClusters=[32];
