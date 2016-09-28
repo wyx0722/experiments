@@ -12,5 +12,11 @@ if ~isfield(descParam, 'NormFeatureMaps')
     descParam.NormFeatureMaps='None';
 end
 
-[desc, spInfo] = maps2features(featurePath, descParam.Layer, descParam.NormFeatureMaps);
+if strfind(descParam.net, 'C3D')>0
+    [desc, spInfo] = maps2features_c3d(featurePath, descParam.Layer);
+else
+    [desc, spInfo] = maps2features(featurePath, descParam.Layer, descParam.NormFeatureMaps);
+
+end
+
 info.spInfo=spInfo;
