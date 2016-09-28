@@ -149,11 +149,11 @@ st_vlmpf32=zeros(length(allPathFeatures), length(t), 'like', t);
 
 nDesc=zeros(1, length(allPathFeatures));
 
-parpool(nPar);
+%parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(allPathFeatures));
-parfor i=1:length(allPathFeatures)
+for i=1:length(allPathFeatures)
     fprintf('%d \n', i)
     % Extract descriptors
     
@@ -254,7 +254,7 @@ for k=1:nEncoding
      all_accuracy{k}=accuracy;
 end
 
-delete(gcp('nocreate'))
+%delete(gcp('nocreate'))
 %%%%
 
 finalAcc=zeros(1,nEncoding);
