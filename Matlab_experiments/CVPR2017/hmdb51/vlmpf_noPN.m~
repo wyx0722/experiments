@@ -13,7 +13,7 @@ allDist{2}=temp * temp';
 temp=NormalizeRowsUnit( st_vlmpf32_noPCA_temp);
 allDist{3}=temp * temp';
 
-temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(st_vlmpf32_noPCA_c3d), NormalizeRowsUnit(st_vlmpf32_noPCA_temp), NormalizeRowsUnit(st_vlmpf32_noPCA_sp) ));
+temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(st_vlmpf32_noPCA_c3d, st_vlmpf32_noPCA_temp, st_vlmpf32_noPCA_sp));
 allDist{4}=temp * temp';
 
 
