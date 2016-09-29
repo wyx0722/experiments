@@ -1,58 +1,58 @@
-% 
-% addpath('./../');%!!!!!!!
-% 
-% global DATAopts;
-% DATAopts = HMDB51Init;
-% [allVids, labs, splits] = GetVideosPlusLabels();
-% 
-% 
-% alpha_deep=0.5;
-% alpha_idt=0.1;
-% datasetName='HMDB51'
-% 
-% name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetTempSplit1VGG16pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
-% load(name);
-% 
-% v256_noPCA_temp=v256;
-% m256_noPCA_temp=m256;
-% st_vlmpf32_noPCA_temp=st_vlmpf32;
-% 
-% 
-% name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetSpVGG19pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
-% load(name);
-% 
-% v256_noPCA_sp=v256;
-% m256_noPCA_sp=m256;
-% st_vlmpf32_noPCA_sp=st_vlmpf32;
-% 
-% name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetC3DpcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
-% load(name);
-% 
-% v256_noPCA_c3d=v256;
-% m256_noPCA_c3d=m256;
-% st_vlmpf32_noPCA_c3d=st_vlmpf32;
-% 
-% 
-% name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54fisherVector.mat'
-% load(name);
-% hof_idt=fisherVector;
-% 
-% name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat'
-% load(name);
-% hog_idt=fisherVector;
-% 
-% name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat'
-% load(name);
-% mbhx_idt=fisherVector;
-% 
-% name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat'
-% load(name);
-% mbhy_idt=fisherVector;
-% 
-% clear fisherVector v256 m256 st_vlmpf32
+
+addpath('./../');%!!!!!!!
+
+global DATAopts;
+DATAopts = HMDB51Init;
+[allVids, labs, splits] = GetVideosPlusLabels();
+
 
  alpha_deep=0.5;
  alpha_idt=0.1;
+ 
+ 
+datasetName='HMDB51'
+
+name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetTempSplit1VGG16pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
+v256_noPCA_temp=v256;
+m256_noPCA_temp=m256;
+st_vlmpf32_noPCA_temp=st_vlmpf32;
+
+
+name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetSpVGG19pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
+v256_noPCA_sp=v256;
+m256_noPCA_sp=m256;
+st_vlmpf32_noPCA_sp=st_vlmpf32;
+
+name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetC3DpcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
+v256_noPCA_c3d=v256;
+m256_noPCA_c3d=m256;
+st_vlmpf32_noPCA_c3d=st_vlmpf32;
+
+
+name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54fisherVector.mat'
+load(name);
+hof_idt=fisherVector;
+
+name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat'
+load(name);
+hog_idt=fisherVector;
+
+name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat'
+load(name);
+mbhx_idt=fisherVector;
+
+name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/iDT/FEVid_IDTDatasetHMDB51IDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat'
+load(name);
+mbhy_idt=fisherVector;
+
+clear fisherVector v256 m256 st_vlmpf32
+
 
 name='/home/ionut/asustor_ionut/Data/results/mtap2017/hmdb51/videoRep/dense/FEVidHmgDenseBlockSize8_8_6_DatasetHMDB51FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SPfisherVector.mat'
 load(name);

@@ -52,7 +52,10 @@
 % clear fisherVector v256 m256 st_vlmpf32
 % fprintf('\nDone! load features \n');
 
-
+ alpha_deep=1;
+ alpha_idt=0.1;
+ 
+ 
 nEncoding=3;
 allDist=cell(1, nEncoding);
 
@@ -87,9 +90,6 @@ mean_all_accuracy=cell(nEncoding,1);
 cRange = 100;
 nReps = 1;
 nFolds = 3;
-
- alpha_deep=1;
- alpha_idt=0.1;
 
 
 
