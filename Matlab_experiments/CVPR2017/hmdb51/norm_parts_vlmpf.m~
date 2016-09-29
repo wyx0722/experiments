@@ -1,0 +1,30 @@
+st_vlmpf32_noPCA_c3d
+st_vlmpf32_noPCA_sp
+st_vlmpf32_noPCA_temp
+
+
+
+
+norm_st_vlmpf32_noPCA_c3d=zeros(size(st_vlmpf32_noPCA_c3d));
+norm_st_vlmpf32_noPCA_c3d(:, 1:(256*512))=NormalizeRowsUnit(st_vlmpf32_noPCA_c3d(:, 1:(256*512)));
+norm_st_vlmpf32_noPCA_c3d(:, ((256*512)+1):(256*512)+(32*512))=NormalizeRowsUnit(st_vlmpf32_noPCA_c3d(:, ((256*512)+1):(256*512)+(32*512)) );
+norm_st_vlmpf32_noPCA_c3d(:,(256*512)+(32*512)+1 :(256*512)+(32*512)+(32*256))=NormalizeRowsUnit(st_vlmpf32_noPCA_c3d(:,(256*512)+(32*512)+1 :(256*512)+(32*512)+(32*256)) );
+
+
+norm_st_vlmpf32_noPCA_sp=zeros(size(st_vlmpf32_noPCA_sp));
+norm_st_vlmpf32_noPCA_sp(:, 1:(256*512))=NormalizeRowsUnit(st_vlmpf32_noPCA_sp(:, 1:(256*512)));
+norm_st_vlmpf32_noPCA_sp(:, ((256*512)+1):(256*512)+(32*512))=NormalizeRowsUnit(st_vlmpf32_noPCA_sp(:, ((256*512)+1):(256*512)+(32*512)) );
+norm_st_vlmpf32_noPCA_sp(:,(256*512)+(32*512)+1 :(256*512)+(32*512)+(32*256))=NormalizeRowsUnit(st_vlmpf32_noPCA_sp(:,(256*512)+(32*512)+1 :(256*512)+(32*512)+(32*256)) );
+
+norm_st_vlmpf32_noPCA_temp=zeros(size(st_vlmpf32_noPCA_temp));
+norm_st_vlmpf32_noPCA_temp(:, 1:(256*512))=NormalizeRowsUnit(st_vlmpf32_noPCA_temp(:, 1:(256*512)));
+norm_st_vlmpf32_noPCA_temp(:, ((256*512)+1):(256*512)+(32*512))=NormalizeRowsUnit(st_vlmpf32_noPCA_temp(:, ((256*512)+1):(256*512)+(32*512)) );
+norm_st_vlmpf32_noPCA_temp(:,(256*512)+(32*512)+1 :(256*512)+(32*512)+(32*256))=NormalizeRowsUnit(st_vlmpf32_noPCA_temp(:,(256*512)+(32*512)+1 :(256*512)+(32*512)+(32*256)) );
+
+
+nEncoding=4;
+allDist=cell(1, nEncoding);
+
+temp=NormalizeRowsUnit( norm_st_vlmpf32_noPCA_c3d);
+allDist{1}=temp * temp';
+
