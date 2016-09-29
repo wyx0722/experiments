@@ -18,11 +18,15 @@ st_vlmpf32_PCA256_temp=st_vlmpf32;
 
 
 name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetSpVGG19pcaDim256spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
 v256_PCA256_sp=v256;
 m256_PCA256_sp=m256;
 st_vlmpf32_PCA256_sp=st_vlmpf32;
 
 name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetC3DpcaDim256spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
 v256_PCA256_c3d=v256;
 m256_PCA256_c3d=m256;
 st_vlmpf32_PCA256_c3d=st_vlmpf32;

@@ -1,66 +1,70 @@
-% 
-% addpath('./../');%!!!!!!!
-% 
-% global DATAopts;
-% DATAopts = HMDB51Init;
-% [allVids, labs, splits] = GetVideosPlusLabels();
-% 
-% 
-% alpha=0.5;
-% 
-% 
-% name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetTempSplit1VGG16pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
-% load(name);
-% 
-% v256_noPCA_temp=v256;
-% m256_noPCA_temp=m256;
-% st_vlmpf32_noPCA_temp=st_vlmpf32;
-% 
-% 
-% name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetSpVGG19pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
-% v256_noPCA_sp=v256;
-% m256_noPCA_sp=m256;
-% st_vlmpf32_noPCA_sp=st_vlmpf32;
-% 
-% name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetC3DpcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
-% v256_noPCA_c3d=v256;
-% m256_noPCA_c3d=m256;
-% st_vlmpf32_noPCA_c3d=st_vlmpf32;
-% 
-% 
-% 
-% nEncoding=3;
-% allDist=cell(1, nEncoding);
-% 
-% temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(v256_noPCA_temp, alpha)), NormalizeRowsUnit(PowerNormalization(v256_noPCA_sp, alpha)), ...
-%     NormalizeRowsUnit(PowerNormalization(v256_noPCA_c3d, alpha)) ) );
-% allDist{1}=temp * temp';
-% 
-% temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(m256_noPCA_temp, alpha)), NormalizeRowsUnit(PowerNormalization(m256_noPCA_sp, alpha)), ...
-%     NormalizeRowsUnit(PowerNormalization(m256_noPCA_c3d, alpha)) ) );
-% allDist{2}=temp * temp';
-% 
-% temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(st_vlmpf32_noPCA_temp, alpha)), NormalizeRowsUnit(PowerNormalization(st_vlmpf32_noPCA_sp, alpha)), ...
-%     NormalizeRowsUnit(PowerNormalization(st_vlmpf32_noPCA_c3d, alpha)) ) );
-% allDist{3}=temp * temp';
-% 
-% %each row for the cell represents the results for all 3 splits
-% all_clfsOut=cell(1,nEncoding);
-% all_accuracy=cell(1,nEncoding);
-% clfsOut=cell(1,nEncoding);
-% accuracy=cell(1,nEncoding);
-% %mean_all_clfsOut=cell(nEncoding,1);
-% mean_all_accuracy=cell(nEncoding,1);
-% 
-% cRange = 100;
-% nReps = 1;
-% nFolds = 3;
-% 
-% 
-% parpool(3);
-% 
 
+addpath('./../');%!!!!!!!
+
+global DATAopts;
+DATAopts = HMDB51Init;
+[allVids, labs, splits] = GetVideosPlusLabels();
+
+
+alpha=0.5;
 datasetName='HMDB51'
+
+name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetTempSplit1VGG16pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
+v256_noPCA_temp=v256;
+m256_noPCA_temp=m256;
+st_vlmpf32_noPCA_temp=st_vlmpf32;
+
+
+name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetSpVGG19pcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
+v256_noPCA_sp=v256;
+m256_noPCA_sp=m256;
+st_vlmpf32_noPCA_sp=st_vlmpf32;
+
+name='/home/ionut/asustor_ionut/Data/results/cvpr2017/beginning_rezults/FEVid_deepFeaturesClusters256_319_512_DatasetHMDB51Layerpool5MediaTypeDeepFNormalisationNonenetC3DpcaDim0spClusters32__v256__m256__st_vlmpf32.mat'
+load(name);
+
+v256_noPCA_c3d=v256;
+m256_noPCA_c3d=m256;
+st_vlmpf32_noPCA_c3d=st_vlmpf32;
+
+
+
+nEncoding=3;
+allDist=cell(1, nEncoding);
+
+temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(v256_noPCA_temp, alpha)), NormalizeRowsUnit(PowerNormalization(v256_noPCA_sp, alpha)), ...
+    NormalizeRowsUnit(PowerNormalization(v256_noPCA_c3d, alpha)) ) );
+allDist{1}=temp * temp';
+
+temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(m256_noPCA_temp, alpha)), NormalizeRowsUnit(PowerNormalization(m256_noPCA_sp, alpha)), ...
+    NormalizeRowsUnit(PowerNormalization(m256_noPCA_c3d, alpha)) ) );
+allDist{2}=temp * temp';
+
+temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(st_vlmpf32_noPCA_temp, alpha)), NormalizeRowsUnit(PowerNormalization(st_vlmpf32_noPCA_sp, alpha)), ...
+    NormalizeRowsUnit(PowerNormalization(st_vlmpf32_noPCA_c3d, alpha)) ) );
+allDist{3}=temp * temp';
+
+%each row for the cell represents the results for all 3 splits
+all_clfsOut=cell(1,nEncoding);
+all_accuracy=cell(1,nEncoding);
+clfsOut=cell(1,nEncoding);
+accuracy=cell(1,nEncoding);
+%mean_all_clfsOut=cell(nEncoding,1);
+mean_all_accuracy=cell(nEncoding,1);
+
+cRange = 100;
+nReps = 1;
+nFolds = 3;
+
+
+parpool(3);
+
+
+
 %%%
 for k=1:nEncoding
     k
