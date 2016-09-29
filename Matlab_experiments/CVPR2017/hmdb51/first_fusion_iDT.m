@@ -74,6 +74,8 @@ temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(PowerNormalization(st_vlmpf32_n
     NormalizeRowsUnit(PowerNormalization(mbhx_idt, alpha_idt)),NormalizeRowsUnit(PowerNormalization(mbhy_idt, alpha_idt)) ) );
 allDist{3}=temp * temp';
 
+clear temp
+
 %each row for the cell represents the results for all 3 splits
 all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
