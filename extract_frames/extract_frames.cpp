@@ -17,7 +17,7 @@ using namespace cv;
 using namespace std;
 
 int main(int argc, char** argv){
-
+//usage: /home/ionut/experiments/extract_frames/extract_frames /home/ionut/Data/HMDB51/Videos/  /home/ionut/experiments/extract_frames/del_tmp2/listVideos /home/ionut/Data/hmdb51_frames/frames/
   string pathVideos=argv[1];
   char* s_argv2 = argv[2];
   ifstream pathListVideos (argv[2]);
@@ -71,14 +71,14 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
   bool isSaved;
   
   
-  ofstream out_file; //
-  out_file.open("/home/ionut/tmp/out_file.txt"); //
+ // ofstream out_file; //
+//  out_file.open("/home/ionut/tmp/out_file.txt"); //
   
   cout<<"Frame extraction for "<<fullPath_listVideos.size()<<" videos! \n\n";
   for (int i=0; i<fullPath_listVideos.size(); i++)
   {
   	cout<<i+1<<" "<<fullPath_listVideos.at(i)<<endl;
-  	out_file<<i+1<<" "<<fullPath_listVideos.at(i)<<"\n"; //
+  //	out_file<<i+1<<" "<<fullPath_listVideos.at(i)<<"\n"; //
   	//cout<<i+1<<":";
   	VideoCapture capture(fullPath_listVideos.at(i));
   	if(!capture.isOpened()) {
@@ -114,7 +114,7 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 		if(frame.empty())
 			break;
 	
-	char nameFrame[20];
+	char nameFrame[30];
 	
 	sprintf(nameFrame, "%06d.jpg", int(frame_num));
 	
@@ -139,18 +139,18 @@ cout<<"pathVideos: "<<pathVideos<<"\npathListVideos: "<<s_argv2<<"\npathSaveFram
 	if (frame_num==1)
 	{
 		cout<<final_save_f<<endl;
-		out_file<<final_save_f<<"\n"; //
+//		out_file<<final_save_f<<"\n"; //
 	}
 	
 	frame_num++;	
         }
         
         printf("numberFrames: %d\n\n", frame_num);
-        out_file<<"numberFrames: "<<frame_num<<"\n\n"; //
+    //    out_file<<"numberFrames: "<<frame_num<<"\n\n"; //
   	
   }
   
-  out_file.close(); //
+ // out_file.close(); //
   
   cout<<"\nDone!!"<<endl;
 
