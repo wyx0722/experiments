@@ -7,23 +7,33 @@ function [ allFeatures ] = C3Dsave2mat( path_features, layer, savePath)
 dirFeatures=sprintf('%s*.%s',path_features, layer);
 
 list_frames_feature=dir(dirFeatures);
-allFeatures=cell(1, length(list_frames_feature));
 
-for i=1:length(list_frames_feature)
+if ~isempty(list_frames_feature)
     
-    filename=[path_features list_frames_feature(i).name];
-    [s, blob, read_status] = read_binary_blob_preserve_shape(filename);
-    
-    if read_status~=1
-        warning('The feature reading did not went well!!!!!\n%s', filename);
-        keyboard
+    allFeatures=cell(1, length(list_frames_feature));
+
+    for i=1:length(list_frames_feature)
+
+        filename=[path_features list_frames_feature(i).name];
+        [s, blob, read_status] = read_binary_blob_preserve_shape(filename);
+
+        if read_status~=1
+            warning('The feature reading did not went well!!!!!\n%s', filename);
+            keyboard
+        end
+
+        allFeatures{i}=blob;
     end
+
+
+    fileNameSave=sprintf('%s%s.mat',savePath, layer);
+    save(fileNameSave, '-v7.3', 'allFeatures');
+
+else 
+    warning('No %s features on the path: %s \n',layer, path_features);
+    keyboard
     
-    allFeatures{i}=blob;
 end
 
-
-fileNameSave=sprintf('%s%s.mat',savePath, layer);
-save(fileNameSave, '-v7.3', 'allFeatures');
 end
 
