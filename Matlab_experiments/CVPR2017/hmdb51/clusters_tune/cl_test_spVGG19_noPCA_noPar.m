@@ -165,7 +165,7 @@ for i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
     rep3(i, :) = ST_VLMPF_abs(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
     rep4(i, :) = ST_VLMPF_abs(desc, cell_Clusters{4}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
     rep5(i, :) = ST_VLMPF_abs(desc, cell_Clusters{5}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
-    rep5(i, :) = ST_VLMPF_abs(desc, cell_Clusters{6}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep6(i, :) = ST_VLMPF_abs(desc, cell_Clusters{6}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
     rep7(i, :) = ST_VLMPF_abs(desc, cell_Clusters{7}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
     rep8(i, :) = ST_VLMPF_abs(desc, cell_Clusters{8}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
     rep9(i, :) = ST_VLMPF_abs(desc, cell_Clusters{9}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
