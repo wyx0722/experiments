@@ -147,12 +147,14 @@ t=ST_VLMPF_abs(tDesc, cell_Clusters{16}.vocabulary, info.spInfo, cell_spClusters
 
 nDesc=zeros(1, length(allPathFeatures));
 
-parpool(nPar);
+%parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(allPathFeatures));
-parfor i=1:length(allPathFeatures)
-    fprintf('%d \n', i)
+for i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
+    if mod(i, 100)==0
+        fprintf('%d ', i)%fprintf('%d \n', i)
+    end
     % Extract descriptors
     
     [desc, info, descParamUsed] = MediaName2Descriptor(allPathFeatures{i}, descParam, pcaMap);
@@ -193,7 +195,7 @@ for i=1:16
     allDist{1}=temp * temp';
     
     temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1)*size(cell_Clusters{i}.vocabulary, 2) )));
-    allDist{i+16}=temp * temp';
+    allDist{16+i}=temp * temp';
 end
 
 
@@ -216,7 +218,7 @@ parpool(3);
 %%%
 for k=1:nEncoding
     k
-    parfor i=1:3
+    for i=1:3%parfor i=1:3
         
         trainI = splits(:,i) == 1;
         
@@ -241,7 +243,7 @@ for k=1:nEncoding
      all_accuracy{k}=accuracy;
 end
 
-delete(gcp('nocreate'))
+%delete(gcp('nocreate')) %///
 %%%%
 
 finalAcc=zeros(1,nEncoding);

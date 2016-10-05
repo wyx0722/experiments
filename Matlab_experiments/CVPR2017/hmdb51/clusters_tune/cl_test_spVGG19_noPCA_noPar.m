@@ -9,14 +9,13 @@ mType='DeepF';
 typeFeature=@FEVid_deepFeatures;
 normStrategy='None';
 layer='pool5'
-Net='C3D';
+Net='SpVGG19';
 
 d=0;
 
 alpha=0.5;
 nPar=5;
-pathFeatures='/home/ionut/asustor_ionut/Data/mat_c3d_features_hmdb51/Videos/'%%%%%channge~~~~~~~~~~~~
-
+pathFeatures='/home/ionut/asustor_ionut/Data/hmdb51_VGG_19_features_rawFrames/Videos/'%%%%%channge~~~~~~~~~~~~
 
 descParam.Dataset=datasetName;
 descParam.MediaType=mType;
@@ -147,12 +146,14 @@ t=ST_VLMPF_abs(tDesc, cell_Clusters{16}.vocabulary, info.spInfo, cell_spClusters
 
 nDesc=zeros(1, length(allPathFeatures));
 
-parpool(nPar);
+%parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(allPathFeatures));
-parfor i=1:length(allPathFeatures)
-    fprintf('%d \n', i)
+for i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
+    if mod(i, 100)==0
+        fprintf('%d ', i)%fprintf('%d \n', i)
+    end
     % Extract descriptors
     
     [desc, info, descParamUsed] = MediaName2Descriptor(allPathFeatures{i}, descParam, pcaMap);
@@ -181,9 +182,10 @@ parfor i=1:length(allPathFeatures)
          end
          
 end
+delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
-nEncoding=9;
+nEncoding=32;
 allDist=cell(1, nEncoding);
 
 
@@ -191,36 +193,9 @@ for i=1:16
     temp=NormalizeRowsUnit(eval(sprintf('rep%d', i)));
     allDist{1}=temp * temp';
     
-    temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1) )));
-    
+    temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1)*size(cell_Clusters{i}.vocabulary, 2) )));
+    allDist{16+i}=temp * temp';
 end
-
-temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
-allDist{1}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(v319, alpha));
-allDist{2}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
-allDist{3}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(m256_abs, alpha));
-allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(m319_abs, alpha));
-allDist{5}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(m512_abs, alpha));
-allDist{6}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV32_m, alpha));
-allDist{7}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
-allDist{8}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(st_vlmpf32_abs, alpha));
-allDist{9}=temp * temp';
 
 
 
@@ -238,11 +213,11 @@ nFolds = 3;
 
 
 
-
+parpool(3);
 %%%
 for k=1:nEncoding
     k
-    parfor i=1:3
+    for i=1:3%parfor i=1:3
         
         trainI = splits(:,i) == 1;
         
@@ -267,7 +242,7 @@ for k=1:nEncoding
      all_accuracy{k}=accuracy;
 end
 
-delete(gcp('nocreate'))
+%delete(gcp('nocreate')) %///
 %%%%
 
 finalAcc=zeros(1,nEncoding);
