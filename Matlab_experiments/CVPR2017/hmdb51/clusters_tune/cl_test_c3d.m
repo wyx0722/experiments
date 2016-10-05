@@ -11,6 +11,8 @@ normStrategy='None';
 layer='pool5'
 Net='C3D';
 
+d=0;
+
 alpha=0.5;
 nPar=5;
 pathFeatures='/home/ionut/asustor_ionut/Data/mat_c3d_features_hmdb51/Videos/'%%%%%channge~~~~~~~~~~~~
@@ -21,8 +23,8 @@ descParam.MediaType=mType;
 descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
 
-descParam.Clusters=[256 319 512];
-descParam.spClusters=[32];
+descParam.Clusters=[64 128 256 512 100 110 120 130 140 150 160 170 180 190 200 210];
+descParam.spClusters=[16 20 32];
 
 
 switch descParam.MediaType
@@ -121,33 +123,27 @@ vocabularyPathFeatures=allPathFeatures(1:4:end);%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  
 [tDesc, info] = MediaName2Descriptor(allPathFeatures{1}, descParam, pcaMap);                                           
 
-t=VLAD_1(tDesc, cell_Clusters{1}.vocabulary);
-v256=zeros(length(allPathFeatures), length(t), 'like', t); 
 
-t=VLAD_1(tDesc, cell_Clusters{2}.vocabulary);
-v319=zeros(length(allPathFeatures), length(t), 'like', t); 
+%all_rep=cell(1, 16);%!!!!!!!!
 
-t=VLAD_1_mean(tDesc, cell_Clusters{3}.vocabulary);
-v512=zeros(length(allPathFeatures), length(t), 'like', t);
+t=ST_VLMPF_abs(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep1=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep2=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep3=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{4}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep4=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{5}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep5=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{6}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep6=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{7}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep7=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{8}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep8=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{9}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep9=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{10}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep10=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{11}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep11=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{12}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep12=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{13}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep13=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{14}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep14=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{15}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep15=zeros(length(allPathFeatures), length(t), 'like', t); 
+t=ST_VLMPF_abs(tDesc, cell_Clusters{16}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary); rep16=zeros(length(allPathFeatures), length(t), 'like', t); 
 
-t=max_pooling(tDesc, cell_Clusters{1}.vocabulary);
-m256_abs=zeros(length(allPathFeatures), length(t), 'like', t);
 
-t=max_pooling(tDesc, cell_Clusters{2}.vocabulary);
-m319_abs=zeros(length(allPathFeatures), length(t), 'like', t); 
-
-t=max_pooling(tDesc, cell_Clusters{3}.vocabulary);
-m512_abs=zeros(length(allPathFeatures), length(t), 'like', t);
-
-
-t=VLAD_1_mean_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-spV32_m=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=VLAD_1_spClustering_memb(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-spV32=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=ST_VLMPF(tDesc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-st_vlmpf32_abs=zeros(length(allPathFeatures), length(t), 'like', t);
 
 nDesc=zeros(1, length(allPathFeatures));
 
@@ -162,54 +158,43 @@ parfor i=1:length(allPathFeatures)
     [desc, info, descParamUsed] = MediaName2Descriptor(allPathFeatures{i}, descParam, pcaMap);
     nDesc(i)=size(desc,1);
     
-    v256 (i, :) = VLAD_1(desc, cell_Clusters{1}.vocabulary);
-    v319 (i, :) = VLAD_1(desc, cell_Clusters{2}.vocabulary);
-    v512 (i, :) = VLAD_1(desc, cell_Clusters{3}.vocabulary);
-    
-    m256_abs (i, :) = max_pooling_abs(desc, cell_Clusters{1}.vocabulary);
-    m319_abs  (i, :) = max_pooling_abs(desc, cell_Clusters{2}.vocabulary);
-    m512_abs (i, :) = max_pooling_abs(desc, cell_Clusters{3}.vocabulary);
-    
-    spV32_m (i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    spV32 (i, :) = VLAD_1_spClustering_memb(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    st_vlmpf32_abs (i, :) = ST_VLMPF_abs(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+
+    rep1(i, :) = ST_VLMPF_abs(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep2(i, :) = ST_VLMPF_abs(desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep3(i, :) = ST_VLMPF_abs(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep4(i, :) = ST_VLMPF_abs(desc, cell_Clusters{4}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep5(i, :) = ST_VLMPF_abs(desc, cell_Clusters{5}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep5(i, :) = ST_VLMPF_abs(desc, cell_Clusters{6}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep7(i, :) = ST_VLMPF_abs(desc, cell_Clusters{7}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep8(i, :) = ST_VLMPF_abs(desc, cell_Clusters{8}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep9(i, :) = ST_VLMPF_abs(desc, cell_Clusters{9}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep10(i, :) = ST_VLMPF_abs(desc, cell_Clusters{10}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep11(i, :) = ST_VLMPF_abs(desc, cell_Clusters{11}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep12(i, :) = ST_VLMPF_abs(desc, cell_Clusters{12}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep13(i, :) = ST_VLMPF_abs(desc, cell_Clusters{13}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep14(i, :) = ST_VLMPF_abs(desc, cell_Clusters{14}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep15(i, :) = ST_VLMPF_abs(desc, cell_Clusters{15}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
+    rep16(i, :) = ST_VLMPF_abs(desc, cell_Clusters{16}.vocabulary, info.spInfo, cell_spClusters{3}.vocabulary);
     
          if i == 1
              descParamUsed
          end
          
 end
+delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
-nEncoding=9;
+nEncoding=32;
 allDist=cell(1, nEncoding);
 
-temp=NormalizeRowsUnit(PowerNormalization(v256, alpha));
-allDist{1}=temp * temp';
 
-temp=NormalizeRowsUnit(PowerNormalization(v319, alpha));
-allDist{2}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(v512, alpha));
-allDist{3}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(m256_abs, alpha));
-allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(m319_abs, alpha));
-allDist{5}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(m512_abs, alpha));
-allDist{6}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV32_m, alpha));
-allDist{7}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(spV32, alpha));
-allDist{8}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(st_vlmpf32_abs, alpha));
-allDist{9}=temp * temp';
+for i=1:16
+    temp=NormalizeRowsUnit(eval(sprintf('rep%d', i)));
+    allDist{1}=temp * temp';
+    
+    temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1)*size(cell_Clusters{i}.vocabulary, 2) )));
+    allDist{i+16}=temp * temp';
+end
 
 
 
@@ -227,7 +212,7 @@ nFolds = 3;
 
 
 
-
+parpool(3);
 %%%
 for k=1:nEncoding
     k
