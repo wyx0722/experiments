@@ -190,31 +190,31 @@
 % allDist=cell(1, nEncoding);
 % 
 % 
-% for i=1:16
-%     temp=NormalizeRowsUnit(eval(sprintf('rep%d', i)));
-%     allDist{1}=temp * temp';
-%     
-%     temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1)*size(cell_Clusters{i}.vocabulary, 2) )));
-%     allDist{16+i}=temp * temp';
-% end
-% 
-% 
-% 
-% %each row for the cell represents the results for all 3 splits
-% all_clfsOut=cell(1,nEncoding);
-% all_accuracy=cell(1,nEncoding);
-% clfsOut=cell(1,nEncoding);
-% accuracy=cell(1,nEncoding);
-% %mean_all_clfsOut=cell(nEncoding,1);
-% mean_all_accuracy=cell(nEncoding,1);
-% 
-% cRange = 100;
-% nReps = 1;
-% nFolds = 3;
-% 
-% 
-% 
-% %parpool(3);
+for i=1:16
+    temp=NormalizeRowsUnit(eval(sprintf('rep%d', i)));
+    allDist{i}=temp * temp';
+    
+    temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1)*size(cell_Clusters{i}.vocabulary, 2) )));
+    allDist{16+i}=temp * temp';
+end
+
+
+
+%each row for the cell represents the results for all 3 splits
+all_clfsOut=cell(1,nEncoding);
+all_accuracy=cell(1,nEncoding);
+clfsOut=cell(1,nEncoding);
+accuracy=cell(1,nEncoding);
+%mean_all_clfsOut=cell(nEncoding,1);
+mean_all_accuracy=cell(nEncoding,1);
+
+cRange = 100;
+nReps = 1;
+nFolds = 3;
+
+
+
+%parpool(3);
 %%%
 for k=1:nEncoding
     k

@@ -192,7 +192,7 @@ allDist=cell(1, nEncoding);
 
 for i=1:16
     temp=NormalizeRowsUnit(eval(sprintf('rep%d', i)));
-    allDist{1}=temp * temp';
+    allDist{i}=temp * temp';
     
     temp=NormalizeRowsUnit(eval(sprintf('rep%d(:, 1:%d)', i, size(cell_Clusters{i}.vocabulary, 1)*size(cell_Clusters{i}.vocabulary, 2) )));
     allDist{16+i}=temp * temp';
