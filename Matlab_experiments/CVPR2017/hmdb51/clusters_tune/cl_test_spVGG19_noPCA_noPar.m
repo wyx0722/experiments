@@ -213,7 +213,7 @@ nFolds = 3;
 
 
 
-parpool(3);
+%parpool(3);
 %%%
 for k=1:nEncoding
     k
