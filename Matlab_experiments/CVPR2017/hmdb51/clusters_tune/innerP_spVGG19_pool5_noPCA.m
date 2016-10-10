@@ -11,6 +11,8 @@ normStrategy='None';
 layer='pool5'
 Net='SpVGG19';
 
+d=0;
+
 alpha=0.5;
 nPar=5;
 pathFeatures='/home/ionut/asustor_ionut/Data/hmdb51_VGG_19_features_rawFrames/Videos/'%%%%%channge~~~~~~~~~~~~
