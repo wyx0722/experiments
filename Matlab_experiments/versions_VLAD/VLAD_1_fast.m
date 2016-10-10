@@ -1,4 +1,4 @@
-function VLAD=VLAD_1(desc, vocab)
+function VLAD=VLAD_1_fast(desc, vocab)
 %VLAD=VLAD(desc, vocab)
 %Compute VLAD encoding for a set of descriptors (VLAD_1 is because is assigned only one cluster for each descriptor)
 
