@@ -1,0 +1,104 @@
+
+load('/home/ionut/experiments/Matlab_experiments/ACCV2016/sp_clustering/hmdb51/timing_permV.mat');
+
+nRandomVideos=100;
+
+randVideos=allPathFeatures(permV(1:nRandomVideos));
+
+t_sp32cl64=zeros(1, length(randVideos));
+t_sp32cl128=zeros(1, length(randVideos));
+t_sp32cl200=zeros(1, length(randVideos));
+t_sp32cl256=zeros(1, length(randVideos));
+t_sp32cl512=zeros(1, length(randVideos));
+
+t_v64=zeros(1, length(randVideos));
+t_v128=zeros(1, length(randVideos));
+t_v200=zeros(1, length(randVideos));
+t_v256=zeros(1, length(randVideos));
+t_v512=zeros(1, length(randVideos));
+
+
+fprintf('Feature extraction  for %d vids: ', length(randVideos));
+%parpool(2);
+for i=1:length(randVideos)
+    
+    
+    
+    
+        if mod(i, 100)==0
+        fprintf('%d ', i)%fprintf('%d \n', i)
+    end
+    % Extract descriptors
+    
+    [desc, info, descParamUsed] = MediaName2Descriptor(randVideos{i}, descParam, pcaMap);
+    nDesc(i)=size(desc,1);
+    
+
+    tic; ST_VLMPF_abs(desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary); t_sp32cl64(i)=toc;
+    tic; ST_VLMPF_abs(desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary); t_sp32cl128(i)=toc;
+    tic; ST_VLMPF_abs(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary); t_sp32cl200(i)=toc;
+    tic; ST_VLMPF_abs(desc, cell_Clusters{4}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary); t_sp32cl256(i)=toc;
+    tic; ST_VLMPF_abs(desc, cell_Clusters{5}.vocabulary, info.spInfo, cell_spClusters{6}.vocabulary); t_sp32cl512(i)=toc;
+
+    tic; VLAD_1(desc, cell_Clusters{1}.vocabulary); t_v64(i)=toc;
+    tic; VLAD_1(desc, cell_Clusters{2}.vocabulary); t_v128(i)=toc;
+    tic; VLAD_1(desc, cell_Clusters{3}.vocabulary); t_v200(i)=toc;
+    tic; VLAD_1(desc, cell_Clusters{4}.vocabulary); t_sp32cl64(i)=toc;
+    tic; VLAD_1(desc, cell_Clusters{5}.vocabulary); t_sp32cl64(i)=toc;
+    
+    
+    
+    if mod(i,10)==0
+        fprintf('%d ', i)
+    end
+    
+    tic
+    [desc, info, descParamUsed] = MediaName2Descriptor(randVideos{i}, descParam, pcaMap);
+    tDescExtr(i)=toc;
+    
+    nDesc(i)=size(desc,1);
+    nFrames(i)=nDesc(i)/49;
+    
+    tic
+    v256(i, :) = VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
+    t_v256(i)=toc;
+    
+    tic
+    v256_fast(i, :) = fast_VLAD_1_mean(desc, cell_Clusters{3}.vocabulary);
+    t_v256_fast(i)=toc;    
+    
+    
+    
+    tic
+    v512(i, :) = VLAD_1_mean(desc, cell_Clusters{4}.vocabulary);
+    t_v512(i)=toc;
+    
+    tic
+    v512_fast(i, :) = fast_VLAD_1_mean(desc, cell_Clusters{4}.vocabulary);
+    t_v512_fast(i)=toc;
+    
+    tic
+    spV32(i, :) = VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
+    t_spV32(i)=toc;
+    
+    tic
+    spV32_fast(i, :) = fast_VLAD_1_mean_spClustering_memb(desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{5}.vocabulary);
+    t_spV32_fast(i)=toc;
+    
+      
+        
+     if i == 1
+         descParamUsed
+     end
+end
+%delete(gcp('nocreate'))
+fprintf('\nDone!\n');
+
+
+fprintf('Average time for %d videos VLAD256: %.3f \n', length(randVideos), mean(t_v256));
+fprintf('Average time for %d videos VLAD256 *fast*: %.3f \n \n', length(randVideos), mean(t_v256_fast));
+fprintf('Average time for %d videos VLAD512: %.3f \n', length(randVideos), mean(t_v512));
+fprintf('Average time for %d videos VLAD512 *fast*: %.3f \n \n', length(randVideos), mean(t_v512_fast));
+fprintf('Average time for %d videos st32: %.3f \n', length(randVideos), mean(t_spV32));
+fprintf('Average time for %d videos st32 *fast*: %.3f \n \n', length(randVideos), mean(t_spV32_fast));
+
