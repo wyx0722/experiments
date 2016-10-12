@@ -46,8 +46,8 @@ for p=1:length(descParam.pcaDim)
         warning('descParam.pcaDim does not decrease dimensionality. Skipping PCA!!!');
         cell_pcaMap{p}=pcaMap;
     else
-        pcaMap = pca(descriptors(1:2:end,:), descParam.pcaDim);
-        cell_pcaMap{p}=pcaMap;
+        cell_pcaMap{p} = pca(descriptors(1:2:end,:), descParam.pcaDim(p));
+        %cell_pcaMap{p}=pcaMap;
     end
 end
 
@@ -58,9 +58,9 @@ cell_Clusters=cell(length(cell_pcaMap), size(descParam.Clusters, 2));
 
 for p=1:length(cell_pcaMap)
     
-    pcaMap=cell_pcaMap{p};
+    %pcaMap=cell_pcaMap{p};
     % Descriptors to train Kmeans vocabulary, note these are disjunct from pca
-    pca_descriptors = descriptors(2:2:end,:) * pcaMap.data.rot;
+    pca_descriptors = descriptors(2:2:end,:) * cell_pcaMap{p}.data.rot;
 
 
 

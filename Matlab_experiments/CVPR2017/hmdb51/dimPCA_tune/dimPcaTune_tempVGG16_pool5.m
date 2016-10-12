@@ -137,14 +137,13 @@ pca256_desc = desc * cell_pcaMap{3}.data.rot;
 pca0_desc = desc * cell_pcaMap{4}.data.rot;
 
 
-
 t=ST_VLMPF_abs(pca64_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca64=zeros(length(allPathFeatures), length(t), 'like', t);
-t=ST_VLMPF_abs(pca128_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca128=zeros(length(allPathFeatures), length(t), 'like', t);
-t=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
-t=ST_VLMPF_abs(pca0_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
+t=ST_VLMPF_abs(pca128_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca128=zeros(length(allPathFeatures), length(t), 'like', t);
+t=ST_VLMPF_abs(pca256_desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
+t=ST_VLMPF_abs(pca0_desc, cell_Clusters{4}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
 
-t=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary); v256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
-t=VLAD_1(pca0_desc, cell_Clusters{1}.vocabulary); v256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
+t=VLAD_1(pca256_desc, cell_Clusters{3}.vocabulary); v256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
+t=VLAD_1(pca0_desc, cell_Clusters{4}.vocabulary); v256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
 
 
 nDesc=zeros(1, length(allPathFeatures));
@@ -169,12 +168,12 @@ for i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
 
  
     sp32cl256pca64(i, :)=ST_VLMPF_abs(pca64_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
-    sp32cl256pca128(i, :)=ST_VLMPF_abs(pca128_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
-    sp32cl256pca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
-    sp32cl256pca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
+    sp32cl256pca128(i, :)=ST_VLMPF_abs(pca128_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
+    sp32cl256pca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{3}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
+    sp32cl256pca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{4}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); 
     
-    v256pca256(i, :)=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary);
-    v256pca0(i, :)=VLAD_1(pca0_desc, cell_Clusters{1}.vocabulary);
+    v256pca256(i, :)=VLAD_1(pca256_desc, cell_Clusters{3}.vocabulary);
+    v256pca0(i, :)=VLAD_1(pca0_desc, cell_Clusters{4}.vocabulary);
 
 
          if i == 1
