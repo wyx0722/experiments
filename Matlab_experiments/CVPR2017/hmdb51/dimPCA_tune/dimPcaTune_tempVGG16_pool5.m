@@ -129,7 +129,7 @@ vocabularyPathFeatures=allPathFeatures(1:4:end);%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
-[desc, info, descParam] = descParam.Func(video, descParam);
+[desc, info, descParam] = descParam.Func(allPathFeatures{1}, descParam);
 
 pca64_desc = desc * cell_pcaMap{1}.data.rot;
 pca128_desc = desc * cell_pcaMap{2}.data.rot;
