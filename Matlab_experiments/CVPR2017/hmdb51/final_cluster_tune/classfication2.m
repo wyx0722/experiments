@@ -60,7 +60,7 @@ t_feature(:, end-(size(cell_spClusters{5}.vocabulary, 1)*size(cell_Clusters{4}.v
     PowerNormalization(t_feature(:, end-(size(cell_spClusters{5}.vocabulary, 1)*size(cell_Clusters{4}.vocabulary, 1)) +1 :end), 0.5);
 temp=NormalizeRowsUnit(t_feature); allDist{11}=temp * temp';
 
-
+clear t_feature
 
 %each row for the cell represents the results for all 3 splits
 all_clfsOut=cell(1,nEncoding);
