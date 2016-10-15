@@ -166,16 +166,16 @@ clear pca256_desc pca0_desc desc info
 
 nDesc=zeros(1, length(allPathFeatures));
 
-parpool(nPar);
+%parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(allPathFeatures));
-parfor i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
-%     if mod(i, 100)==0
-%         fprintf('%d ', i)%fprintf('%d \n', i)
-%     end
+for i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
+    if mod(i, 100)==0
+        fprintf('%d ', i)%fprintf('%d \n', i)
+    end
     
-    fprintf('%d \n', i)
+    %fprintf('%d \n', i)
     % Extract descriptors
     
     [desc, info, descParamUsed] = descParam.Func(allPathFeatures{i}, descParam);
@@ -209,7 +209,7 @@ parfor i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
          end
          
 end
-delete(gcp('nocreate'))
+%delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
 nEncoding=8;
