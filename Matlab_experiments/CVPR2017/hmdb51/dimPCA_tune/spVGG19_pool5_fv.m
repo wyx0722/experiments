@@ -194,7 +194,7 @@ allDist=cell(1, nEncoding);
 temp=NormalizeRowsUnit(PowerNormalization(fv256pca256, alpha)); allDist{1}=temp * temp';
 temp=NormalizeRowsUnit(PowerNormalization(fv256pca0, alpha)); allDist{2}=temp * temp';
 
-cleat temp t_feature
+clear temp t_feature
 
 %each row for the cell represents the results for all 3 splits
 all_clfsOut=cell(1,nEncoding);

@@ -11,8 +11,9 @@ normStrategy='None';
 
 %~~~~~~~~~~~~~~
 layer='pool5'
-Net='SpVGG19';
-pathFeatures='/home/ionut/asustor_ionut/Data/VGG_19_features_rawFrames_UCF101/Videos/'%%%%%channge~~~~~~~~~~~~
+split=3;%!!!!!!!!!!!!!!!change
+Net=['TempSplit' num2str(split) 'VGG16'];
+pathFeatures=['/media/HDS2-UTX/ionut/Data/' 'ucf101_action_temporal_vgg_16_split123_features_opticalFlow_tvL1/split' num2str(split) '/Videos/']%%%%%channge~~~~~~~~~~~~
 %~~~~~~~~~~~~~~
 
 
@@ -246,10 +247,10 @@ clear temp t_feature
 %each row for the cell represents the results for all 3 splits
 all_clfsOut=cell(1,nEncoding);
 all_accuracy=cell(1,nEncoding);
-clfsOut=cell(1,nEncoding);
-accuracy=cell(1,nEncoding);
+%clfsOut=cell(1,nEncoding);
+%accuracy=cell(1,nEncoding);
 %mean_all_clfsOut=cell(nEncoding,1);
-mean_all_accuracy=cell(nEncoding,1);
+%mean_all_accuracy=cell(nEncoding,1);
 
 cRange = 100;
 nReps = 1;
@@ -257,16 +258,15 @@ nFolds = 3;
 
 
 
-parpool(3);
+
 %%
 for k=1:nEncoding
     k
-    parfor i=1:3
-        
-        trainI = splits(:,i) == 1;
+   
+        trainI = splits(:,split) == 1;
         
        if ~isempty(strfind(datasetName, 'HMDB51'))
-            testI  = splits(:,i) == 2;
+            testI  = splits(:,split) == 2;
        elseif ~isempty(strfind(datasetName, 'UCF101'))
             testI=~trainI;
        end
@@ -278,16 +278,15 @@ for k=1:nEncoding
         testDist = allDist{k}(testI, trainI);
         
 
-        [~, clfsOut{i}] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
-        accuracy{i} = ClassificationAccuracy(clfsOut{i}, testLabs);
+        [~, clfsOut] = SvmPKOpt(trainDist, testDist, trainLabs, testLabs, cRange, nReps, nFolds);
+        accuracy = ClassificationAccuracy(clfsOut, testLabs);
         %fprintf('accuracy: %.3f\n', accuracy);
-    end
+   
      all_clfsOut{k}=clfsOut;
      all_accuracy{k}=accuracy;
-     fprintf('Accuracy for encoding %d: %.3f\n',k, mean((all_accuracy{k}{1} + all_accuracy{k}{2} + all_accuracy{k}{3})./3));
+     fprintf('Accuracy for encoding %d: %.3f\n',k, mean(all_accuracy{k}));
 end
 
-delete(gcp('nocreate')) %///
 %%%%
 
 clear allDist
@@ -295,10 +294,8 @@ clear allDist
 
 finalAcc=zeros(1,nEncoding);
 for j=1:nEncoding
-    %mean_all_clfsOut{j}=(all_clfsOut{j}{1} + all_clfsOut{j}{2} + all_clfsOut{j}{3})./3;
-    mean_all_accuracy{j}=(all_accuracy{j}{1} + all_accuracy{j}{2} + all_accuracy{j}{3})./3;
-    
-    finalAcc(j)=mean(mean_all_accuracy{j});
+
+    finalAcc(j)=mean(all_accuracy{j});
     fprintf('%.3f\n', finalAcc(j));
 
     
@@ -316,7 +313,7 @@ end
  
  clfsOut_sp32cl256pca0 = all_clfsOut(2);
  acc_sp32cl256pca0 = all_accuracy(2);
- intructions_compute_acc='mean((acc_sp32cl256pca0{1}{1} + acc_sp32cl256pca0{1}{2} + acc_sp32cl256pca0{1}{3})./3)';
+ intructions_compute_acc='mean((acc_sp32cl256pca0{1}))';
  
 saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '_PNL2memb__sp32cl256pca0.mat']
 save(saveName, '-v7.3', 'descParam', 'clfsOut_sp32cl256pca0', 'acc_sp32cl256pca0', 'intructions_compute_acc');
@@ -327,7 +324,7 @@ save(saveName2, '-v7.3', 'descParam', 'sp32cl256pca0');
 
  clfsOut_sp64cl256pca0 = all_clfsOut(4);
  acc_sp64cl256pca0 = all_accuracy(4);
- intructions_compute_acc='mean((acc_sp64cl256pca0{1}{1} + acc_sp64cl256pca0{1}{2} + acc_sp64cl256pca0{1}{3})./3)';
+ intructions_compute_acc='mean((acc_sp64cl256pca0{1}))';
  
 saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '_PNL2memb__sp64cl256pca0.mat']
 save(saveName, '-v7.3', 'descParam', 'clfsOut_sp64cl256pca0', 'acc_sp64cl256pca0', 'intructions_compute_acc');
@@ -339,7 +336,7 @@ save(saveName2, '-v7.3', 'descParam', 'sp64cl256pca0');
 
  
 saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '.mat']
-save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_accuracy');
+save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
 saveName2 = [bazeSavePath 'videoRep/'  DescParam2Name(descParam) '.mat']
 save(saveName2, '-v7.3', 'descParam', 'sp32cl256pca256', 'sp32cl256pca0', 'sp64cl256pca256', 'sp64cl256pca0', 'v256pca256', 'v256pca0', 'fv256pca256', 'fv256pca0');
