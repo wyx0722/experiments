@@ -4,7 +4,7 @@ addpath('./../../');%!!!!!!!
 
 global DATAopts;
 
-datasetName='UCF101';
+datasetName='HMDB51';
 mType='DeepF';
 typeFeature=@FEVid_deepFeatures;
 normStrategy='None';
@@ -12,7 +12,7 @@ normStrategy='None';
 %~~~~~~~~~~~~~~
 layer='conv5b'
 Net='C3D';
-pathFeatures='/media/HDS2-UTX/ionut/Data/conv5b_mat_c3d_features_ucf101/Videos/'%%%%%channge~~~~~~~~~~~~
+pathFeatures='/media/HDS2-UTX/ionut/Data/conv5b_pool5_mat_c3d_features_hmdb51/Videos/'%%%%%channge~~~~~~~~~~~~
 %~~~~~~~~~~~~~~
 
 
@@ -28,8 +28,8 @@ descParam.MediaType=mType;
 descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
 
-descParam.Clusters=[256];
-descParam.spClusters=[32 64];
+descParam.Clusters=[];
+descParam.spClusters=[];
 descParam.gmmSize=[256];
 
 
@@ -109,7 +109,12 @@ for i=1:size(allVids, 1)
             file_extension='.txt';
         end
             
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer file_extension];
+        if ~isempty(strfind(descParam.Dataset, 'HMDB51'))    
+            allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer file_extension];
+        end
+        if ~isempty(strfind(descParam.Dataset, 'UCF101'))    
+            allPathFeatures{i}=[bazePathFeatures allVids{i} '/' descParam.Layer file_extension];
+        end
         
     elseif ~isempty(strfind(descParam.MediaType, 'IDT'))
         allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
@@ -141,17 +146,6 @@ pca0_desc = desc * cell_pcaMap{2}.data.rot;
 
 
 
-
-t=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
-t=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); sp32cl256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
-
-t=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary); sp64cl256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
-t=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary); sp3264256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
-
-
-t=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary); v256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
-t=VLAD_1(pca0_desc, cell_Clusters{2}.vocabulary); v256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
-
 t=mexFisherAssign(pca256_desc', cell_gmmModelName{1})'; fv256pca256=zeros(length(allPathFeatures), length(t), 'like', t);
 t=mexFisherAssign(pca0_desc', cell_gmmModelName{2})'; fv256pca0=zeros(length(allPathFeatures), length(t), 'like', t);
 
@@ -161,16 +155,16 @@ clear pca256_desc pca0_desc desc info
 
 nDesc=zeros(1, length(allPathFeatures));
 
-parpool(nPar);
+%parpool(nPar);
 
 % Now object visual word frequency histograms
 fprintf('Descriptor extraction  for %d vids: ', length(allPathFeatures));
-parfor i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
-%     if mod(i, 100)==0
-%         fprintf('%d ', i)%fprintf('%d \n', i)
-%     end
+for i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
+    if mod(i, 100)==0
+        fprintf('%d ', i)%fprintf('%d \n', i)
+    end
     
-    fprintf('%d \n', i)
+    %fprintf('%d \n', i)
     % Extract descriptors
     
     [desc, info, descParamUsed] = descParam.Func(allPathFeatures{i}, descParam);
@@ -180,19 +174,6 @@ parfor i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
     pca256_desc = desc * cell_pcaMap{1}.data.rot;
     pca0_desc = desc * cell_pcaMap{2}.data.rot;
 
- 
-    
-    sp32cl256pca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    sp32cl256pca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    
-    sp64cl256pca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-    sp64cl256pca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
-    
-    
-    
-    
-    v256pca256(i, :)=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary);
-    v256pca0(i, :)=VLAD_1(pca0_desc, cell_Clusters{2}.vocabulary);
     
     fv256pca256(i, :)=mexFisherAssign(pca256_desc', cell_gmmModelName{1})'; 
     fv256pca0(i, :)=mexFisherAssign(pca0_desc', cell_gmmModelName{2})';
@@ -204,38 +185,14 @@ parfor i=1:length(allPathFeatures)%parfor i=1:length(allPathFeatures)
          end
          
 end
-delete(gcp('nocreate'))
+%delete(gcp('nocreate'))
 fprintf('\nDone!\n');
 
-nEncoding=8;
+nEncoding=2;
 allDist=cell(1, nEncoding);
 
-t_feature=sp32cl256pca256;
-t_feature(:, end-(size(cell_spClusters{1}.vocabulary, 1)*size(cell_Clusters{1}.vocabulary, 1)) + 1 :end)= ...
-    PowerNormalization(t_feature(:, end-(size(cell_spClusters{1}.vocabulary, 1)*size(cell_Clusters{1}.vocabulary, 1)) +1 :end), 0.5);
-temp=NormalizeRowsUnit(t_feature); allDist{1}=temp * temp';
-
-t_feature=sp32cl256pca0;
-t_feature(:, end-(size(cell_spClusters{1}.vocabulary, 1)*size(cell_Clusters{2}.vocabulary, 1)) + 1 :end)= ...
-    PowerNormalization(t_feature(:, end-(size(cell_spClusters{1}.vocabulary, 1)*size(cell_Clusters{2}.vocabulary, 1)) +1 :end), 0.5);
-temp=NormalizeRowsUnit(t_feature); allDist{2}=temp * temp';
-
-t_feature=sp64cl256pca256;
-t_feature(:, end-(size(cell_spClusters{2}.vocabulary, 1)*size(cell_Clusters{1}.vocabulary, 1)) + 1 :end)= ...
-    PowerNormalization(t_feature(:, end-(size(cell_spClusters{2}.vocabulary, 1)*size(cell_Clusters{1}.vocabulary, 1)) +1 :end), 0.5);
-temp=NormalizeRowsUnit(t_feature); allDist{3}=temp * temp';
-
-t_feature=sp64cl256pca0;
-t_feature(:, end-(size(cell_spClusters{2}.vocabulary, 1)*size(cell_Clusters{2}.vocabulary, 1)) + 1 :end)= ...
-    PowerNormalization(t_feature(:, end-(size(cell_spClusters{2}.vocabulary, 1)*size(cell_Clusters{2}.vocabulary, 1)) +1 :end), 0.5);
-temp=NormalizeRowsUnit(t_feature); allDist{4}=temp * temp';
-
-
-temp=NormalizeRowsUnit(PowerNormalization(v256pca256, alpha)); allDist{5}=temp * temp';
-temp=NormalizeRowsUnit(PowerNormalization(v256pca0, alpha)); allDist{6}=temp * temp';
-
-temp=NormalizeRowsUnit(PowerNormalization(fv256pca256, alpha)); allDist{7}=temp * temp';
-temp=NormalizeRowsUnit(PowerNormalization(fv256pca0, alpha)); allDist{8}=temp * temp';
+temp=NormalizeRowsUnit(PowerNormalization(fv256pca256, alpha)); allDist{1}=temp * temp';
+temp=NormalizeRowsUnit(PowerNormalization(fv256pca0, alpha)); allDist{2}=temp * temp';
 
 cleat temp t_feature
 
@@ -302,35 +259,8 @@ end
 
 
 
- bazeSavePath='/home/ionut/asustor_ionut/Data/results/cvpr2017/ucf101/';
+bazeSavePath='/home/ionut/asustor_ionut/Data/results/cvpr2017/hmdb51/dimPCA/';
  
- if length(cell_spClusters)==2
-     descParam.sp_clDim_check=[size(cell_spClusters{1}.vocabulary, 1) size(cell_spClusters{2}.vocabulary, 1) ]
-     descParam.check_Clusters=[size(cell_Clusters{1}.vocabulary, 1) size(cell_Clusters{2}.vocabulary, 1) ]
- end
- 
- 
- clfsOut_sp32cl256pca0 = all_clfsOut(2);
- acc_sp32cl256pca0 = all_accuracy(2);
- intructions_compute_acc='mean((acc_sp32cl256pca0{1}{1} + acc_sp32cl256pca0{1}{2} + acc_sp32cl256pca0{1}{3})./3)';
- 
-saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '_PNL2memb__sp32cl256pca0.mat']
-save(saveName, '-v7.3', 'descParam', 'clfsOut_sp32cl256pca0', 'acc_sp32cl256pca0', 'intructions_compute_acc');
-
-saveName2 = [bazeSavePath 'videoRep/'  DescParam2Name(descParam) '__sp32cl256pca0.mat']
-save(saveName2, '-v7.3', 'descParam', 'sp32cl256pca0');
-
-
- clfsOut_sp64cl256pca0 = all_clfsOut(4);
- acc_sp64cl256pca0 = all_accuracy(4);
- intructions_compute_acc='mean((acc_sp64cl256pca0{1}{1} + acc_sp64cl256pca0{1}{2} + acc_sp64cl256pca0{1}{3})./3)';
- 
-saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '_PNL2memb__sp64cl256pca0.mat']
-save(saveName, '-v7.3', 'descParam', 'clfsOut_sp64cl256pca0', 'acc_sp64cl256pca0', 'intructions_compute_acc');
-
-saveName2 = [bazeSavePath 'videoRep/'  DescParam2Name(descParam) '__sp64cl256pca0.mat']
-save(saveName2, '-v7.3', 'descParam', 'sp64cl256pca0');
-
 
 
  
@@ -338,6 +268,6 @@ saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '.mat']
 save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_accuracy');
 
 saveName2 = [bazeSavePath 'videoRep/'  DescParam2Name(descParam) '.mat']
-save(saveName2, '-v7.3', 'descParam', 'sp32cl256pca256', 'sp32cl256pca0', 'sp64cl256pca256', 'sp64cl256pca0', 'v256pca256', 'v256pca0', 'fv256pca256', 'fv256pca0');
+save(saveName2, '-v7.3', 'descParam', 'fv256pca256', 'fv256pca0');
 
  
