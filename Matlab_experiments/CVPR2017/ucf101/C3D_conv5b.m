@@ -109,7 +109,12 @@ for i=1:size(allVids, 1)
             file_extension='.txt';
         end
             
-        allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer file_extension];
+        if ~isempty(strfind(descParam.Dataset, 'HMDB51'))    
+            allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4) '/' descParam.Layer file_extension];
+        end
+        if ~isempty(strfind(descParam.Dataset, 'UCF101'))    
+            allPathFeatures{i}=[bazePathFeatures allVids{i} '/' descParam.Layer file_extension];
+        end
         
     elseif ~isempty(strfind(descParam.MediaType, 'IDT'))
         allPathFeatures{i}=[bazePathFeatures allVids{i}(1:end-4)];
