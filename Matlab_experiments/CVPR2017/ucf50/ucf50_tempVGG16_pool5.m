@@ -324,7 +324,7 @@ save(saveName2, '-v7.3', 'descParam', 'sp64cl256pca0');
 
  
 saveName = [bazeSavePath 'clfsOut/'  DescParam2Name(descParam) '.mat']
-save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy', 'mean_all_accuracy');
+save(saveName, '-v7.3', 'descParam', 'all_clfsOut', 'all_accuracy');
 
 saveName2 = [bazeSavePath 'videoRep/'  DescParam2Name(descParam) '.mat']
 save(saveName2, '-v7.3', 'descParam', 'sp32cl256pca256', 'sp32cl256pca0', 'sp64cl256pca256', 'sp64cl256pca0', 'v256pca256', 'v256pca0', 'fv256pca256', 'fv256pca0');
