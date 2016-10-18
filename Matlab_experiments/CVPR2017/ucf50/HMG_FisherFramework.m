@@ -6,8 +6,8 @@ global DATAopts;
 DATAopts = UCFInit;
 
 
-addpath('./../');%!!!!!!!
-
+%addpath('./../');%!!!!!!!
+datasetName='UCF50';
 typeFeature=@FEVidHmgDense;
 normStrategy='ROOTSIFT';
 d=72;
@@ -21,6 +21,7 @@ alpha=0.1;
 
 % Parameter settings for descriptor extraction
 clear descParam
+descParam.Dataset=datasetName;
 descParam.Func = typeFeature;
 descParam.Normalisation=normStrategy;
 descParam.pcaDim = d;
