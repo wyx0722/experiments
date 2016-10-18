@@ -29,13 +29,9 @@ descParam.numClusters = cl;
 
 descParam.NumBlocks = [3 3 2];
 
-if nargin>4
+
 descParam.FrameSampleRate = fsr;
 descParam.BlockSize = [8 8 6/fsr];
-
-else
-    descParam.BlockSize = [8 8 6];
-end
 
 descParam.MediaType = 'Vid';
 descParam.NumOr = 8;
