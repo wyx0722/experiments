@@ -49,6 +49,7 @@
 % end
 
 nPar=5;
+alpha=0.1;
 
 nEncoding=2;
 allDist=cell(1, nEncoding);
