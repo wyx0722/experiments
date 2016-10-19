@@ -1,7 +1,7 @@
 
-path_features='/home/ionut/asustor_ionut/Data/MIFS/ucf50_l3/cache/'
+path_features='/home/ionut/asustor_ionut/Data/MIFS/ucf50_l3/'
 
-dirFeatures=sprintf('%s*.mat',path_features);
+dirFeatures=sprintf('%scache/*.mat',path_features);
 
 list_mat_file=dir(dirFeatures);
 
@@ -16,4 +16,31 @@ for i=1:length(list_mat_file)
 end
 
 
-all_data=cat(1, cell_features{i});
+all_data=cat(1, cell_features{:});
+
+
+load([ path_features 'imdb.mat']);
+
+
+
+global DATAopts;
+DATAopts = UCFInit;
+
+
+[allVids, labs, groups] = GetVideosPlusLabels('Full');
+
+representation=zeros(length(allVids), size(all_data, 2));
+
+for i=1:length(allVids)
+    
+    for j=1:(images.name)
+        
+        if ~isempty(strfind([meta.classes{images.class(j)} '/' images.name{j}(1:end-4)], allVids{i}))
+            representation(i, :)=all_data{}
+            continue
+        end
+        
+    end 
+    
+    
+end
