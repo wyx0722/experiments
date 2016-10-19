@@ -22,7 +22,7 @@ cell_features=cell(1, length(list_mat_file));
 fprintf('Load features from %d files!!  ... \n', length(list_mat_file));
 for i=1:length(list_mat_file)
      fprintf('%d ', i);
-     filename=[path_features list_mat_file(i).name];
+     filename=[path_features 'cache/' list_mat_file(i).name];
      load(filename);
      cell_features{i}=data';    
 end
