@@ -45,7 +45,7 @@ for i=1:length(allVids)
     
     for j=1:(length(images.name))
         
-        if ~isempty(strfind([meta.classes{images.class(j)} '/' images.name{j}(1:end-4)], allVids{i}(1:end-4)))
+        if ~isempty(strfind([meta.classes{images.class(j)} '/' images.name{j}(1:end-4)], allVids{i}))
             representation(i, :)=all_data(j, :);
             continue
         end
