@@ -1,112 +1,112 @@
-
-addpath('./../');%!!!!!!!
-addpath('./../../');%!!!!!!!
-
-global DATAopts;
-DATAopts = HMDB51Init;
-[allVids, labs, splits] = GetVideosPlusLabels();
-
-
-alpha=0.5;
-datasetName='HMDB51'
-
- bazeDir='/home/ionut/asustor_ionut/Data/results/cvpr2017/hmdb51/dimPCA/videoRep/'
- 
-% 'descParam', 'sp32cl256pca64', 'sp32cl256pca128', 'sp32cl256pca256', 'sp32cl256pca0', 'v256pca256', 'v256pca0'
- 
- 
-
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetHMDB51Layerconv5bMediaTypeDeepFNormFeatureMapsNoneNormalisationNonenetC3DpcaDim64_128_256_0_spClusters32.mat']
-load(name);
-
-sp32cl256pca64(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca64(:, end-(32*256) + 1 : end), 0.5);
-C3D_sp32cl256pca64=sp32cl256pca64;
-
-sp32cl256pca128(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca128(:, end-(32*256) + 1 : end), 0.5);
-C3D_sp32cl256pca128=sp32cl256pca128;
-
-sp32cl256pca256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca256(:, end-(32*256) + 1 : end), 0.5);
-C3D_sp32cl256pca256=sp32cl256pca256;
-
-sp32cl256pca0(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca0(:, end-(32*256) + 1 : end), 0.5);
-C3D_sp32cl256pca0=sp32cl256pca0;
-
-
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetHMDB51Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonenetSpVGG19pcaDim64_128_256_0_spClusters32.mat']
-load(name);
-
-sp32cl256pca64(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca64(:, end-(32*256) + 1 : end), 0.5);
-SpVGG19_sp32cl256pca64=sp32cl256pca64;
-
-sp32cl256pca128(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca128(:, end-(32*256) + 1 : end), 0.5);
-SpVGG19_sp32cl256pca128=sp32cl256pca128;
-
-sp32cl256pca256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca256(:, end-(32*256) + 1 : end), 0.5);
-SpVGG19_sp32cl256pca256=sp32cl256pca256;
-
-sp32cl256pca0(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca0(:, end-(32*256) + 1 : end), 0.5);
-SpVGG19_sp32cl256pca0=sp32cl256pca0;
-
-
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetHMDB51Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonenetTempSplit1VGG16pcaDim64_128_256_0_spClusters32.mat']
-load(name);
-
-sp32cl256pca64(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca64(:, end-(32*256) + 1 : end), 0.5);
-TempSplit1VGG16_sp32cl256pca64=sp32cl256pca64;
-
-sp32cl256pca128(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca128(:, end-(32*256) + 1 : end), 0.5);
-TempSplit1VGG16_sp32cl256pca128=sp32cl256pca128;
-
-sp32cl256pca256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca256(:, end-(32*256) + 1 : end), 0.5);
-TempSplit1VGG16_sp32cl256pca256=sp32cl256pca256;
-
-sp32cl256pca0(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca0(:, end-(32*256) + 1 : end), 0.5);
-TempSplit1VGG16_sp32cl256pca0=sp32cl256pca0;
-
-
-clear sp32cl256pca64 sp32cl256pca128 sp32cl256pca256 sp32cl256pca0
-
-
-
-
-
-nEncoding=13;
-allDist=cell(1, nEncoding);
-
-
-
-temp=NormalizeRowsUnit(C3D_sp32cl256pca64); allDist{1}=temp * temp';
-temp=NormalizeRowsUnit(C3D_sp32cl256pca128); allDist{2}=temp * temp';
-temp=NormalizeRowsUnit(C3D_sp32cl256pca256); allDist{3}=temp * temp';
-temp=NormalizeRowsUnit(C3D_sp32cl256pca0); allDist{4}=temp * temp';
-
-temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca64); allDist{5}=temp * temp';
-temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca128); allDist{5}=temp * temp';
-temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca256); allDist{7}=temp * temp';
-temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca0); allDist{8}=temp * temp';
-
-temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca64); allDist{9}=temp * temp';
-temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca128); allDist{10}=temp * temp';
-temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca256); allDist{11}=temp * temp';
-temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca0); allDist{12}=temp * temp';
-
-temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca0), ...
-    NormalizeRowsUnit(SpVGG19_sp32cl256pca0), NormalizeRowsUnit(C3D_sp32cl256pca0) ));
-allDist{13}=temp * temp';
+% 
+% addpath('./../');%!!!!!!!
+% addpath('./../../');%!!!!!!!
+% 
+% global DATAopts;
+% DATAopts = HMDB51Init;
+% [allVids, labs, splits] = GetVideosPlusLabels();
+% 
+% 
+% alpha=0.5;
+% datasetName='HMDB51'
+% 
+%  bazeDir='/home/ionut/asustor_ionut/Data/results/cvpr2017/hmdb51/dimPCA/videoRep/'
+%  
+% % 'descParam', 'sp32cl256pca64', 'sp32cl256pca128', 'sp32cl256pca256', 'sp32cl256pca0', 'v256pca256', 'v256pca0'
+%  
+%  
+% 
+% name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetHMDB51Layerconv5bMediaTypeDeepFNormFeatureMapsNoneNormalisationNonenetC3DpcaDim64_128_256_0_spClusters32.mat']
+% load(name);
+% 
+% sp32cl256pca64(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca64(:, end-(32*256) + 1 : end), 0.5);
+% C3D_sp32cl256pca64=sp32cl256pca64;
+% 
+% sp32cl256pca128(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca128(:, end-(32*256) + 1 : end), 0.5);
+% C3D_sp32cl256pca128=sp32cl256pca128;
+% 
+% sp32cl256pca256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca256(:, end-(32*256) + 1 : end), 0.5);
+% C3D_sp32cl256pca256=sp32cl256pca256;
+% 
+% sp32cl256pca0(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca0(:, end-(32*256) + 1 : end), 0.5);
+% C3D_sp32cl256pca0=sp32cl256pca0;
+% 
+% 
+% name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetHMDB51Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonenetSpVGG19pcaDim64_128_256_0_spClusters32.mat']
+% load(name);
+% 
+% sp32cl256pca64(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca64(:, end-(32*256) + 1 : end), 0.5);
+% SpVGG19_sp32cl256pca64=sp32cl256pca64;
+% 
+% sp32cl256pca128(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca128(:, end-(32*256) + 1 : end), 0.5);
+% SpVGG19_sp32cl256pca128=sp32cl256pca128;
+% 
+% sp32cl256pca256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca256(:, end-(32*256) + 1 : end), 0.5);
+% SpVGG19_sp32cl256pca256=sp32cl256pca256;
+% 
+% sp32cl256pca0(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca0(:, end-(32*256) + 1 : end), 0.5);
+% SpVGG19_sp32cl256pca0=sp32cl256pca0;
+% 
+% 
+% name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetHMDB51Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonenetTempSplit1VGG16pcaDim64_128_256_0_spClusters32.mat']
+% load(name);
+% 
+% sp32cl256pca64(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca64(:, end-(32*256) + 1 : end), 0.5);
+% TempSplit1VGG16_sp32cl256pca64=sp32cl256pca64;
+% 
+% sp32cl256pca128(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca128(:, end-(32*256) + 1 : end), 0.5);
+% TempSplit1VGG16_sp32cl256pca128=sp32cl256pca128;
+% 
+% sp32cl256pca256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca256(:, end-(32*256) + 1 : end), 0.5);
+% TempSplit1VGG16_sp32cl256pca256=sp32cl256pca256;
+% 
+% sp32cl256pca0(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256pca0(:, end-(32*256) + 1 : end), 0.5);
+% TempSplit1VGG16_sp32cl256pca0=sp32cl256pca0;
+% 
+% 
+% clear sp32cl256pca64 sp32cl256pca128 sp32cl256pca256 sp32cl256pca0
+% 
+% 
+% 
+% 
+% 
+% nEncoding=13;
+% allDist=cell(1, nEncoding);
+% 
+% 
+% 
+% temp=NormalizeRowsUnit(C3D_sp32cl256pca64); allDist{1}=temp * temp';
+% temp=NormalizeRowsUnit(C3D_sp32cl256pca128); allDist{2}=temp * temp';
+% temp=NormalizeRowsUnit(C3D_sp32cl256pca256); allDist{3}=temp * temp';
+% temp=NormalizeRowsUnit(C3D_sp32cl256pca0); allDist{4}=temp * temp';
+% 
+% temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca64); allDist{5}=temp * temp';
+temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca128); allDist{6}=temp * temp';
+% temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca256); allDist{7}=temp * temp';
+% temp=NormalizeRowsUnit(SpVGG19_sp32cl256pca0); allDist{8}=temp * temp';
+% 
+% temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca64); allDist{9}=temp * temp';
+% temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca128); allDist{10}=temp * temp';
+% temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca256); allDist{11}=temp * temp';
+% temp=NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca0); allDist{12}=temp * temp';
+% 
+% temp=NormalizeRowsUnit( cat(2, NormalizeRowsUnit(TempSplit1VGG16_sp32cl256pca0), ...
+%     NormalizeRowsUnit(SpVGG19_sp32cl256pca0), NormalizeRowsUnit(C3D_sp32cl256pca0) ));
+% allDist{13}=temp * temp';
 
 clear temp
 
-%each row for the cell represents the results for all 3 splits
-all_clfsOut=cell(1,nEncoding);
-all_accuracy=cell(1,nEncoding);
-clfsOut=cell(1,nEncoding);
-accuracy=cell(1,nEncoding);
-%mean_all_clfsOut=cell(nEncoding,1);
-mean_all_accuracy=cell(nEncoding,1);
-
-cRange = 100;
-nReps = 1;
-nFolds = 3;
+% %each row for the cell represents the results for all 3 splits
+% all_clfsOut=cell(1,nEncoding);
+% all_accuracy=cell(1,nEncoding);
+% clfsOut=cell(1,nEncoding);
+% accuracy=cell(1,nEncoding);
+% %mean_all_clfsOut=cell(nEncoding,1);
+% mean_all_accuracy=cell(nEncoding,1);
+% 
+% cRange = 100;
+% nReps = 1;
+% nFolds = 3;
 
 
 parpool(3);
@@ -114,7 +114,7 @@ parpool(3);
 
 
 %%%
-for k=1:nEncoding
+for k=6:nEncoding %!!!!!!!!!!!!
     k
     parfor i=1:3
         
