@@ -147,11 +147,11 @@
 
 
 
-parpool(3);
+%parpool(3);
 %%
 for k=1:nEncoding
     k
-    parfor i=1:3
+   for i=1:3% parfor i=1:3
         
         trainI = splits(:,i) == 1;
         
@@ -177,7 +177,7 @@ for k=1:nEncoding
      fprintf('Accuracy for encoding %d: %.3f\n',k, mean((all_accuracy{k}{1} + all_accuracy{k}{2} + all_accuracy{k}{3})./3));
 end
 
-delete(gcp('nocreate')) %///
+%delete(gcp('nocreate')) %///
 %%%%
 
 clear allDist
