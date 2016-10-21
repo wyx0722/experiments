@@ -12,7 +12,8 @@ normStrategy='None';
 %~~~~~~~~~~~~~~
 layer='pool5';
 Net='TempSplit1VGG16';
-pathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'%%%%%channge~~~~~~~~~~~~
+%pathFeatures='/media/HDS2-UTX/ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'%%%%%channge~~~~~~~~~~~~
+pathFeatures='/home/ionut/asustor_ionut/Data/hmdb51_action_temporal_vgg_16_split1_features_opticalFlow_tvL1/Videos/'
 %~~~~~~~~~~~~~~
 
 

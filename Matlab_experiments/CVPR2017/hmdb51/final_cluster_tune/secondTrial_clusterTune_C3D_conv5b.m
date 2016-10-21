@@ -12,7 +12,8 @@ normStrategy='None';
 %~~~~~~~~~~~~~~
 layer='conv5b'
 Net='C3D';
-pathFeatures='/media/HDS2-UTX/ionut/Data/conv5b_pool5_mat_c3d_features_hmdb51/Videos/'%%%%%channge~~~~~~~~~~~~
+%pathFeatures='/media/HDS2-UTX/ionut/Data/conv5b_pool5_mat_c3d_features_hmdb51/Videos/'%%%%%channge~~~~~~~~~~~~
+pathFeatures='/home/ionut/asustor_ionut/Data/mat_c3d_features_hmdb51/Videos/'
 %~~~~~~~~~~~~~~
 
 
