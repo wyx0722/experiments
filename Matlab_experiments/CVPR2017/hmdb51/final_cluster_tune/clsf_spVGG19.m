@@ -31,15 +31,18 @@ sp32cl256(:, end-(32*256) + 1 :end)=PowerNormalization(sp32cl256(:, end-(32*256)
 n_SpVGG19_sp32cl256=NormalizeRowsUnit(sp32cl256);
 
 
-temp=NormalizeRowsUnit(n_SpVGG19_sp32cl256(:, 1:256*512));
-allDist{1}=temp * temp';
 
 
 
-clear temp
 
 nEncoding=1;
 allDist=cell(1, nEncoding);
+
+temp=NormalizeRowsUnit(n_SpVGG19_sp32cl256(:, 1:256*512));
+allDist{1}=temp * temp';
+
+clear temp
+
 
 %each row for the cell represents the results for all 3 splits
 all_clfsOut=cell(1,nEncoding);
