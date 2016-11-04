@@ -133,5 +133,45 @@ interval=0:0.1:1;
 
 %~~~~~~Deep features: SCN+TCN+C3D
 
-L_df_weights=getSolutions_wFusion(interval,3);
+%wighted late
+weights=getSolutions_wFusion(interval,3);
 
+L_weights_df=weights;
+L_mean_acc_df=zeros(size(weights,1),1);
+
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
+for w=1:size(weights,1)
+    if mod(w,100)==0
+        fprintf('%d ', w);
+    end
+    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1};
+    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2};
+    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3};
+
+    L_mean_acc_df(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
+                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
+   
+end
+   
+
+
+%wighted Double
+weights=getSolutions_wFusion(interval,4);
+
+D_weights_df=weights;
+D_mean_acc_df=zeros(size(weights,1),1);
+
+fprintf('\n\nStart iterating over: %d \n', size(weights,1));
+for w=1:size(weights,1)
+    if mod(w,100)==0
+        fprintf('%d ', w);
+    end
+    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*df{1}{1};
+    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*df{1}{2};
+    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*df{1}{3};
+
+    D_mean_acc_df(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
+                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
+   
+end
+%~~~~~~~~~~~~~~~~~~
