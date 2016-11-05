@@ -112,7 +112,7 @@ for w=1:size(weights,1)
         clfsOut{i} = weights(w,1)*c3d{1}{i} + weights(w,2)*scn{1}{i} + weights(w,3)*tcn{1}{i} + weights(w,4)*df{1}{i};
         acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
        if w == 1
-          clfsOut_noW =  c3d{1}{3} + scn{1}{3} + tcn{1}{3} + df{1}{3};
+          clfsOut_noW =  c3d{1}{i} + scn{1}{i} + tcn{1}{i} + df{1}{i};
            ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
        end
     end
