@@ -2,60 +2,49 @@
 addpath('./../');%!!!!!!!
 addpath('./../../');%!!!!!!!
 
-
 global DATAopts;
-DATAopts = UCF101Init;
-[allVids, labs, splits] = GetVideosPlusLabels('Challenge');
+DATAopts = UCFInit;
+[vids, labs, groups] = GetVideosPlusLabels('Full');
 
 
-bazeDir='/home/ionut/asustor_ionut/Data/results/cvpr2017/forFusion_state_of_the_art/ucf101/clfsOut/'
+bazeDir='/home/ionut/asustor_ionut/Data/results/cvpr2017/forFusion_state_of_the_art/ucf50/clfsOut/'
 
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF101Layerconv5bMediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netC3DpcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
+name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF50Layerconv5bMediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netC3DpcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
 load(name);
 c3d=clfsOut_sp32cl256pca0(1); clear clfsOut_sp32cl256pca0
 
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF101Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netSpVGG19pcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
+name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF50Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netSpVGG19pcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
 load(name);
 scn=clfsOut_sp32cl256pca0(1); clear clfsOut_sp32cl256pca0
 
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF101Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netTempSplit1VGG16pcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
+name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF50Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256nettempVGG16pcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
 load(name);
-tcn_1=clfsOut_sp32cl256pca0(1); clear clfsOut_sp32cl256pca0
+tcn=clfsOut_sp32cl256pca0(1); clear clfsOut_sp32cl256pca0
 
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF101Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netTempSplit2VGG16pcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
-load(name);
-tcn_2=clfsOut_sp32cl256pca0(1); clear clfsOut_sp32cl256pca0
 
-name=[bazeDir 'FEVid_deepFeaturesClusters256DatasetUCF101Layerpool5MediaTypeDeepFNormFeatureMapsNoneNormalisationNonecheck_Clusters256_256_gmmSize256netTempSplit3VGG16pcaDim256_0_spClusters32_64_sp_clDim_check32_64__PNL2memb__sp32cl256pca0.mat']
-load(name);
-tcn_3=clfsOut_sp32cl256pca0(1); clear clfsOut_sp32cl256pca0
 
-tcn{1}{1}=tcn_1{1};
-tcn{1}{2}=tcn_2{1};
-tcn{1}{3}=tcn_3{1};
-
-name=[bazeDir 'FEVidHmgDenseBlockSize8_8_6_DatasetUCF101FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72SPfisherVector.mat']
+name=[bazeDir 'FEVidHmgDenseBlockSize8_8_6_DatasetUCF50FrameSampleRate1MediaTypeVidNormalisationROOTSIFTNumBlocks3_3_2_NumOr8numClusters256pcaDim72_fisherAll__all_accuracy.mat']
 load(name);
 hmg=all_clfsOut(1); clear all_clfsOut
 
-name=[bazeDir 'FEVid_IDTDatasetUCF101IDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54fisherVector.mat']
+name=[bazeDir 'FEVid_IDTDatasetUCF50IDTfeatureHOFMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim54_fisherAll__all_accuracy.mat']
 load(name);
 hof=all_clfsOut(1); clear all_clfsOut
 
-name=[bazeDir 'FEVid_IDTDatasetUCF101IDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat']
+name=[bazeDir 'FEVid_IDTDatasetUCF50IDTfeatureHOGMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_fisherAll__all_accuracy.mat']
 load(name);
 hog=all_clfsOut(1); clear all_clfsOut
 
-name=[bazeDir 'FEVid_IDTDatasetUCF101IDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat']
+name=[bazeDir 'FEVid_IDTDatasetUCF50IDTfeatureMBHxMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_fisherAll__all_accuracy.mat']
 load(name);
 mbhx=all_clfsOut(1); clear all_clfsOut
 
-name=[bazeDir 'FEVid_IDTDatasetUCF101IDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48fisherVector.mat']
+name=[bazeDir 'FEVid_IDTDatasetUCF50IDTfeatureMBHyMediaTypeIDTNormalisationROOTSIFTnumClusters256pcaDim48_fisherAll__all_accuracy.mat']
 load(name);
 mbhy=all_clfsOut(1); clear all_clfsOut
 
 
-name=[bazeDir 'ucf101_early_fusion_all.mat']
+name=[bazeDir 'all_early_fusion.mat']
 load(name);
 df=all_clfsOut(1);
 df_hmg=all_clfsOut(4);
@@ -64,13 +53,13 @@ df_idt_hmg=all_clfsOut(6);
 
 
 
-split1_trainI = splits(:,1) == 1; split1_testI  = ~split1_trainI;
+split1_trainI = splits(:,1) == 1; split1_testI  = splits(:,1) == 2;
 split1_trainLabs = labs(split1_trainI,:); split1_testLabs = labs(split1_testI,:);
 
-split2_trainI = splits(:,2) == 1; split2_testI  = ~split2_trainI;
+split2_trainI = splits(:,2) == 1; split2_testI  = splits(:,2) == 2;
 split2_trainLabs = labs(split2_trainI,:); split2_testLabs = labs(split2_testI,:);
 
-split3_trainI = splits(:,3) == 1; split3_testI  = ~split3_trainI;
+split3_trainI = splits(:,3) == 1; split3_testI  = splits(:,3) == 2;
 split3_trainLabs = labs(split3_trainI,:); split3_testLabs = labs(split3_testI,:);
 
 
@@ -150,18 +139,35 @@ weights=getSolutions_wFusion(interval,3);
 L_weights_df=weights;
 L_mean_acc_df=zeros(size(weights,1),1);
 
+
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{i} + weights(w,2)*scn{1}{i} + weights(w,3)*tcn{1}{i};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{1} + scn{1}{1} + tcn{1}{1};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    L_mean_acc_df(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3};
-
-    L_mean_acc_df(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumLate_df=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
    
 %wighted Double
@@ -172,16 +178,32 @@ D_mean_acc_df=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{i} + weights(w,2)*scn{1}{i} + weights(w,3)*tcn{1}{i} + weights(w,4)*df{1}{i};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{3} + scn{1}{3} + tcn{1}{3} + df{1}{3};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    D_mean_acc_df(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*df{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*df{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*df{1}{3};
-
-    D_mean_acc_df(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumDouble_df=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
 %~~~~~~~~~~~~~~~~~~
 
@@ -200,16 +222,32 @@ L_mean_acc_df_hmg=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{i} + weights(w,2)*scn{1}{i} + weights(w,3)*tcn{1}{i} + weights(w,4)*hmg{1}{i};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{1} + scn{1}{1} + tcn{1}{1} + hmg{1}{1};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    L_mean_acc_df_hmg(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hmg{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hmg{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hmg{1}{3};
-
-    L_mean_acc_df_hmg(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumLate_df_hmg=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
    
 %wighted Double
@@ -220,16 +258,32 @@ D_mean_acc_df_hmg=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{i} + weights(w,2)*scn{1}{i} + weights(w,3)*tcn{1}{i} + weights(w,4)*hmg{1}{i} + weights(w,5)*df_hmg{1}{i};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{1} + scn{1}{1} + tcn{1}{1} + hmg{1}{1} + df_hmg{1}{1};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    D_mean_acc_df_hmg(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hmg{1}{1} + weights(w,5)*df_hmg{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hmg{1}{2} + weights(w,5)*df_hmg{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hmg{1}{3} + weights(w,5)*df_hmg{1}{3};
-
-    D_mean_acc_df_hmg(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumDouble_df_hmg=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
 %~~~~~~~~~~~~~~~~~~
 
@@ -245,16 +299,32 @@ L_mean_acc_df_idt=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{i} + weights(w,2)*scn{1}{i} + weights(w,3)*tcn{1}{i} + weights(w,4)*hof{1}{i} + weights(w,5)*hog{1}{i} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{i} + scn{1}{i} + tcn{1}{i};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    L_mean_acc_df_idt(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hof{1}{2} + weights(w,5)*hog{1}{2} + weights(w,6)*mbhx{1}{2} + weights(w,7)*mbhy{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hof{1}{3} + weights(w,5)*hog{1}{3} + weights(w,6)*mbhx{1}{3} + weights(w,7)*mbhy{1}{3};
-
-    L_mean_acc_df_idt(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumLate_df=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
    
 %wighted Double
@@ -265,16 +335,32 @@ D_mean_acc_df_idt=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1} + weights(w,8)*df_idt{1}{1};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{i} + scn{1}{i} + tcn{1}{i};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    D_mean_acc_df_idt(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1} + weights(w,8)*df_idt{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hof{1}{2} + weights(w,5)*hog{1}{2} + weights(w,6)*mbhx{1}{2} + weights(w,7)*mbhy{1}{2} + weights(w,8)*df_idt{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hof{1}{3} + weights(w,5)*hog{1}{3} + weights(w,6)*mbhx{1}{3} + weights(w,7)*mbhy{1}{3} + weights(w,8)*df_idt{1}{3};
-
-    D_mean_acc_df_idt(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumLate_df=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
 %~~~~~~~~~~~~~~~~~~
 
@@ -288,18 +374,34 @@ L_mean_acc_df_idt_hmg=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1} + weights(w,8)*hmg{1}{1};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{i} + scn{1}{i} + tcn{1}{i};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    L_mean_acc_df_idt_hmg(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1} + weights(w,8)*hmg{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hof{1}{2} + weights(w,5)*hog{1}{2} + weights(w,6)*mbhx{1}{2} + weights(w,7)*mbhy{1}{2} + weights(w,8)*hmg{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hof{1}{3} + weights(w,5)*hog{1}{3} + weights(w,6)*mbhx{1}{3} + weights(w,7)*mbhy{1}{3} + weights(w,8)*hmg{1}{3};
-
-    L_mean_acc_df_idt_hmg(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumLate_df=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
-   
+
 %wighted Double
 weights=getSolutions_wFusion(interval,9);
 
@@ -308,16 +410,32 @@ D_mean_acc_df_idt_hmg=zeros(size(weights,1),1);
 
 fprintf('\n\nStart iterating over: %d \n', size(weights,1));
 for w=1:size(weights,1)
+    for i=1:max(groups)
+            testI = groups == i;
+            trainI = ~testI;
+            trainLabs = labs(trainI,:);
+            testLabs = labs(testI, :);  
+        
+        clfsOut{i} = weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1} + weights(w,8)*hmg{1}{1} + weights(w,9)*df_idt_hmg{1}{1};
+        acc{i}=ClassificationAccuracy(clfsOut{i}, testLabs);  
+       if w == 1
+          clfsOut_noW =  c3d{1}{i} + scn{1}{i} + tcn{1}{i};
+           ld{i}=ClassificationAccuracy(clfsOut_noW, testLabs);  
+       end
+    end
+    
+    
+    D_mean_acc_df_idt_hmg(w)=mean(mean(cat(2, acc{:})));
+    
+    
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hof{1}{1} + weights(w,5)*hog{1}{1} + weights(w,6)*mbhx{1}{1} + weights(w,7)*mbhy{1}{1} + weights(w,8)*hmg{1}{1} + weights(w,9)*df_idt_hmg{1}{1};
-    split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hof{1}{2} + weights(w,5)*hog{1}{2} + weights(w,6)*mbhx{1}{2} + weights(w,7)*mbhy{1}{2} + weights(w,8)*hmg{1}{2} + weights(w,9)*df_idt_hmg{1}{2};
-    split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hof{1}{3} + weights(w,5)*hog{1}{3} + weights(w,6)*mbhx{1}{3} + weights(w,7)*mbhy{1}{3} + weights(w,8)*hmg{1}{3} + weights(w,9)*df_idt_hmg{1}{3};
-
-    D_mean_acc_df_idt_hmg(w)=(mean(ClassificationAccuracy(split1_clfs, split1_testLabs)) + mean(ClassificationAccuracy(split2_clfs, split2_testLabs)) + ...
-                mean(ClassificationAccuracy(split3_clfs, split3_testLabs)))/3;
-   
+    if w==1
+        sumLate_df=mean(mean(cat(2, ld{:})))
+    end
+    
+    
 end
 %~~~~~~~~~~~~~~~~~~
 
