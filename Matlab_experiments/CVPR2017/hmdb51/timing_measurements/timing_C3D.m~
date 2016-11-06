@@ -103,6 +103,15 @@ t=mexFisherAssign(pca256_desc', cell_gmmModelName{1})'; FVpca256=zeros(length(su
 t=mexFisherAssign(pca0_desc', cell_gmmModelName{2})'; FVpca0=zeros(length(subsetVideos), length(t), 'like', t);
 
 
+
+t=max_pooling(pca256_desc, cell_Clusters{1}.vocabulary); VLMPFpca256_noabs=zeros(length(subsetVideos), length(t), 'like', t);
+t=max_pooling(pca0_desc, cell_Clusters{2}.vocabulary); VLMPFpca0_noabs=zeros(length(subsetVideos), length(t), 'like', t);
+
+t=ST_VLMPF(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); stVLMPFpca256_noabs=zeros(length(subsetVideos), length(t), 'like', t);
+t=ST_VLMPF(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);  stVLMPFpca0_noabs=zeros(length(subsetVideos), length(t), 'like', t);
+
+
+
 clear pca256_desc pca0_desc desc info
 
 
@@ -116,6 +125,12 @@ t_VLADpca256 = zeros(1, length(subsetVideos));
 t_VLADpca0 = zeros(1, length(subsetVideos));
 t_FVpca256 = zeros(1, length(subsetVideos));
 t_FVpca0 = zeros(1, length(subsetVideos));
+
+t_VLMPFpca256_noabs = zeros(1, length(subsetVideos));
+t_VLMPFpca0_noabs = zeros(1, length(subsetVideos));
+t_stVLMPFpca256_noabs = zeros(1, length(subsetVideos));
+t_stVLMPFpca0_noabs = zeros(1, length(subsetVideos));
+
 
 fprintf('Feature extraction  for %d vids: ', length(subsetVideos));
 for i=1:length(subsetVideos)
@@ -162,6 +177,27 @@ for i=1:length(subsetVideos)
     FVpca0(i, :)=mexFisherAssign(pca0_desc', cell_gmmModelName{2})';
     t_FVpca0(i)=toc;
     
+    
+    
+    tic
+    VLMPFpca256_noabs(i, :)=max_pooling(pca256_desc, cell_Clusters{1}.vocabulary);
+    t_VLMPFpca256_noabs(i)=toc;
+    
+    tic
+    VLMPFpca0_noabs(i, :)=max_pooling(pca0_desc, cell_Clusters{2}.vocabulary);
+    t_VLMPFpca0_noabs(i)=toc;
+    
+    tic
+    stVLMPFpca256_noabs(i, :)=ST_VLMPF(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    t_stVLMPFpca256_noabs(i)=toc;
+    
+    tic
+    stVLMPFpca0_noabs(i, :)=ST_VLMPF(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    t_stVLMPFpca0_noabs(i)=toc;
+    
+    
+    
+    
 end
 fprintf('\nDone!\n\n');
 
@@ -171,7 +207,10 @@ fprintf('\n\nSum of timing measurements for PCA256: \n')
 fprintf('%.4f\n',sum(t_FVpca256));
 fprintf('%.4f\n',sum(t_VLADpca256));
 fprintf('%.4f\n',sum(t_VLMPFpca256));
-fprintf('%.4f\n',sum(t_stVLMPFpca256));
+fprintf('%.4f\n\n',sum(t_stVLMPFpca256));
+fprintf('%.4f\n',sum(t_VLMPFpca256fprintf('%.4f\n',sum(t_VLMPFpca256));
+fprintf('%.4f\n\n',sum(t_stVLMPFpca256));));
+fprintf('%.4f\n\n',sum(t_stVLMPFpca256));
 
 fprintf('\n\nSum of timing measurements for PCA0: \n')
 fprintf('%.4f\n',sum(t_FVpca0));
