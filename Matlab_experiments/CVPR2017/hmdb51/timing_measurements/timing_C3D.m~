@@ -89,6 +89,10 @@ pca256_desc = desc * cell_pcaMap{1}.data.rot;
 pca0_desc = desc * cell_pcaMap{2}.data.rot;
 
 
+ sp32cl256pca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    sp32cl256pca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    
+
 t=max_pooling_abs(pca256_desc, cell_Clusters{1}.vocabulary); VLMPFpca256=zeros(length(subsetVideos), length(t), 'like', t);
 t=max_pooling_abs(pca0_desc, cell_Clusters{2}.vocabulary); VLMPFpca0=zeros(length(subsetVideos), length(t), 'like', t);
 
@@ -139,11 +143,11 @@ for i=1:length(subsetVideos)
     t_VLMPFpca0(i)=toc;
     
     tic
-    stVLMPFpca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    stVLMPFpca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
     t_stVLMPFpca256(i)=toc;
     
     tic
-    stVLMPFpca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    stVLMPFpca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
     t_stVLMPFpca0(i)=toc;
     
     tic
