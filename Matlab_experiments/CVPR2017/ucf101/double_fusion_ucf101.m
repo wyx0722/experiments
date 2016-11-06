@@ -203,7 +203,7 @@ for w=1:size(weights,1)
     if mod(w,100)==0
         fprintf('%d ', w);
     end
-    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hmg{1}{1} ;
+    split1_clfs=weights(w,1)*c3d{1}{1} + weights(w,2)*scn{1}{1} + weights(w,3)*tcn{1}{1} + weights(w,4)*hmg{1}{1};
     split2_clfs=weights(w,1)*c3d{1}{2} + weights(w,2)*scn{1}{2} + weights(w,3)*tcn{1}{2} + weights(w,4)*hmg{1}{2};
     split3_clfs=weights(w,1)*c3d{1}{3} + weights(w,2)*scn{1}{3} + weights(w,3)*tcn{1}{3} + weights(w,4)*hmg{1}{3};
 
