@@ -89,11 +89,11 @@ pca256_desc = desc * cell_pcaMap{1}.data.rot;
 pca0_desc = desc * cell_pcaMap{2}.data.rot;
 
 
-t=max_pooling_abs(pca256_desc, cell_Clusters{1}.vocabulary); VLMPFpca256=zeros(length(subsetVideos), length(t), 'like', t);
-t=max_pooling_abs(pca0_desc, cell_Clusters{2}.vocabulary); VLMPFpca0=zeros(length(subsetVideos), length(t), 'like', t);
+t=max_pooling(pca256_desc, cell_Clusters{1}.vocabulary); VLMPFpca256=zeros(length(subsetVideos), length(t), 'like', t);
+t=max_pooling(pca0_desc, cell_Clusters{2}.vocabulary); VLMPFpca0=zeros(length(subsetVideos), length(t), 'like', t);
 
-t=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); stVLMPFpca256=zeros(length(subsetVideos), length(t), 'like', t);
-t=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);  stVLMPFpca0=zeros(length(subsetVideos), length(t), 'like', t);
+t=ST_VLMPF(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary); stVLMPFpca256=zeros(length(subsetVideos), length(t), 'like', t);
+t=ST_VLMPF(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);  stVLMPFpca0=zeros(length(subsetVideos), length(t), 'like', t);
 
 
 t=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary); VLADpca256=zeros(length(subsetVideos), length(t), 'like', t);
@@ -131,19 +131,19 @@ for i=1:length(subsetVideos)
     pca0_desc = desc * cell_pcaMap{2}.data.rot;
     
     tic
-    VLMPFpca256(i, :)=max_pooling_abs(pca256_desc, cell_Clusters{1}.vocabulary);
+    VLMPFpca256(i, :)=max_pooling(pca256_desc, cell_Clusters{1}.vocabulary);
     t_VLMPFpca256(i)=toc;
     
     tic
-    VLMPFpca0(i, :)=max_pooling_abs(pca0_desc, cell_Clusters{2}.vocabulary);
+    VLMPFpca0(i, :)=max_pooling(pca0_desc, cell_Clusters{2}.vocabulary);
     t_VLMPFpca0(i)=toc;
     
     tic
-    stVLMPFpca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    stVLMPFpca256(i, :)=ST_VLMPF(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     t_stVLMPFpca256(i)=toc;
     
     tic
-    stVLMPFpca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
+    stVLMPFpca0(i, :)=ST_VLMPF(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     t_stVLMPFpca0(i)=toc;
     
     tic

@@ -89,10 +89,6 @@ pca256_desc = desc * cell_pcaMap{1}.data.rot;
 pca0_desc = desc * cell_pcaMap{2}.data.rot;
 
 
- sp32cl256pca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    sp32cl256pca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
-    
-
 t=max_pooling_abs(pca256_desc, cell_Clusters{1}.vocabulary); VLMPFpca256=zeros(length(subsetVideos), length(t), 'like', t);
 t=max_pooling_abs(pca0_desc, cell_Clusters{2}.vocabulary); VLMPFpca0=zeros(length(subsetVideos), length(t), 'like', t);
 
@@ -143,11 +139,11 @@ for i=1:length(subsetVideos)
     t_VLMPFpca0(i)=toc;
     
     tic
-    stVLMPFpca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+    stVLMPFpca256(i, :)=ST_VLMPF_abs(pca256_desc, cell_Clusters{1}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     t_stVLMPFpca256(i)=toc;
     
     tic
-    stVLMPFpca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{2}.vocabulary);
+    stVLMPFpca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     t_stVLMPFpca0(i)=toc;
     
     tic
@@ -172,15 +168,15 @@ fprintf('\nDone!\n\n');
 descParam
 
 fprintf('\n\nSum of timing measurements for PCA256: \n')
-fprintf('%.4f',sum(t_FVpca256));
-fprintf('%.4f',sum(t_VLADpca256));
-fprintf('%.4f',sum(t_VLMPFpca256));
-fprintf('%.4f',sum(t_stVLMPFpca256));
+fprintf('%.4f\n',sum(t_FVpca256));
+fprintf('%.4f\n',sum(t_VLADpca256));
+fprintf('%.4f\n',sum(t_VLMPFpca256));
+fprintf('%.4f\n',sum(t_stVLMPFpca256));
 
 fprintf('\n\nSum of timing measurements for PCA0: \n')
-fprintf('%.4f',sum(t_FVpca0));
-fprintf('%.4f',sum(t_VLADpca0));
-fprintf('%.4f',sum(t_VLMPFpca0));
-fprintf('%.4f',sum(t_stVLMPFpca0));
+fprintf('%.4f\n',sum(t_FVpca0));
+fprintf('%.4f\n',sum(t_VLADpca0));
+fprintf('%.4f\n',sum(t_VLMPFpca0));
+fprintf('%.4f\n',sum(t_stVLMPFpca0));
 
 fprintf('\n\nTotal number of descriptors for %d videos: %d\n',length(subsetVideos), sum(nDesc));
