@@ -161,21 +161,7 @@ for i=1:length(subsetVideos)
     stVLMPFpca0(i, :)=ST_VLMPF_abs(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     t_stVLMPFpca0(i)=toc;
     
-    tic
-    VLADpca256(i, :)=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary);
-    t_VLADpca256(i)=toc;
-    
-    tic
-    VLADpca0(i, :)=VLAD_1(pca0_desc, cell_Clusters{2}.vocabulary);
-    t_VLADpca0(i)=toc;
-    
-    tic
-    FVpca256(i, :)=mexFisherAssign(pca256_desc', cell_gmmModelName{1})'; 
-    t_FVpca256(i)=toc;
-    
-    tic
-    FVpca0(i, :)=mexFisherAssign(pca0_desc', cell_gmmModelName{2})';
-    t_FVpca0(i)=toc;
+
     
     
     
@@ -195,6 +181,23 @@ for i=1:length(subsetVideos)
     stVLMPFpca0_noabs(i, :)=ST_VLMPF(pca0_desc, cell_Clusters{2}.vocabulary, info.spInfo, cell_spClusters{1}.vocabulary);
     t_stVLMPFpca0_noabs(i)=toc;
     
+    
+    
+        tic
+    VLADpca256(i, :)=VLAD_1(pca256_desc, cell_Clusters{1}.vocabulary);
+    t_VLADpca256(i)=toc;
+    
+    tic
+    VLADpca0(i, :)=VLAD_1(pca0_desc, cell_Clusters{2}.vocabulary);
+    t_VLADpca0(i)=toc;
+    
+    tic
+    FVpca256(i, :)=mexFisherAssign(pca256_desc', cell_gmmModelName{1})'; 
+    t_FVpca256(i)=toc;
+    
+    tic
+    FVpca0(i, :)=mexFisherAssign(pca0_desc', cell_gmmModelName{2})';
+    t_FVpca0(i)=toc;
     
     
     
