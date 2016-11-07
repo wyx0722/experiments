@@ -365,55 +365,55 @@ for w=1:size(weights,1)
 end
 %~~~~~~~~~~~~~~~~~~
 
-% 
-% %~~~~~~~df
-% fprintf('Final results for fusion: c3d + scn + tcn\n')
-% fprintf('%.3f \n', sumLate_df)
-% fprintf('%.3f \n', max(L_mean_acc_df))
-% fprintf('%.3f \n', sumDouble_df)
-% fprintf('%.3f \n', max(D_mean_acc_df))
-% [~, idx]=max(L_mean_acc_df);
-% fprintf('%.2f ', L_weights_df(idx, :))
-% fprintf('\n');
-% [~, idx]=max(D_mean_acc_df);
-% fprintf('%.2f ', D_weights_df(idx, :))
-% fprintf('\n\n');
-% 
-% %~~~~~~~df+hmg
-% fprintf('Final results for fusion: c3d + scn + tcn + hmg\n')
-% fprintf('%.3f \n', sumLate_df_hmg)
-% fprintf('%.3f \n', max(L_mean_acc_df_hmg))
-% fprintf('%.3f \n', sumDouble_df_hmg)
-% fprintf('%.3f \n', max(D_mean_acc_df_hmg))
-% [~, idx]=max(L_mean_acc_df_hmg);
-% fprintf('%.2f ', L_weights_df_hmg(idx, :))
-% fprintf('\n');
-% [~, idx]=max(D_mean_acc_df_hmg);
-% fprintf('%.2f ', D_weights_df_hmg(idx, :))
-% fprintf('\n\n');
-% 
-% %~~~~~~~df+idt
-% fprintf('Final results for fusion: c3d + scn + tcn + hof + hog + mbhx + mbhy\n')
-% fprintf('%.3f \n', sumLate_df_idt)
-% fprintf('%.3f \n', max(L_mean_acc_df_idt))
-% fprintf('%.3f \n', sumDouble_df_idt)
-% fprintf('%.3f \n', max(D_mean_acc_df_idt))
-% [~, idx]=max(L_mean_acc_df_idt);
-% fprintf('%.2f ', L_weights_df_idt(idx, :))
-% fprintf('\n');
-% [~, idx]=max(D_mean_acc_df_idt);
-% fprintf('%.2f ', D_weights_df_idt(idx, :))
-% fprintf('\n\n');
+
+%~~~~~~~df
+fprintf('Final results for fusion: c3d + scn + tcn\n')
+fprintf('%.3f \n', sumLate_df)
+fprintf('%.3f \n', max(L_mean_acc_df))
+fprintf('%.3f \n', sumDouble_df)
+fprintf('%.3f \n', max(D_mean_acc_df))
+[~, idx]=max(L_mean_acc_df);
+fprintf('%.2f ', L_weights_df(idx, :))
+fprintf('\n');
+[~, idx]=max(D_mean_acc_df);
+fprintf('%.2f ', D_weights_df(idx, :))
+fprintf('\n\n');
+
+%~~~~~~~df+hmg
+fprintf('Final results for fusion: c3d + scn + tcn + hmg\n')
+fprintf('%.3f \n', sumLate_df_hmg)
+fprintf('%.3f \n', max(L_mean_acc_df_hmg))
+fprintf('%.3f \n', sumDouble_df_hmg)
+fprintf('%.3f \n', max(D_mean_acc_df_hmg))
+[~, idx]=max(L_mean_acc_df_hmg);
+fprintf('%.2f ', L_weights_df_hmg(idx, :))
+fprintf('\n');
+[~, idx]=max(D_mean_acc_df_hmg);
+fprintf('%.2f ', D_weights_df_hmg(idx, :))
+fprintf('\n\n');
+
+%~~~~~~~df+idt
+fprintf('Final results for fusion: c3d + scn + tcn + hof + hog + mbhx + mbhy\n')
+fprintf('%.3f \n', sumLate_df_idt)
+fprintf('%.3f \n', max(L_mean_acc_df_idt))
+fprintf('%.3f \n', sumDouble_df_idt)
+fprintf('%.3f \n', max(D_mean_acc_df_idt))
+[~, idx]=max(L_mean_acc_df_idt);
+fprintf('%.2f ', L_weights_df_idt(idx, :))
+fprintf('\n');
+[~, idx]=max(D_mean_acc_df_idt);
+fprintf('%.2f ', D_weights_df_idt(idx, :))
+fprintf('\n\n');
 
 %~~~~~~~df+idt + hmg
 fprintf('Final results for fusion: c3d + scn + tcn + hof + hog + mbhx + mbhy + hmg\n')
-%fprintf('%.3f \n', sumLate_df_idt_hmg)
-%fprintf('%.3f \n', max(L_mean_acc_df_idt_hmg))
-%fprintf('%.3f \n', sumDouble_df_idt_hmg)
+fprintf('%.3f \n', sumLate_df_idt_hmg)
+fprintf('%.3f \n', max(L_mean_acc_df_idt_hmg))
+fprintf('%.3f \n', sumDouble_df_idt_hmg)
 fprintf('%.3f \n', max(D_mean_acc_df_idt_hmg))
-%[~, idx]=max(L_mean_acc_df_idt_hmg);
-%fprintf('%.2f ', L_weights_df_idt_hmg(idx, :))
-%fprintf('\n');
+[~, idx]=max(L_mean_acc_df_idt_hmg);
+fprintf('%.2f ', L_weights_df_idt_hmg(idx, :))
+fprintf('\n');
 [~, idx]=max(D_mean_acc_df_idt_hmg);
 fprintf('%.2f ', D_weights_df_idt_hmg(idx, :))
 fprintf('\n\n');
