@@ -1,0 +1,17 @@
+function [ representation ] = VMGF( features )
+
+dimFeatures=size(features, 2);
+[~. assign]=max(features, [], 2);
+
+rep=cell(1,dimFeatures);
+ze=zeros(1,dimFeatures);
+
+for i=1:dimFeatures
+    
+end
+
+
+
+
+end
+
